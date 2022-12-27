@@ -1,16 +1,19 @@
 package net.trustgames.lobby.spawn;
 
+import net.trustgames.core.Core;
 import net.trustgames.lobby.Lobby;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class SetSpawnCommand implements CommandExecutor {
 
@@ -26,24 +29,26 @@ public class SetSpawnCommand implements CommandExecutor {
         */
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        Core core = lobby.getCore();
+        FileConfiguration configCore = core.getConfig();
         if (sender instanceof Player player) {
-            if (player.hasPermission("core.admin")) {
+            if (player.hasPermission(Objects.requireNonNull(configCore.getString("permissions.admin")))) {
                 Location location = player.getLocation();
                 Spawn spawn = new Spawn(lobby);
                 YamlConfiguration config = YamlConfiguration.loadConfiguration(spawn.getSpawnFile());
                 config.set("spawn.location", location);
                 try {
                     config.save(spawn.getSpawnFile());
-                    player.sendMessage(ChatColor.GREEN + "Spawn location was set and saved in spawn.yml!");
+                    player.sendMessage(ChatColor.GREEN + "Spawn location was set and saved in /plugins/Lobby/spawn.yml!");
                 } catch (IOException e) {
                     player.sendMessage(ChatColor.RED + "Couldn't save the spawn.yml file!");
                     throw new RuntimeException(e);
                 }
             } else {
-                player.sendMessage(ChatColor.RED + "You don't have permission to perform this command!");
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(configCore.getString("messages.no-permission"))));
             }
         } else {
-            sender.sendMessage(ChatColor.RED + "This command can be used by players only!");
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(configCore.getString("messages.only-in-game-command"))));
         }
         return true;
     }

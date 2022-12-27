@@ -52,9 +52,15 @@ public class HotbarItems {
 
         // lore
         List<Component> hideLore = new ArrayList<>();
-        hideLore.add(Component.text(""));
-        hideLore.add(Component.text(ChatColor.DARK_GRAY + "Hide " + (Bukkit.getOnlinePlayers().size() - 1) + " players by"));
-        hideLore.add(Component.text(ChatColor.DARK_GRAY + "clicking with this item"));
+        if (Bukkit.getOnlinePlayers().size() == 1){
+            hideLore.add(Component.text(""));
+            hideLore.add(Component.text(ChatColor.DARK_GRAY + "Nobody else is online :("));
+        }
+        else {
+            hideLore.add(Component.text(""));
+            hideLore.add(Component.text(ChatColor.DARK_GRAY + "Hide " + (Bukkit.getOnlinePlayers().size() - 1) + " players by"));
+            hideLore.add(Component.text(ChatColor.DARK_GRAY + "clicking with this item"));
+        }
         hideMeta.lore(hideLore);
 
         // set the item meta

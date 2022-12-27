@@ -6,3 +6,9 @@ depend: [ Core ]
 authors: [ Wega ]
 description: Lobby for TrustGames.net
 website: www.trustgames.net
+commands:
+  setspawn:
+    description: sets the spawn location
+    permission: core.admin
+  spawn:
+    description: teleports you to spawn
