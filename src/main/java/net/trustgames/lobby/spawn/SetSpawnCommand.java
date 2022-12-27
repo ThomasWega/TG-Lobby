@@ -29,13 +29,19 @@ public class SetSpawnCommand implements CommandExecutor {
         */
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+
+        // methods and classed
         Core core = lobby.getCore();
+        Spawn spawn = new Spawn(lobby);
+
+        // configs
         FileConfiguration configCore = core.getConfig();
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(spawn.getSpawnFile());
+
+
         if (sender instanceof Player player) {
             if (player.hasPermission(Objects.requireNonNull(configCore.getString("permissions.admin")))) {
                 Location location = player.getLocation();
-                Spawn spawn = new Spawn(lobby);
-                YamlConfiguration config = YamlConfiguration.loadConfiguration(spawn.getSpawnFile());
                 config.set("spawn.location", location);
                 try {
                     config.save(spawn.getSpawnFile());

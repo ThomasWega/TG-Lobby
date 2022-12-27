@@ -1,6 +1,7 @@
 package net.trustgames.lobby.spawn;
 
 import net.trustgames.core.Core;
+import net.trustgames.core.managers.CooldownManager;
 import net.trustgames.lobby.Lobby;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -12,9 +13,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
 import java.util.Objects;
-import java.util.UUID;
 
 public class SpawnCommand implements CommandExecutor {
 
@@ -24,22 +23,33 @@ public class SpawnCommand implements CommandExecutor {
         this.lobby = lobby;
     }
 
-    private final HashMap<UUID, Long> commandCooldown = new HashMap<>();
-
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+
+        // methods and classes
         Core core = lobby.getCore();
+        CooldownManager cooldownManager = core.cooldownManager;
+        Spawn spawn = new Spawn(lobby);
+
+        // configs
         FileConfiguration configCore = core.getConfig();
+        FileConfiguration configLobby = lobby.getConfig();
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(spawn.getSpawnFile());
+
         if (sender instanceof Player player) {
-            Spawn spawn = new Spawn(lobby);
+
+            // if the player has a cooldown on this command. Using CooldownManager from Core plugin.
+            if (cooldownManager.commandCooldown(player, configLobby.getDouble("settings.spawn-command-cooldown"))){
+                return true;
+            }
 
             // gets the location from the spawn.yml
-            YamlConfiguration config = YamlConfiguration.loadConfiguration(spawn.getSpawnFile());
-            FileConfiguration configMain = lobby.getConfig();
             Location location = config.getLocation("spawn.location");
+
+            // if the location isn't null, teleport the player to the location and send him the teleport message
             if (location != null) {
                 player.teleport(location);
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(configMain.getString("messages.spawn-teleport"))));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(configLobby.getString("messages.spawn-teleport"))));
             } else {
                 player.sendMessage(ChatColor.RED + "Spawn location isn't set!");
             }

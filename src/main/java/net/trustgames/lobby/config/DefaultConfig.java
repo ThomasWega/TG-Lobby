@@ -18,7 +18,7 @@ public class DefaultConfig {
         defaultConfig.addDefault("permissions.vip", "lobby.vip");
 
         // settings
-    //    defaultConfig.addDefault("settings.max-commands-per-second", 10d);
+        defaultConfig.addDefault("settings.spawn-command-cooldown", 3);
     }
 }
 
