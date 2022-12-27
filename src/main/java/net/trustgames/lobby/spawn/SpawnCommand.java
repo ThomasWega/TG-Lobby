@@ -39,7 +39,7 @@ public class SpawnCommand implements CommandExecutor {
         if (sender instanceof Player player) {
 
             // if the player has a cooldown on this command. Using CooldownManager from Core plugin.
-            if (cooldownManager.commandCooldown(player, configLobby.getDouble("settings.spawn-command-cooldown"))){
+            if (cooldownManager.commandCooldown(player, configLobby.getDouble("settings.cooldowns.spawn-command-cooldown"))){
                 return true;
             }
 

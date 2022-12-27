@@ -18,7 +18,7 @@ public class DefaultConfig {
         defaultConfig.addDefault("permissions.vip", "lobby.vip");
 
         // settings
-        defaultConfig.addDefault("settings.spawn-command-cooldown", 3);
+        defaultConfig.addDefault("settings.cooldowns.spawn-command-cooldown", 3d);
     }
 }
 
