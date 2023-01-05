@@ -22,6 +22,8 @@ public class TablistPlayerPrefix implements Listener {
 
     public TablistPlayerPrefix(Lobby lobby) {
         this.lobby = lobby;
+
+        // register the user data change event
         EventBus eventBus = Core.getLuckPerms().getEventBus();
         eventBus.subscribe(lobby, UserDataRecalculateEvent.class, this::onUserDataRecalculate);
     }
@@ -35,6 +37,10 @@ public class TablistPlayerPrefix implements Listener {
         initializePrefixes();
     }
 
+    /* for each player on the server, get keys of name colors in config.yml
+    and check if player has the permission to the highest one. If he does, break the
+    loop and set rank as x (the rank). If he doesn't, continue until he has the permission
+     */
     private void initializePrefixes(){
 
         Core core = lobby.getCore();
@@ -49,12 +55,17 @@ public class TablistPlayerPrefix implements Listener {
                 }
             }
 
+            // get the name color
             String nameColor = config.getString("tablist.name-color." + rank);
+
+            // get the prefix the player should have
             String prefix = LuckPermsManager.getUser(player).getCachedData().getMetaData().getPrefix();
 
             assert nameColor != null;
+            // if the players primary group is default, don't set any prefix
             if (Objects.equals(LuckPermsManager.getPlayerPrimaryGroup(player), "default")){
                 player.playerListName(Component.text(ChatColor.translateAlternateColorCodes('&', nameColor + player.getName())));
+            // if the players primary group is anything else, set the prefix
             } else{
                 player.playerListName(Component.text(ChatColor.translateAlternateColorCodes('&',  prefix + " " + nameColor + player.getName())));
             }

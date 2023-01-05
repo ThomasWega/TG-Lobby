@@ -38,7 +38,10 @@ public class SetSpawnCommand implements CommandExecutor {
         FileConfiguration configCore = core.getConfig();
         YamlConfiguration config = YamlConfiguration.loadConfiguration(spawn.getSpawnFile());
 
-
+        /* check if sender is player, if not, send him the only in-game player message.
+        Also check if player has permission. If he does, save the location of player as
+        the spawn location in the spawn.yml. Send the player a message that the location has been set.
+         */
         if (sender instanceof Player player) {
             if (player.hasPermission("lobby.admin")) {
                 Location location = player.getLocation();
