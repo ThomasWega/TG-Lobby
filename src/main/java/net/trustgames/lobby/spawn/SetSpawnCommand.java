@@ -36,12 +36,11 @@ public class SetSpawnCommand implements CommandExecutor {
 
         // configs
         FileConfiguration configCore = core.getConfig();
-        FileConfiguration configLobby = lobby.getConfig();
         YamlConfiguration config = YamlConfiguration.loadConfiguration(spawn.getSpawnFile());
 
 
         if (sender instanceof Player player) {
-            if (player.hasPermission(Objects.requireNonNull(configLobby.getString("permissions.admin")))) {
+            if (player.hasPermission("lobby.admin")) {
                 Location location = player.getLocation();
                 config.set("spawn.location", location);
                 try {

@@ -56,6 +56,11 @@ public class HotbarItems {
             hideLore.add(Component.text(""));
             hideLore.add(Component.text(ChatColor.DARK_GRAY + "Nobody else is online :("));
         }
+        else if (Bukkit.getOnlinePlayers().size() == 2){
+            hideLore.add(Component.text(""));
+            hideLore.add(Component.text(ChatColor.DARK_GRAY + "Hide " + (Bukkit.getOnlinePlayers().size() - 1) + " player by"));
+            hideLore.add(Component.text(ChatColor.DARK_GRAY + "clicking with this item"));
+        }
         else {
             hideLore.add(Component.text(""));
             hideLore.add(Component.text(ChatColor.DARK_GRAY + "Hide " + (Bukkit.getOnlinePlayers().size() - 1) + " players by"));

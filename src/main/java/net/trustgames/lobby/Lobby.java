@@ -10,6 +10,7 @@ import net.trustgames.lobby.hotbar.HotbarListeners;
 import net.trustgames.lobby.spawn.SetSpawnCommand;
 import net.trustgames.lobby.spawn.Spawn;
 import net.trustgames.lobby.spawn.SpawnCommand;
+import net.trustgames.lobby.tablist.TablistPlayerPrefix;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -27,6 +28,10 @@ public final class Lobby extends JavaPlugin {
         - command anti-spam
          */
 
+
+        // TODO sort tablist
+
+
         // create data folder
         FolderManager.createDataFolder(getDataFolder());
 
@@ -37,6 +42,7 @@ public final class Lobby extends JavaPlugin {
         // register events
         EventManager.registerEvent(new Spawn(this), this);
         EventManager.registerEvent(new HotbarListeners(), this);
+        EventManager.registerEvent(new TablistPlayerPrefix(this), this);
 
         // create config files
         ConfigManager.createConfig(new File(getDataFolder(), "spawn.yml"));

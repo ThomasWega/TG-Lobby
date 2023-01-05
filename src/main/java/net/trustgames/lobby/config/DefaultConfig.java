@@ -9,14 +9,6 @@ public class DefaultConfig {
         // messages
         defaultConfig.addDefault("messages.spawn-teleport", "&7You've been teleported to the spawn location.");
 
-        // permissions
-        defaultConfig.addDefault("permissions.admin", "lobby.admin");
-        defaultConfig.addDefault("permissions.staff", "lobby.staff");
-        defaultConfig.addDefault("permissions.trust+", "lobby.trust+");
-        defaultConfig.addDefault("permissions.trust", "lobby.trust");
-        defaultConfig.addDefault("permissions.vip+", "lobby.vip+");
-        defaultConfig.addDefault("permissions.vip", "lobby.vip");
-
         // settings
         defaultConfig.addDefault("settings.cooldowns.spawn-command-cooldown", 3d);
     }
