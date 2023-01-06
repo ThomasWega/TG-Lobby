@@ -74,7 +74,12 @@ public class HotbarItems {
         // loop through the online player and set for each one the new amount
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             if (hideStack.getAmount() <= 64) {
-                hideStack.setAmount(Bukkit.getOnlinePlayers().size());
+                if (Bukkit.getOnlinePlayers().size() == 1){
+                    hideStack.setAmount(1);
+                }
+                else{
+                    hideStack.setAmount(Bukkit.getOnlinePlayers().size() - 1);
+                }
                 InventoryManager.addItemToInventory(onlinePlayer.getInventory(), 6, hideStack);
             }
         }
