@@ -12,9 +12,9 @@ Lobby for TrustGames.net
 
 ###### Benefits:
 - PRIME:
-prefix
-10s chat limit
-60s same chat limit
+_prefix
+_10s chat limit
+_60s same chat limit
 
 - KNIGHT:
 can use colors in chat
