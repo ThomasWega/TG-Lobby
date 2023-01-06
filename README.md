@@ -4,8 +4,22 @@ Lobby for TrustGames.net
 ###### Permissions
 - lobby.admin
 - lobby.staff
-- lobby.trust+
-- lobby.trust
-- lobby.vip+
-- lobby.vip
+- lobby.titan
+- lobby.lord
+- lobby.knight
+- lobby.prime
 - lobby.default
+
+###### Benefits:
+__- PRIME:__  
+
+__- KNIGHT:__  
+
+__- LORD:__  
+
+__- TITAN:__  
+
+__- STAFF:__  
+
+__- ADMIN:__  
+setspawn command  
