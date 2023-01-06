@@ -13,6 +13,25 @@ Lobby for TrustGames.net
 ###### Benefits:
 - PRIME:
 prefix
+10s chat limit
+60s same chat limit
 
 - KNIGHT:
 can use colors in chat
+5s chat limit
+45s same chat limit
+
+- LORD:
+3s chat limit
+25s same chat limit
+
+- TITAN:
+no chat limit
+10s same chat limit
+
+- STAFF:
+no chat limit
+no same chat limit
+
+- ADMIN:
+
