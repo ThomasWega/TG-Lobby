@@ -4,8 +4,15 @@ Lobby for TrustGames.net
 ###### Permissions
 - lobby.admin
 - lobby.staff
-- lobby.trust+
-- lobby.trust
-- lobby.vip+
-- lobby.vip
+- lobby.titan
+- lobby.lord
+- lobby.knight
+- lobby.prime
 - lobby.default
+
+###### Benefits:
+- PRIME:
+prefix
+
+- KNIGHT:
+can use colors in chat
