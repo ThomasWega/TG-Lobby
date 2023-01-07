@@ -10,8 +10,6 @@ import net.trustgames.lobby.hotbar.HotbarListeners;
 import net.trustgames.lobby.spawn.SetSpawnCommand;
 import net.trustgames.lobby.spawn.Spawn;
 import net.trustgames.lobby.spawn.SpawnCommand;
-import net.trustgames.lobby.tablist.TablistHeaderFooter;
-import net.trustgames.lobby.tablist.TablistPrefix;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -43,8 +41,6 @@ public final class Lobby extends JavaPlugin {
         // register events
         EventManager.registerEvent(new Spawn(this), this);
         EventManager.registerEvent(new HotbarListeners(), this);
-        EventManager.registerEvent(new TablistHeaderFooter(this), this);
-        EventManager.registerEvent(new TablistPrefix(), this);
 
         // create config files
         ConfigManager.createConfig(new File(getDataFolder(), "spawn.yml"));
