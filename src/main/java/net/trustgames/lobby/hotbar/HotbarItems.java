@@ -16,6 +16,10 @@ import org.bukkit.inventory.meta.SkullMeta;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handles the creation, adding and updating of items
+ * in the player's hotbar
+ */
 public class HotbarItems {
 
     static Inventory inventory;

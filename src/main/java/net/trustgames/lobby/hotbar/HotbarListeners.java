@@ -34,7 +34,7 @@ public class HotbarListeners implements Listener {
         HotbarItems.hidePlayersItem();
     }
 
-    // cancel itemclick event
+    // cancel item-click event
     @EventHandler
     public void itemClickEvent(InventoryClickEvent event) {
         event.setCancelled(true);

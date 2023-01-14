@@ -17,7 +17,8 @@ import java.io.File;
 
 /**
  * Lobby plugin which is used on the lobbies of TrustGames.net network.
- * It extends the functionalities of Core plugin for TrustGames.net network.
+ * It extends the functionalities of Core plugin for TrustGames.net network,
+ * but unlike Core shouldn't be used on any mini-games servers.
  */
 public final class Lobby extends JavaPlugin {
 

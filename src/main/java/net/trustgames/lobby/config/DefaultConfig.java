@@ -3,9 +3,16 @@ package net.trustgames.lobby.config;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-
+/**
+ * Sets the config defaults for the default config (config.yml)
+ */
 public class DefaultConfig {
+
+    /**
+     * Create the defalts for the default config (config.yml)
+     *
+     * @param defaultConfig config.yml FileConfiguration
+     */
     public static void create(@NotNull FileConfiguration defaultConfig) {
 
         // messages
