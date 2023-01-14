@@ -15,6 +15,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
+/**
+ When a player executes /spawn, it teleports the player to the spawn location from spawn.yml (if any is was set)
+ */
 public class SpawnCommand implements CommandExecutor {
 
     private final Lobby lobby;

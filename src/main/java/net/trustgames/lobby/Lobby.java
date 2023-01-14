@@ -15,6 +15,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 
+/**
+ * Lobby plugin which is used on the lobbies of TrustGames.net network.
+ * It extends the functionalities of Core plugin for TrustGames.net network.
+ */
 public final class Lobby extends JavaPlugin {
 
     Core core = (Core) Bukkit.getPluginManager().getPlugin("Core");
@@ -52,6 +56,9 @@ public final class Lobby extends JavaPlugin {
     public void onDisable() {
     }
 
+    /**
+     * @return The Core plugin instance of TrustGames.net
+     */
     public Core getCore() {
         return core;
     }

@@ -15,6 +15,10 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+When a player with proper permission executes /setspawn, it saves his location to the spawn.yml file
+The players are then teleported there on login
+*/
 public class SetSpawnCommand implements CommandExecutor {
 
         private final Lobby lobby;
@@ -23,10 +27,6 @@ public class SetSpawnCommand implements CommandExecutor {
                 this.lobby = lobby;
         }
 
-        /*
-         When a player with proper permission executes /setspawn, it saves his location to the spawn.yml file
-         The player are then teleported there on login
-        */
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
@@ -50,7 +50,7 @@ public class SetSpawnCommand implements CommandExecutor {
                     config.save(spawn.getSpawnFile());
                     player.sendMessage(ChatColor.GREEN + "Spawn location was set and saved in /plugins/Lobby/spawn.yml!");
                 } catch (IOException e) {
-                    player.sendMessage(ChatColor.RED + "Couldn't save the spawn.yml file!");
+                    player.sendMessage(ChatColor.RED + "ERROR: Couldn't save the spawn.yml file!");
                     throw new RuntimeException(e);
                 }
             } else {

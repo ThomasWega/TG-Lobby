@@ -20,7 +20,10 @@ public class HotbarItems {
 
     static Inventory inventory;
 
-    // list of hotbar items to add
+    /** list of hotbar items to add
+     *
+     * @param player Player to set items to
+     */
     public static void addItems(Player player) {
 
         // set the inventory
@@ -45,7 +48,9 @@ public class HotbarItems {
         inventory.setItem(8, profileStack);
     }
 
-    // update the hide item in hotbar
+    /**
+     * update the hide item in hotbar
+     */
     public static void hidePlayersItem() {
 
         // hide players item
@@ -55,10 +60,12 @@ public class HotbarItems {
 
         // lore
         List<Component> hideLore = new ArrayList<>();
+        // if the players online is only 1
         if (Bukkit.getOnlinePlayers().size() == 1){
             hideLore.add(Component.text(""));
             hideLore.add(Component.text(ChatColor.DARK_GRAY + "Nobody else is online :("));
         }
+        // if the players online is only 2
         else if (Bukkit.getOnlinePlayers().size() == 2){
             hideLore.add(Component.text(""));
             hideLore.add(Component.text(ChatColor.DARK_GRAY + "Hide " + (Bukkit.getOnlinePlayers().size() - 1) + " player by"));
@@ -69,6 +76,7 @@ public class HotbarItems {
             hideLore.add(Component.text(ChatColor.DARK_GRAY + "Hide " + (Bukkit.getOnlinePlayers().size() - 1) + " players by"));
             hideLore.add(Component.text(ChatColor.DARK_GRAY + "clicking with this item"));
         }
+
         hideMeta.lore(hideLore);
 
         // set the item meta
@@ -88,7 +96,11 @@ public class HotbarItems {
         }
     }
 
-    // update the player profile item in hotbar
+    /**
+     * update the player profile item in hotbar
+     *
+     * @param count Player's level
+     */
     public static void updateProfileItem(int count) {
         // TODO finish
     }

@@ -14,6 +14,11 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.io.File;
 
+
+/**
+ * Events which handle the teleportation to spawn on player join or death.
+ * Also has method to get the spawn.yml file
+ */
 public class Spawn implements Listener {
 
     private final Lobby lobby;
@@ -22,7 +27,11 @@ public class Spawn implements Listener {
         this.lobby = lobby;
     }
 
-    // teleports the player to the spawn location (stored in spawn.yml and set by doing /setspawn) on his join
+    /**
+     * teleports the player to the spawn location (stored in spawn.yml and set by doing /setspawn) on his join
+     *
+     * @param event Player Join
+     */
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
@@ -32,11 +41,13 @@ public class Spawn implements Listener {
         if (location != null) {
             player.teleport(location);
         } else {
-            Bukkit.getLogger().info(DebugColors.RED + "Spawn location isn't set!");
+            Bukkit.getLogger().info(DebugColors.RED + "ERROR: Spawn location isn't set!");
         }
     }
 
-    // teleport the player to the spawn location (stored in spawn.yml and set by doing /setspawn) on his death
+    /**
+     * teleport the player to the spawn location (stored in spawn.yml and set by doing /setspawn) on his death
+      */
     @EventHandler
     public void onPlayerDeath(PlayerPostRespawnEvent event) {
         Player player = event.getPlayer();
@@ -46,12 +57,16 @@ public class Spawn implements Listener {
         if (location != null) {
             player.teleport(location);
         } else {
-            Bukkit.getLogger().info(DebugColors.RED + "Spawn location isn't set!");
+            Bukkit.getLogger().info(DebugColors.RED + "ERROR: Spawn location isn't set!");
             player.sendMessage(ChatColor.RED + "Spawn location isn't set! Set it with /setspawn");
         }
     }
 
-    // used to retrieve the spawn.yml file
+    /**
+     * used to retrieve the spawn.yml file
+     *
+     * @return spawn.yml file
+     */
     public File getSpawnFile() {
         return new File(lobby.getDataFolder(), "spawn.yml");
     }
