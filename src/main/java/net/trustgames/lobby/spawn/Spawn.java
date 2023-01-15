@@ -27,11 +27,6 @@ public class Spawn implements Listener {
         this.lobby = lobby;
     }
 
-    /**
-     * teleports the player to the spawn location (stored in spawn.yml and set by doing /setspawn) on his join
-     *
-     * @param event Player Join
-     */
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
@@ -45,9 +40,6 @@ public class Spawn implements Listener {
         }
     }
 
-    /**
-     * teleport the player to the spawn location (stored in spawn.yml and set by doing /setspawn) on his death
-      */
     @EventHandler
     public void onPlayerDeath(PlayerPostRespawnEvent event) {
         Player player = event.getPlayer();
@@ -62,11 +54,6 @@ public class Spawn implements Listener {
         }
     }
 
-    /**
-     * used to retrieve the spawn.yml file
-     *
-     * @return spawn.yml file
-     */
     public File getSpawnFile() {
         return new File(lobby.getDataFolder(), "spawn.yml");
     }

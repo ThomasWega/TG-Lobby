@@ -29,27 +29,23 @@ public class SpawnCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
-        // methods and classes
         Core core = lobby.getCore();
         CooldownManager cooldownManager = core.cooldownManager;
         Spawn spawn = new Spawn(lobby);
 
-        // configs
         FileConfiguration configCore = core.getConfig();
         FileConfiguration configLobby = lobby.getConfig();
         YamlConfiguration config = YamlConfiguration.loadConfiguration(spawn.getSpawnFile());
 
         if (sender instanceof Player player) {
 
-            // if the player has a cooldown on this command. Using CooldownManager from Core plugin.
+            // if the player has a cooldown on this command
             if (cooldownManager.commandCooldown(player, configLobby.getDouble("settings.cooldowns.spawn-command-cooldown"))){
                 return true;
             }
 
-            // gets the location from the spawn.yml
             Location location = config.getLocation("spawn.location");
 
-            // if the location isn't null, teleport the player to the location and send him the teleport message
             if (location != null) {
                 player.teleport(location);
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(configLobby.getString("messages.spawn-teleport"))));

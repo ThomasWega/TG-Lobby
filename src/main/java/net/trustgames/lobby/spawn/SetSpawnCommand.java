@@ -16,32 +16,26 @@ import java.io.IOException;
 import java.util.Objects;
 
 /**
-When a player with proper permission executes /setspawn, it saves his location to the spawn.yml file
-The players are then teleported there on login
-*/
+ * When a player with proper permission executes /setspawn, it saves his location to the spawn.yml file
+ * The players are then teleported there on login
+ */
 public class SetSpawnCommand implements CommandExecutor {
 
-        private final Lobby lobby;
+    private final Lobby lobby;
 
-        public SetSpawnCommand(Lobby lobby) {
-                this.lobby = lobby;
-        }
+    public SetSpawnCommand(Lobby lobby) {
+        this.lobby = lobby;
+    }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
-        // methods and classed
         Core core = lobby.getCore();
         Spawn spawn = new Spawn(lobby);
 
-        // configs
         FileConfiguration configCore = core.getConfig();
         YamlConfiguration config = YamlConfiguration.loadConfiguration(spawn.getSpawnFile());
 
-        /* check if sender is player, if not, send him the only in-game player message.
-        Also check if player has permission. If he does, save the location of player as
-        the spawn location in the spawn.yml. Send the player a message that the location has been set.
-         */
         if (sender instanceof Player player) {
             if (player.hasPermission("lobby.admin")) {
                 Location location = player.getLocation();

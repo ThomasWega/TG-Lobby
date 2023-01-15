@@ -30,10 +30,9 @@ public class HotbarItems {
      */
     public static void addItems(Player player) {
 
-        // set the inventory
         inventory = player.getInventory();
 
-        // item flags
+        // item flags to set for every item
         ItemFlag[] itemFlags = new ItemFlag[]{ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE};
 
         // server selector
@@ -53,7 +52,7 @@ public class HotbarItems {
     }
 
     /**
-     * update the hide item in hotbar
+     * update the hide item amount and lore in hotbar
      */
     public static void hidePlayersItem() {
 
@@ -62,14 +61,11 @@ public class HotbarItems {
         ItemMeta hideMeta = hideStack.getItemMeta();
         hideMeta.displayName(Component.text(ChatColor.WHITE + "Hide Players" + ChatColor.GRAY + " (Use)"));
 
-        // lore
         List<Component> hideLore = new ArrayList<>();
-        // if the players online is only 1
         if (Bukkit.getOnlinePlayers().size() == 1){
             hideLore.add(Component.text(""));
             hideLore.add(Component.text(ChatColor.DARK_GRAY + "Nobody else is online :("));
         }
-        // if the players online is only 2
         else if (Bukkit.getOnlinePlayers().size() == 2){
             hideLore.add(Component.text(""));
             hideLore.add(Component.text(ChatColor.DARK_GRAY + "Hide " + (Bukkit.getOnlinePlayers().size() - 1) + " player by"));
@@ -82,8 +78,6 @@ public class HotbarItems {
         }
 
         hideMeta.lore(hideLore);
-
-        // set the item meta
         hideStack.setItemMeta(hideMeta);
 
         // loop through the online player and set for each one the new amount
@@ -101,7 +95,7 @@ public class HotbarItems {
     }
 
     /**
-     * update the player profile item in hotbar
+     * update the player profile item amount and lore in hotbar
      *
      * @param count Player's level
      */

@@ -32,10 +32,6 @@ public final class Lobby extends JavaPlugin {
         - command anti-spam
          */
 
-
-        // TODO sort tablist
-
-
         // create data folder
         FolderManager.createDataFolder(getDataFolder());
 

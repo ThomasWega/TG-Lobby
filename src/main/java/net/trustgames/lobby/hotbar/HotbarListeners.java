@@ -20,33 +20,27 @@ public class HotbarListeners implements Listener {
 
         Player player = event.getPlayer();
 
-        // get the other methods
         HotbarItems.addItems(player);
 
-        // hide players
         HotbarItems.hidePlayersItem();
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
 
-        // hide players
         HotbarItems.hidePlayersItem();
     }
 
-    // cancel item-click event
     @EventHandler
     public void itemClickEvent(InventoryClickEvent event) {
         event.setCancelled(true);
     }
 
-    // cancel item drag event
     @EventHandler
     public void itemDragEvent(InventoryDragEvent event){
         event.setCancelled(true);
     }
 
-    // cancel item drop event
     @EventHandler
     public void itemDropEvent(PlayerDropItemEvent event) {
         event.setCancelled(true);
