@@ -1,7 +1,6 @@
 package net.trustgames.lobby.spawn;
 
 import com.destroystokyo.paper.event.player.PlayerPostRespawnEvent;
-import net.trustgames.core.debug.DebugColors;
 import net.trustgames.lobby.Lobby;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -36,7 +35,7 @@ public class Spawn implements Listener {
         if (location != null) {
             player.teleport(location);
         } else {
-            Bukkit.getLogger().info(DebugColors.RED + "ERROR: Spawn location isn't set!");
+            Bukkit.getLogger().severe("ERROR: Spawn location isn't set!");
         }
     }
 
@@ -49,7 +48,7 @@ public class Spawn implements Listener {
         if (location != null) {
             player.teleport(location);
         } else {
-            Bukkit.getLogger().info(DebugColors.RED + "ERROR: Spawn location isn't set!");
+            Bukkit.getLogger().severe("ERROR: Spawn location isn't set!");
             player.sendMessage(ChatColor.RED + "Spawn location isn't set! Set it with /setspawn");
         }
     }

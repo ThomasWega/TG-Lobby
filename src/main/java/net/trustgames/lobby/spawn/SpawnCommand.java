@@ -58,7 +58,7 @@ public class SpawnCommand implements CommandExecutor {
             }
         } else {
             String path = "messages.only-in-game-command";
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(
+            sender.sendMessage(ColorManager.translateColors(Objects.requireNonNull(
                     configCore.getString(path), "String on path " + path + " wasn't found in config!")));
         }
         return true;
