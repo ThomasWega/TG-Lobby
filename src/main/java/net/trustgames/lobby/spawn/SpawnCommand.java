@@ -1,6 +1,7 @@
 package net.trustgames.lobby.spawn;
 
 import net.trustgames.core.Core;
+import net.trustgames.core.managers.ColorManager;
 import net.trustgames.core.managers.CooldownManager;
 import net.trustgames.lobby.Lobby;
 import org.bukkit.ChatColor;
@@ -48,12 +49,17 @@ public class SpawnCommand implements CommandExecutor {
 
             if (location != null) {
                 player.teleport(location);
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(configLobby.getString("messages.spawn-teleport"))));
+
+                String path = "messages.spawn-teleport";
+                player.sendMessage(ColorManager.translateColors(Objects.requireNonNull(
+                        configLobby.getString(path), "String on path " + path + " wasn't found in config!")));
             } else {
                 player.sendMessage(ChatColor.RED + "Spawn location isn't set!");
             }
         } else {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(configCore.getString("messages.only-in-game-command"))));
+            String path = "messages.only-in-game-command";
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(
+                    configCore.getString(path), "String on path " + path + " wasn't found in config!")));
         }
         return true;
     }

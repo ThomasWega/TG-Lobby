@@ -29,7 +29,6 @@ public final class Lobby extends JavaPlugin {
 
         /* THINGS TO ADD:
         - double jump
-        - command anti-spam
          */
 
         // create data folder
