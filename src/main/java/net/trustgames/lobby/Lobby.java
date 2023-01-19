@@ -1,7 +1,6 @@
 package net.trustgames.lobby;
 
 import net.trustgames.core.Core;
-import net.trustgames.core.managers.CommandManager;
 import net.trustgames.core.managers.ConfigManager;
 import net.trustgames.lobby.config.DefaultConfig;
 import net.trustgames.lobby.hotbar.HotbarListeners;
@@ -9,10 +8,13 @@ import net.trustgames.lobby.spawn.SetSpawnCommand;
 import net.trustgames.lobby.spawn.Spawn;
 import net.trustgames.lobby.spawn.SpawnCommand;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.HashMap;
 
 /**
  * Lobby plugin which is used on the lobbies of TrustGames.net network.
@@ -56,8 +58,15 @@ public final class Lobby extends JavaPlugin {
     }
 
     private void registerCommands(){
-        CommandManager.registerCommand("spawn", new SpawnCommand(this));
-        CommandManager.registerCommand("setspawn", new SetSpawnCommand(this));
+
+        // List of command to register
+        HashMap<PluginCommand, CommandExecutor> cmdList = new HashMap<>();
+        cmdList.put(getCommand("setspawn"), new SetSpawnCommand(this));
+        cmdList.put(getCommand("spawn"), new SpawnCommand(this));
+
+        for (PluginCommand cmd : cmdList.keySet()) {
+            cmd.setExecutor(cmdList.get(cmd));
+        }
     }
     
     
