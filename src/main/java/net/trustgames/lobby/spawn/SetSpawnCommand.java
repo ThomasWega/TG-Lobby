@@ -50,12 +50,12 @@ public class SetSpawnCommand implements CommandExecutor {
                 }
             } else {
                 String path = "messages.no-permission";
-                player.sendMessage(ColorManager.translateColors(Objects.requireNonNull(configCore.getString(path),
+                player.sendMessage(ColorManager.color(Objects.requireNonNull(configCore.getString(path),
                         "String on path " + path + " wasn't found in config!")));
             }
         } else {
             String path = "messages.only-in-game-command";
-            sender.sendMessage(ColorManager.translateColors(Objects.requireNonNull(configCore.getString(path),
+            sender.sendMessage(ColorManager.color(Objects.requireNonNull(configCore.getString(path),
                     "String on path " + path + " wasn't found in config!")));
         }
         return true;

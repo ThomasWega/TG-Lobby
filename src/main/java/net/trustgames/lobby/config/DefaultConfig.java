@@ -15,9 +15,12 @@ public class DefaultConfig {
      */
     public static void create(@NotNull FileConfiguration defaultConfig) {
 
+        // prefixes
+        String prefix_spawn = "&7Spawn | ";
+
         // messages
         defaultConfig.addDefault("messages.spawn-teleport",
-                "&9Spawn> &8You've been teleported to the spawn location.");
+                prefix_spawn + "&8You've been teleported to the spawn location.");
 
         // settings
         defaultConfig.addDefault("settings.cooldowns.spawn-command-cooldown", 3d);

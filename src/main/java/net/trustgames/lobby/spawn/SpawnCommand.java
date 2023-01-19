@@ -51,14 +51,14 @@ public class SpawnCommand implements CommandExecutor {
                 player.teleport(location);
 
                 String path = "messages.spawn-teleport";
-                player.sendMessage(ColorManager.translateColors(Objects.requireNonNull(
+                player.sendMessage(ColorManager.color(Objects.requireNonNull(
                         configLobby.getString(path), "String on path " + path + " wasn't found in config!")));
             } else {
                 player.sendMessage(ChatColor.RED + "Spawn location isn't set!");
             }
         } else {
             String path = "messages.only-in-game-command";
-            sender.sendMessage(ColorManager.translateColors(Objects.requireNonNull(
+            sender.sendMessage(ColorManager.color(Objects.requireNonNull(
                     configCore.getString(path), "String on path " + path + " wasn't found in config!")));
         }
         return true;
