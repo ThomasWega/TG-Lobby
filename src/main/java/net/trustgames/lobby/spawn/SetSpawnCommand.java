@@ -1,7 +1,7 @@
 package net.trustgames.lobby.spawn;
 
 import net.trustgames.core.Core;
-import net.trustgames.core.managers.ColorManager;
+import net.trustgames.core.utils.ColorUtils;
 import net.trustgames.lobby.Lobby;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -50,12 +50,12 @@ public class SetSpawnCommand implements CommandExecutor {
                 }
             } else {
                 String path = "messages.no-permission";
-                player.sendMessage(ColorManager.color(Objects.requireNonNull(configCore.getString(path),
+                player.sendMessage(ColorUtils.color(Objects.requireNonNull(configCore.getString(path),
                         "String on path " + path + " wasn't found in config!")));
             }
         } else {
             String path = "messages.only-in-game-command";
-            sender.sendMessage(ColorManager.color(Objects.requireNonNull(configCore.getString(path),
+            sender.sendMessage(ColorUtils.color(Objects.requireNonNull(configCore.getString(path),
                     "String on path " + path + " wasn't found in config!")));
         }
         return true;

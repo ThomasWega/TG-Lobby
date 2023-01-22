@@ -16,7 +16,7 @@ public class DefaultConfig {
     public static void create(@NotNull FileConfiguration defaultConfig) {
 
         // prefixes
-        String prefix_spawn = "&7Spawn | ";
+        String prefix_spawn = "&#dbfca4Spawn | ";
 
         // messages
         defaultConfig.addDefault("messages.spawn-teleport",
