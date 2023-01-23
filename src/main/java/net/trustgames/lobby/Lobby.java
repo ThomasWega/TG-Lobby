@@ -31,6 +31,7 @@ public final class Lobby extends JavaPlugin {
         /* THINGS TO ADD:
         - double jump
         - daily rewards
+        - change join and leave message
          */
 
         // create a data folder
