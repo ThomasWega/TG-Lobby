@@ -27,7 +27,7 @@ public class Spawn implements Listener {
     }
 
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
+    private void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
         YamlConfiguration config = YamlConfiguration.loadConfiguration(getSpawnFile());
@@ -40,7 +40,7 @@ public class Spawn implements Listener {
     }
 
     @EventHandler
-    public void onPlayerDeath(PlayerPostRespawnEvent event) {
+    private void onPlayerDeath(PlayerPostRespawnEvent event) {
         Player player = event.getPlayer();
 
         YamlConfiguration config = YamlConfiguration.loadConfiguration(getSpawnFile());

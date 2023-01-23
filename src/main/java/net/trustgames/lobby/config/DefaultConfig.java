@@ -24,6 +24,8 @@ public class DefaultConfig {
 
         // settings
         defaultConfig.addDefault("settings.cooldowns.spawn-command-cooldown", 3d);
+        defaultConfig.addDefault("settings.double-jump.horizontal", 0.75);
+        defaultConfig.addDefault("settings.double-jump.vertical", 0.65);
 
     }
 }

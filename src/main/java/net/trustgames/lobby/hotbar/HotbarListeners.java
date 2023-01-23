@@ -16,7 +16,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class HotbarListeners implements Listener {
 
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
+    private void onPlayerJoin(PlayerJoinEvent event) {
 
         Player player = event.getPlayer();
 
@@ -26,23 +26,22 @@ public class HotbarListeners implements Listener {
     }
 
     @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent event) {
-
+    private void onPlayerQuit(PlayerQuitEvent event) {
         HotbarItems.hidePlayersItem();
     }
 
     @EventHandler
-    public void itemClickEvent(InventoryClickEvent event) {
+    private void itemClickEvent(InventoryClickEvent event) {
         event.setCancelled(true);
     }
 
     @EventHandler
-    public void itemDragEvent(InventoryDragEvent event){
+    private void itemDragEvent(InventoryDragEvent event){
         event.setCancelled(true);
     }
 
     @EventHandler
-    public void itemDropEvent(PlayerDropItemEvent event) {
+    private void itemDropEvent(PlayerDropItemEvent event) {
         event.setCancelled(true);
     }
 }
