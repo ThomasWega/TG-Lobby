@@ -52,9 +52,17 @@ public class DoubleJump implements Listener {
         player.setAllowFlight(false);
         player.setFlying(false);
 
+        double hor_spr = config.getDouble("settings.double-jump.horizontal-sprint");
+        double ver_spr = config.getDouble("settings.double-jump.vertical-sprint");
         double hor = config.getDouble("settings.double-jump.horizontal");
         double ver = config.getDouble("settings.double-jump.vertical");
-        player.setVelocity(player.getLocation().getDirection().multiply(hor).setY(ver));
+
+        if (player.isSprinting()){
+            player.setVelocity(player.getLocation().getDirection().multiply(hor_spr).setY(ver_spr));
+        }
+        else{
+            player.setVelocity(player.getLocation().getDirection().multiply(hor).setY(ver));
+        }
 
         player.playSound(player, Sound.ENTITY_BAT_TAKEOFF, 0.7f, 1.5f);
         player.spawnParticle(Particle.ELECTRIC_SPARK, player.getLocation(), 5, 0.5, 0.5, 0.5);
