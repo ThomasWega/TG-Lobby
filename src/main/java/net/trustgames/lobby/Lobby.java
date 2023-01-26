@@ -4,8 +4,9 @@ import net.trustgames.core.Core;
 import net.trustgames.core.managers.ConfigManager;
 import net.trustgames.lobby.config.DefaultConfig;
 import net.trustgames.lobby.double_jump.DoubleJump;
-import net.trustgames.lobby.gamerule.LobbyGamerules;
+import net.trustgames.lobby.gamerules.LobbyGamerules;
 import net.trustgames.lobby.hotbar.HotbarListeners;
+import net.trustgames.lobby.join_leave.JoinLeaveMessages;
 import net.trustgames.lobby.spawn.SetSpawnCommand;
 import net.trustgames.lobby.spawn.Spawn;
 import net.trustgames.lobby.spawn.SpawnCommand;
@@ -32,12 +33,7 @@ public final class Lobby extends JavaPlugin {
 
         /* THINGS TO ADD:
         - daily rewards
-        - change join and leave message
          */
-
-        // TODO add gamerules
-        // TODO change join and leave message
-
 
         // create a data folder
         if (getDataFolder().mkdirs()){
@@ -65,6 +61,7 @@ public final class Lobby extends JavaPlugin {
         pluginManager.registerEvents(new Spawn(this), this);
         pluginManager.registerEvents(new HotbarListeners(), this);
         pluginManager.registerEvents(new DoubleJump(this), this);
+        pluginManager.registerEvents(new JoinLeaveMessages(this), this);
     }
 
     private void registerCommands(){

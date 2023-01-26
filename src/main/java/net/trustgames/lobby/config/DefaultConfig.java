@@ -17,6 +17,8 @@ public class DefaultConfig {
 
         // prefixes
         String prefix_spawn = "&#dbfca4Spawn | ";
+        String prefix_join = "&#6b8ae8Join | ";
+        String prefix_leave = "&#6b8ae8Leave | ";
 
         // messages
         defaultConfig.addDefault("messages.spawn-teleport",
@@ -28,6 +30,12 @@ public class DefaultConfig {
         defaultConfig.addDefault("settings.double-jump.vertical", 0.8d);
         defaultConfig.addDefault("settings.double-jump.horizontal-sprint", 0.85d);
         defaultConfig.addDefault("settings.double-jump.vertical-sprint", 0.6d);
+
+        // join-leave messages
+        defaultConfig.addDefault("join-leave.messages.join", prefix_join + "&e%1$s &7has joined the lobby!");
+        defaultConfig.addDefault("join-leave.messages.leave", prefix_leave + "&e%1$s &7has left the lobby!");
+
+
     }
 }
 

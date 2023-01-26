@@ -35,7 +35,7 @@ public class Spawn implements Listener {
         if (location != null) {
             player.teleport(location);
         } else {
-            Bukkit.getLogger().severe("ERROR: Spawn location isn't set!");
+            Bukkit.getLogger().severe("Spawn location isn't set!");
         }
     }
 
@@ -48,7 +48,7 @@ public class Spawn implements Listener {
         if (location != null) {
             player.teleport(location);
         } else {
-            Bukkit.getLogger().severe("ERROR: Spawn location isn't set!");
+            Bukkit.getLogger().severe("Spawn location isn't set!");
             player.sendMessage(ChatColor.RED + "Spawn location isn't set! Set it with /setspawn");
         }
     }
