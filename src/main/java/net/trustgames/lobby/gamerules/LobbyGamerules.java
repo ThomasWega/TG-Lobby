@@ -1,7 +1,6 @@
 package net.trustgames.lobby.gamerules;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Difficulty;
 import org.bukkit.GameRule;
 import org.bukkit.World;
 

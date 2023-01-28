@@ -26,7 +26,8 @@ public class JoinLeaveMessages implements Listener {
         String prefix = LuckPermsManager.getPlayerPrefix(player);
         String joinMessage = config.getString("join-leave.messages.join");
 
-        event.joinMessage(ColorUtils.color(String.format(joinMessage, player.getName())));
+        assert joinMessage != null;
+        event.joinMessage(ColorUtils.color(String.format(joinMessage, prefix, player.getName())));
     }
 
     @EventHandler
@@ -37,6 +38,7 @@ public class JoinLeaveMessages implements Listener {
         String prefix = LuckPermsManager.getUser(player).getCachedData().getMetaData().getPrefix();
         String leaveMessage = config.getString("join-leave.messages.leave");
 
-        event.quitMessage(ColorUtils.color(String.format(leaveMessage, player.getName())));
+        assert leaveMessage != null;
+        event.quitMessage(ColorUtils.color(String.format(leaveMessage, prefix, player.getName())));
     }
 }

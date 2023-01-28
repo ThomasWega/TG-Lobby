@@ -7,6 +7,8 @@ import net.trustgames.lobby.double_jump.DoubleJump;
 import net.trustgames.lobby.gamerules.LobbyGamerules;
 import net.trustgames.lobby.hotbar.HotbarListeners;
 import net.trustgames.lobby.join_leave.JoinLeaveMessages;
+import net.trustgames.lobby.npcs.NPCConfig;
+import net.trustgames.lobby.npcs.SpawnNPC;
 import net.trustgames.lobby.spawn.SetSpawnCommand;
 import net.trustgames.lobby.spawn.Spawn;
 import net.trustgames.lobby.spawn.SpawnCommand;
@@ -37,7 +39,7 @@ public final class Lobby extends JavaPlugin {
 
         // create a data folder
         if (getDataFolder().mkdirs()){
-            getLogger().warning("Created config.yml");
+            getLogger().warning("Created main plugin folder");
         }
 
         LobbyGamerules.setGamerules();
@@ -45,10 +47,8 @@ public final class Lobby extends JavaPlugin {
         registerEvents();
         registerCommands();
 
-        // create config files
-        ConfigManager.createConfig(new File(getDataFolder(), "spawn.yml"));
-        DefaultConfig.create(getConfig()); getConfig().options().copyDefaults(true); saveConfig();
-
+        createConfigs();
+        createConfigsDefaults();
     }
 
     @Override
@@ -62,6 +62,7 @@ public final class Lobby extends JavaPlugin {
         pluginManager.registerEvents(new HotbarListeners(), this);
         pluginManager.registerEvents(new DoubleJump(this), this);
         pluginManager.registerEvents(new JoinLeaveMessages(this), this);
+        pluginManager.registerEvents(new SpawnNPC(this, core), this);
     }
 
     private void registerCommands(){
@@ -74,6 +75,18 @@ public final class Lobby extends JavaPlugin {
         for (PluginCommand cmd : cmdList.keySet()) {
             cmd.setExecutor(cmdList.get(cmd));
         }
+    }
+
+    private void createConfigs(){
+        ConfigManager.createConfig(new File(getDataFolder(), "spawn.yml"));
+        ConfigManager.createConfig(new File(getDataFolder(), "npcs.yml"));
+    }
+
+    private void createConfigsDefaults(){
+        DefaultConfig.create(getConfig()); getConfig().options().copyDefaults(true); saveConfig();
+
+        NPCConfig npcConfig = new NPCConfig(this);
+        npcConfig.createDefaults();
     }
     
     
