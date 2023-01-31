@@ -17,11 +17,11 @@ public class HotbarListeners implements Listener {
 
     @EventHandler
     private void onPlayerJoin(PlayerJoinEvent event) {
-
         Player player = event.getPlayer();
 
-        HotbarItems.addItems(player);
+        player.getInventory().clear();
 
+        HotbarItems.addItems(player);
         HotbarItems.hidePlayersItem();
     }
 

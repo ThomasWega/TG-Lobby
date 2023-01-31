@@ -32,8 +32,8 @@ public class DefaultConfig {
         defaultConfig.addDefault("settings.double-jump.vertical-sprint", 0.6d);
 
         // join-leave messages
-        defaultConfig.addDefault("join-leave.messages.join", prefix_join + "%1$s &e%2$s &7has joined the lobby!");
-        defaultConfig.addDefault("join-leave.messages.leave", prefix_leave + "%1$s &e%2$s &7has left the lobby!");
+        defaultConfig.addDefault("join-leave.messages.join", prefix_join + "&e%1$s &f%2$s &7has joined the lobby!");
+        defaultConfig.addDefault("join-leave.messages.leave", prefix_leave + "&e%1$s &f%2$s &7has left the lobby!");
 
 
     }

@@ -43,7 +43,7 @@ public class SetSpawnCommand implements CommandExecutor {
                 config.set("spawn.location", location);
                 try {
                     config.save(spawn.getSpawnFile());
-                    player.sendMessage(ChatColor.GREEN + "Spawn location was set and saved in /plugins/Lobby/spawn.yml!");
+                    player.sendMessage(ChatColor.GREEN + "Spawn location was set and saved in /plugins/Lobby/spawn.yml");
                 } catch (IOException e) {
                     player.sendMessage(ChatColor.RED + "ERROR: Couldn't save the spawn.yml file!");
                     throw new RuntimeException(e);

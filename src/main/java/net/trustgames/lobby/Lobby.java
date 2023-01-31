@@ -8,7 +8,7 @@ import net.trustgames.lobby.gamerules.LobbyGamerules;
 import net.trustgames.lobby.hotbar.HotbarListeners;
 import net.trustgames.lobby.join_leave.JoinLeaveMessages;
 import net.trustgames.lobby.npcs.NPCConfig;
-import net.trustgames.lobby.npcs.SpawnNPC;
+import net.trustgames.lobby.npcs.SpawnNPCS;
 import net.trustgames.lobby.spawn.SetSpawnCommand;
 import net.trustgames.lobby.spawn.Spawn;
 import net.trustgames.lobby.spawn.SpawnCommand;
@@ -37,6 +37,9 @@ public final class Lobby extends JavaPlugin {
         - daily rewards
          */
 
+        // TODO polish NPC
+        // TODO better NMS remap
+
         // create a data folder
         if (getDataFolder().mkdirs()){
             getLogger().warning("Created main plugin folder");
@@ -62,7 +65,7 @@ public final class Lobby extends JavaPlugin {
         pluginManager.registerEvents(new HotbarListeners(), this);
         pluginManager.registerEvents(new DoubleJump(this), this);
         pluginManager.registerEvents(new JoinLeaveMessages(this), this);
-        pluginManager.registerEvents(new SpawnNPC(this, core), this);
+        pluginManager.registerEvents(new SpawnNPCS(this, core), this);
     }
 
     private void registerCommands(){

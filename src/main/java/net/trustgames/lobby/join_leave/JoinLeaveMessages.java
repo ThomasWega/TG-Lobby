@@ -1,5 +1,6 @@
 package net.trustgames.lobby.join_leave;
 
+import net.kyori.adventure.text.Component;
 import net.trustgames.core.managers.LuckPermsManager;
 import net.trustgames.core.utils.ColorUtils;
 import net.trustgames.lobby.Lobby;
@@ -39,6 +40,7 @@ public class JoinLeaveMessages implements Listener {
         String leaveMessage = config.getString("join-leave.messages.leave");
 
         assert leaveMessage != null;
-        event.quitMessage(ColorUtils.color(String.format(leaveMessage, prefix, player.getName())));
+        assert prefix != null;
+        event.quitMessage(ColorUtils.color(String.format(leaveMessage, ColorUtils.stripColor(Component.text(prefix)), player.getName())));
     }
 }
