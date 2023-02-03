@@ -1,10 +1,10 @@
 package net.trustgames.lobby.npcs;
 
 import net.minecraft.server.level.EntityPlayer;
-import net.minecraft.world.entity.decoration.EntityArmorStand;
 import net.trustgames.core.Core;
 import net.trustgames.core.managers.HoloManager;
 import net.trustgames.core.managers.NPCManager;
+import net.trustgames.core.utils.PlayerUtils;
 import net.trustgames.lobby.Lobby;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -13,11 +13,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Class used to spawn all the npcs and holograms
@@ -42,8 +39,7 @@ public class SpawnNPCS implements Listener {
         this.config = YamlConfiguration.loadConfiguration(npcConfig.getNPCFile());
     }
 
-    List<EntityPlayer> npcs = new ArrayList<>();
-    List<EntityArmorStand> armorStands = new ArrayList<>();
+    HashMap<UUID, List<EntityPlayer>> npcs = new HashMap<>();
 
     @EventHandler
     private void onPlayerJoin(PlayerJoinEvent event){
@@ -52,18 +48,7 @@ public class SpawnNPCS implements Listener {
         spawn(player);
         setData(player);
         hide(player);
-    }
 
-    @EventHandler
-    private void onPlayerQuit(PlayerQuitEvent event){
-        Player player = event.getPlayer();
-
-        for (EntityPlayer npc : npcs){
-            npcManager.remove(npc, player);
-        }
-        for (EntityArmorStand armorStand : armorStands){
-            holoManager.remove(armorStand, player);
-        }
     }
 
     /**
@@ -72,7 +57,9 @@ public class SpawnNPCS implements Listener {
      * @param player Player to spawn the NPCS for
      */
     private void spawn(Player player){
-        Set<String> keys = config.getConfigurationSection("npcs").getKeys(false);
+        UUID uuid = PlayerUtils.getUUID(player);
+        Set<String> keys = Objects.requireNonNull(config.getConfigurationSection("npcs")).getKeys(false);
+        List<EntityPlayer> playerNpcs = new ArrayList<>();
 
         for (String name : keys){
             Location location = config.getLocation("npcs." + name + ".location");
@@ -83,10 +70,12 @@ public class SpawnNPCS implements Listener {
             npcManager.hideName(npc);
             npcManager.add(npc, player);
 
-            armorStands = holoManager.spawn(player, location.add(0, elevateY, 0), holoText);
+            assert location != null;
+            holoManager.spawn(player, location.clone().add(0, elevateY, 0), holoText);
 
-            npcs.add(npc);
+            playerNpcs.add(npc);
         }
+        npcs.put(uuid, playerNpcs);
     }
 
     /**
@@ -96,8 +85,10 @@ public class SpawnNPCS implements Listener {
      */
     private void setData(Player player){
         Bukkit.getScheduler().runTaskLater(lobby, () -> {
-            for(EntityPlayer npc : npcs) {
+            UUID uuid = PlayerUtils.getUUID(player);
+            for(EntityPlayer npc : npcs.get(uuid)) {
                 Location location = config.getLocation("npcs." + npc.displayName + ".location");
+                assert location != null;
                 float yaw = location.getYaw();
                 float pitch = location.getPitch();
                 String texture = config.getString("npcs." + npc.displayName + ".texture");
@@ -116,7 +107,8 @@ public class SpawnNPCS implements Listener {
      */
     private void hide(Player player){
         Bukkit.getScheduler().runTaskLater(core, () -> {
-            for (EntityPlayer npc : npcs) {
+            UUID uuid = PlayerUtils.getUUID(player);
+            for (EntityPlayer npc : npcs.get(uuid)) {
                 npcManager.hideTab(npc, player);
             }
         }, 70);

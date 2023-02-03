@@ -1,5 +1,6 @@
 package net.trustgames.lobby.double_jump;
 
+import net.trustgames.core.utils.PlayerUtils;
 import net.trustgames.lobby.Lobby;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -39,13 +40,13 @@ public class DoubleJump implements Listener {
     @EventHandler
     public void setVelocity(PlayerToggleFlightEvent event) {
         FileConfiguration config = lobby.getConfig();
-
         Player player = event.getPlayer();
+        UUID uuid = PlayerUtils.getUUID(player);
 
         if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR
-                || player.isFlying() || cooldowns.contains(player.getUniqueId())) return;
+                || player.isFlying() || cooldowns.contains(uuid)) return;
 
-        cooldowns.add(player.getUniqueId());
+        cooldowns.add(uuid);
 
         event.setCancelled(true);
 
@@ -71,11 +72,12 @@ public class DoubleJump implements Listener {
     }
 
     public void removeFromSet(Player player){
+        UUID uuid = PlayerUtils.getUUID(player);
         new BukkitRunnable() {
             @Override
             public void run() {
                 if (!(player.getLocation().getBlock().getRelative(BlockFace.DOWN, 2).getType() == Material.AIR)){
-                    cooldowns.remove(player.getUniqueId());
+                    cooldowns.remove(uuid);
                     player.setAllowFlight(true);
                     cancel();
                 }
@@ -84,9 +86,11 @@ public class DoubleJump implements Listener {
     }
 
     @EventHandler
-    public void removePlayer(PlayerQuitEvent e) {
+    public void removePlayer(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+        UUID uuid = PlayerUtils.getUUID(player);
 
-        cooldowns.remove(e.getPlayer().getUniqueId());
+        cooldowns.remove(uuid);
 
     }
 }
