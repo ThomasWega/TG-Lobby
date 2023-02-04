@@ -26,18 +26,36 @@ public class NPCConfig {
         config.addDefault("npcs.npc1.signature", "Ea0OC1adIwyf7WQAhS7Uw1SG6PCYKbVq/HhvtibNSUL5yn0HGTNn01GEL3dj2XjOzdpugruZLqc+YJQF8ag6wnJj8WDoraZvIGbP5eJ4Amry+oi7KsAvQQZSPYln4nZv6vDhyItWHxorA8uF6MfN9LevDsyycQJovGgvRolSvXz7qSlUuLdhDB81qBeLBjnkoaDOjYTtOg2pim2gVLTInNLK9u2h0FKud80JwjdsbyajgXPTuiFgRI2328MTTWwZe/73aTG5XhK+18zWss+ucwQYg6NW4bMdGFxB9d7hmi9KyZUAUbcHVb96WZ7/RErjky7ATgszUBNA3xD+XghwPuqOlBjmPgUnPLPYyS7K5YNUujhW4MTZL+UxJ+LYa2eDSekR8uqGw7aqsyR2sCAealmQtIh44Z8tg+d/rqVqb8bdiPaSN/CA9ugO9I+uCnd2M/P39B6UTUq2Wib8lIwb0TJd8HBz6IKgqWtiTKHjYCbwnAx269av1SxMM5UkNygYP0RdOk7/h+QJxCa7TML57Mvqs2dBwHdKFnt3Y9sum4uvrXHAhXpBZ+HeYbOynnUXVbJhI/5mzdK7Y0Qf8OrY7w+5fZ+miq9KXUeuBdIj9AJE8zZJve9yymk0IKc2igINjBbPRTKLoOMkBQrHbKpr5aSOIHRtQYRjU6BmPnVYxwU=");
         config.addDefault("npcs.npc1.holo-text", List.of("&e&lCLICK TO PLAY", "&cSERVER-1", "&77 players"));
         config.addDefault("npcs.npc1.holo-elevate", 0.3);
+        config.addDefault("npcs.npc1.equipment.main-hand", "GOLDEN_AXE");
+        config.addDefault("npcs.npc1.equipment.off-hand", "FISHING_ROD");
+        config.addDefault("npcs.npc1.equipment.head", "LEATHER_HELMET");
+        config.addDefault("npcs.npc1.equipment.chest", "LEATHER_CHESTPLATE");
+        config.addDefault("npcs.npc1.equipment.legs", "LEATHER_LEGGINGS");
+        config.addDefault("npcs.npc1.equipment.boots", "LEATHER_BOOTS");
 
         config.addDefault("npcs.npc2.location", new Location(Bukkit.getWorld("world"), 40d, 78d, 16d,  90, 0));
         config.addDefault("npcs.npc2.texture", "ewogICJ0aW1lc3RhbXAiIDogMTY3NDkxOTkyNDA4NiwKICAicHJvZmlsZUlkIiA6ICIxMzAyMWNlNmEzNGU0ODI3ODhkNTczNTY5MWJmYzU1MSIsCiAgInByb2ZpbGVOYW1lIiA6ICJ2aWJlYm95IiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2Y5ZTc1ZjlmOGZkMmYwMzMyNTEwMzU1N2U1OTA1MDA5NzJjZDM2OGFjM2YxOWU0NjgyNjAxMGU5MWZmYzZiM2MiLAogICAgICAibWV0YWRhdGEiIDogewogICAgICAgICJtb2RlbCIgOiAic2xpbSIKICAgICAgfQogICAgfQogIH0KfQ==");
         config.addDefault("npcs.npc2.signature", "Ea0OC1adIwyf7WQAhS7Uw1SG6PCYKbVq/HhvtibNSUL5yn0HGTNn01GEL3dj2XjOzdpugruZLqc+YJQF8ag6wnJj8WDoraZvIGbP5eJ4Amry+oi7KsAvQQZSPYln4nZv6vDhyItWHxorA8uF6MfN9LevDsyycQJovGgvRolSvXz7qSlUuLdhDB81qBeLBjnkoaDOjYTtOg2pim2gVLTInNLK9u2h0FKud80JwjdsbyajgXPTuiFgRI2328MTTWwZe/73aTG5XhK+18zWss+ucwQYg6NW4bMdGFxB9d7hmi9KyZUAUbcHVb96WZ7/RErjky7ATgszUBNA3xD+XghwPuqOlBjmPgUnPLPYyS7K5YNUujhW4MTZL+UxJ+LYa2eDSekR8uqGw7aqsyR2sCAealmQtIh44Z8tg+d/rqVqb8bdiPaSN/CA9ugO9I+uCnd2M/P39B6UTUq2Wib8lIwb0TJd8HBz6IKgqWtiTKHjYCbwnAx269av1SxMM5UkNygYP0RdOk7/h+QJxCa7TML57Mvqs2dBwHdKFnt3Y9sum4uvrXHAhXpBZ+HeYbOynnUXVbJhI/5mzdK7Y0Qf8OrY7w+5fZ+miq9KXUeuBdIj9AJE8zZJve9yymk0IKc2igINjBbPRTKLoOMkBQrHbKpr5aSOIHRtQYRjU6BmPnVYxwU=");
         config.addDefault("npcs.npc2.holo-text", List.of("&e&lCLICK TO PLAY", "&cSERVER-1", "&77 players"));
         config.addDefault("npcs.npc2.holo-elevate", 0.3);
+        config.addDefault("npcs.npc2.equipment.main-hand", "GOLDEN_AXE");
+        config.addDefault("npcs.npc2.equipment.off-hand", "FISHING_ROD");
+        config.addDefault("npcs.npc2.equipment.head", "LEATHER_HELMET");
+        config.addDefault("npcs.npc2.equipment.chest", "LEATHER_CHESTPLATE");
+        config.addDefault("npcs.npc2.equipment.legs", "LEATHER_LEGGINGS");
+        config.addDefault("npcs.npc2.equipment.boots", "LEATHER_BOOTS");
 
         config.addDefault("npcs.npc3.location", new Location(Bukkit.getWorld("world"), 40d, 78d, 14d,  120, 0));
         config.addDefault("npcs.npc3.texture", "ewogICJ0aW1lc3RhbXAiIDogMTY3NDkxOTkyNDA4NiwKICAicHJvZmlsZUlkIiA6ICIxMzAyMWNlNmEzNGU0ODI3ODhkNTczNTY5MWJmYzU1MSIsCiAgInByb2ZpbGVOYW1lIiA6ICJ2aWJlYm95IiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2Y5ZTc1ZjlmOGZkMmYwMzMyNTEwMzU1N2U1OTA1MDA5NzJjZDM2OGFjM2YxOWU0NjgyNjAxMGU5MWZmYzZiM2MiLAogICAgICAibWV0YWRhdGEiIDogewogICAgICAgICJtb2RlbCIgOiAic2xpbSIKICAgICAgfQogICAgfQogIH0KfQ==");
         config.addDefault("npcs.npc3.signature", "Ea0OC1adIwyf7WQAhS7Uw1SG6PCYKbVq/HhvtibNSUL5yn0HGTNn01GEL3dj2XjOzdpugruZLqc+YJQF8ag6wnJj8WDoraZvIGbP5eJ4Amry+oi7KsAvQQZSPYln4nZv6vDhyItWHxorA8uF6MfN9LevDsyycQJovGgvRolSvXz7qSlUuLdhDB81qBeLBjnkoaDOjYTtOg2pim2gVLTInNLK9u2h0FKud80JwjdsbyajgXPTuiFgRI2328MTTWwZe/73aTG5XhK+18zWss+ucwQYg6NW4bMdGFxB9d7hmi9KyZUAUbcHVb96WZ7/RErjky7ATgszUBNA3xD+XghwPuqOlBjmPgUnPLPYyS7K5YNUujhW4MTZL+UxJ+LYa2eDSekR8uqGw7aqsyR2sCAealmQtIh44Z8tg+d/rqVqb8bdiPaSN/CA9ugO9I+uCnd2M/P39B6UTUq2Wib8lIwb0TJd8HBz6IKgqWtiTKHjYCbwnAx269av1SxMM5UkNygYP0RdOk7/h+QJxCa7TML57Mvqs2dBwHdKFnt3Y9sum4uvrXHAhXpBZ+HeYbOynnUXVbJhI/5mzdK7Y0Qf8OrY7w+5fZ+miq9KXUeuBdIj9AJE8zZJve9yymk0IKc2igINjBbPRTKLoOMkBQrHbKpr5aSOIHRtQYRjU6BmPnVYxwU=");
         config.addDefault("npcs.npc3.holo-text", List.of("&e&lCLICK TO PLAY", "&cSERVER-1", "&77 players"));
         config.addDefault("npcs.npc3.holo-elevate", 0.3);
+        config.addDefault("npcs.npc3.equipment.main-hand", "GOLDEN_AXE");
+        config.addDefault("npcs.npc3.equipment.off-hand", "FISHING_ROD");
+        config.addDefault("npcs.npc3.equipment.head", "LEATHER_HELMET");
+        config.addDefault("npcs.npc3.equipment.chest", "LEATHER_CHESTPLATE");
+        config.addDefault("npcs.npc3.equipment.legs", "LEATHER_LEGGINGS");
+        config.addDefault("npcs.npc3.equipment.boots", "LEATHER_BOOTS");
 
         try {
             config.options().copyDefaults(true);

@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.*;
 
@@ -48,6 +49,13 @@ public class SpawnNPCS implements Listener {
         setData(player);
         hide(player);
 
+    }
+
+    @EventHandler
+    private void onPlayerQuit(PlayerQuitEvent event){
+        Player player = event.getPlayer();
+        UUID uuid = PlayerManager.getUUID(player);
+        npcs.remove(uuid);
     }
 
     /**
