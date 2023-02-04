@@ -16,6 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -44,7 +45,11 @@ public class SpawnNPCS implements Listener {
         npcConfig = new NPCConfig(lobby);
     }
 
+    // stores list of all the npcs for given player
     private final HashMap<UUID, List<EntityPlayer>> npcs = new HashMap<>();
+
+    // stores list of all the npcs that should be looking at the player
+    private final HashMap<EntityPlayer, Location> npcsLookAtPlayer = new HashMap<>();
 
     @EventHandler
     private void onPlayerJoin(PlayerJoinEvent event){
@@ -54,6 +59,7 @@ public class SpawnNPCS implements Listener {
         setData(player);
         hide(player);
 
+        lookAtPlayer(player);
     }
 
     @EventHandler
@@ -61,6 +67,32 @@ public class SpawnNPCS implements Listener {
         Player player = event.getPlayer();
         UUID uuid = PlayerManager.getUUID(player);
         npcs.remove(uuid);
+    }
+
+    @EventHandler
+    private void onPlayerMove(PlayerMoveEvent event){
+        Player player = event.getPlayer();
+        for (EntityPlayer npc : npcsLookAtPlayer.keySet()){
+            npcManager.lookAtPlayer(npc, player, npcsLookAtPlayer.get(npc));
+        }
+    }
+
+    /**
+     * Resolve which NPCs should be looking at the player and put them in a list
+     *
+     * @param player Player that the NPC will be facing
+     */
+    private void lookAtPlayer(Player player){
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(npcConfig.getNPCFile());
+        UUID uuid = PlayerManager.getUUID(player);
+
+        for (EntityPlayer npc : npcs.get(uuid)){
+            boolean lookAtPlayer = config.getBoolean("npcs." + npc.displayName + ".look-at-player");
+            if (lookAtPlayer) {
+                Location location = config.getLocation("npcs." + npc.displayName + ".location");
+                npcsLookAtPlayer.put(npc, location);
+            }
+        }
     }
 
     /**
@@ -92,7 +124,7 @@ public class SpawnNPCS implements Listener {
     }
 
     /**
-     * Set the skin and look location for all the NPCs
+     * Set the skin, equipment and look location for all the NPCs
      *
      * @param player Player to set the data for NPCs to
      */
@@ -108,14 +140,14 @@ public class SpawnNPCS implements Listener {
                 String texture = config.getString("npcs." + npc.displayName + ".texture");
                 String signature = config.getString("npcs." + npc.displayName + ".signature");
 
+                npcManager.skin(npc, player, texture, signature);
+
                 ItemStack mainHand = new ItemStack(Material.valueOf(config.getString("npcs." + npc.displayName + ".equipment.main-hand")));
                 ItemStack offHand = new ItemStack(Material.valueOf(config.getString("npcs." + npc.displayName + ".equipment.off-hand")));
                 ItemStack head = new ItemStack(Material.valueOf(config.getString("npcs." + npc.displayName + ".equipment.head")));
                 ItemStack chest = new ItemStack(Material.valueOf(config.getString("npcs." + npc.displayName + ".equipment.chest")));
                 ItemStack legs = new ItemStack(Material.valueOf(config.getString("npcs." + npc.displayName + ".equipment.legs")));
                 ItemStack boots = new ItemStack(Material.valueOf(config.getString("npcs." + npc.displayName + ".equipment.boots")));
-
-                npcManager.skin(npc, player, texture, signature);
 
                 List<Pair<EnumWrappers.ItemSlot, ItemStack>> equipments = new ArrayList<>();
                 equipments.add(new Pair<>(EnumWrappers.ItemSlot.MAINHAND, mainHand));
@@ -127,7 +159,7 @@ public class SpawnNPCS implements Listener {
 
                 npcManager.equipment(npc, player, equipments);
 
-                npcManager.look(npc, player, yaw, pitch, true);
+                npcManager.lookAtPosition(npc, player, yaw, pitch, true);
             }
         }, 50);
     }
