@@ -1,5 +1,7 @@
 package net.trustgames.lobby.npcs;
 
+import com.comphenix.protocol.wrappers.EnumWrappers;
+import com.comphenix.protocol.wrappers.Pair;
 import net.minecraft.server.level.EntityPlayer;
 import net.trustgames.core.Core;
 import net.trustgames.core.managers.HoloManager;
@@ -8,12 +10,14 @@ import net.trustgames.core.managers.PlayerManager;
 import net.trustgames.lobby.Lobby;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
@@ -28,15 +32,16 @@ public class SpawnNPCS implements Listener {
 
     private final NPCManager npcManager;
     private final HoloManager holoManager;
-    private final YamlConfiguration config;
+
+    private final NPCConfig npcConfig;
+
 
     public SpawnNPCS(Lobby lobby, Core core) {
         this.lobby = lobby;
         this.core = lobby.getCore();
         this.npcManager = new NPCManager(core);
         this.holoManager = new HoloManager();
-        NPCConfig npcConfig = new NPCConfig(lobby);
-        this.config = YamlConfiguration.loadConfiguration(npcConfig.getNPCFile());
+        npcConfig = new NPCConfig(lobby);
     }
 
     private final HashMap<UUID, List<EntityPlayer>> npcs = new HashMap<>();
@@ -64,6 +69,7 @@ public class SpawnNPCS implements Listener {
      * @param player Player to spawn the NPCS for
      */
     private void spawn(Player player){
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(npcConfig.getNPCFile());
         UUID uuid = PlayerManager.getUUID(player);
         Set<String> keys = Objects.requireNonNull(config.getConfigurationSection("npcs")).getKeys(false);
         List<EntityPlayer> playerNpcs = new ArrayList<>();
@@ -92,6 +98,7 @@ public class SpawnNPCS implements Listener {
      */
     private void setData(Player player){
         Bukkit.getScheduler().runTaskLater(lobby, () -> {
+            YamlConfiguration config = YamlConfiguration.loadConfiguration(npcConfig.getNPCFile());
             UUID uuid = PlayerManager.getUUID(player);
             for(EntityPlayer npc : npcs.get(uuid)) {
                 Location location = config.getLocation("npcs." + npc.displayName + ".location");
@@ -101,7 +108,25 @@ public class SpawnNPCS implements Listener {
                 String texture = config.getString("npcs." + npc.displayName + ".texture");
                 String signature = config.getString("npcs." + npc.displayName + ".signature");
 
+                ItemStack mainHand = new ItemStack(Material.valueOf(config.getString("npcs." + npc.displayName + ".equipment.main-hand")));
+                ItemStack offHand = new ItemStack(Material.valueOf(config.getString("npcs." + npc.displayName + ".equipment.off-hand")));
+                ItemStack head = new ItemStack(Material.valueOf(config.getString("npcs." + npc.displayName + ".equipment.head")));
+                ItemStack chest = new ItemStack(Material.valueOf(config.getString("npcs." + npc.displayName + ".equipment.chest")));
+                ItemStack legs = new ItemStack(Material.valueOf(config.getString("npcs." + npc.displayName + ".equipment.legs")));
+                ItemStack boots = new ItemStack(Material.valueOf(config.getString("npcs." + npc.displayName + ".equipment.boots")));
+
                 npcManager.skin(npc, player, texture, signature);
+
+                List<Pair<EnumWrappers.ItemSlot, ItemStack>> equipments = new ArrayList<>();
+                equipments.add(new Pair<>(EnumWrappers.ItemSlot.MAINHAND, mainHand));
+                equipments.add(new Pair<>(EnumWrappers.ItemSlot.OFFHAND, offHand));
+                equipments.add(new Pair<>(EnumWrappers.ItemSlot.HEAD, head));
+                equipments.add(new Pair<>(EnumWrappers.ItemSlot.CHEST, chest));
+                equipments.add(new Pair<>(EnumWrappers.ItemSlot.LEGS, legs));
+                equipments.add(new Pair<>(EnumWrappers.ItemSlot.FEET, boots));
+
+                npcManager.equipment(npc, player, equipments);
+
                 npcManager.look(npc, player, yaw, pitch, true);
             }
         }, 50);

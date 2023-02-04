@@ -35,6 +35,7 @@ public final class Lobby extends JavaPlugin {
 
         /* THINGS TO ADD:
         - daily rewards
+        - carry players
          */
 
         // TODO polish NPC

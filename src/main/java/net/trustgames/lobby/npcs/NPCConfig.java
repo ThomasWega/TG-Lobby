@@ -28,10 +28,10 @@ public class NPCConfig {
         config.addDefault("npcs.npc1.holo-elevate", 0.3);
         config.addDefault("npcs.npc1.equipment.main-hand", "GOLDEN_AXE");
         config.addDefault("npcs.npc1.equipment.off-hand", "FISHING_ROD");
-        config.addDefault("npcs.npc1.equipment.head", "LEATHER_HELMET");
-        config.addDefault("npcs.npc1.equipment.chest", "LEATHER_CHESTPLATE");
-        config.addDefault("npcs.npc1.equipment.legs", "LEATHER_LEGGINGS");
-        config.addDefault("npcs.npc1.equipment.boots", "LEATHER_BOOTS");
+        config.addDefault("npcs.npc1.equipment.head", "AIR");
+        config.addDefault("npcs.npc1.equipment.chest", "AIR");
+        config.addDefault("npcs.npc1.equipment.legs", "AIR");
+        config.addDefault("npcs.npc1.equipment.boots", "AIR");
 
         config.addDefault("npcs.npc2.location", new Location(Bukkit.getWorld("world"), 40d, 78d, 16d,  90, 0));
         config.addDefault("npcs.npc2.texture", "ewogICJ0aW1lc3RhbXAiIDogMTY3NDkxOTkyNDA4NiwKICAicHJvZmlsZUlkIiA6ICIxMzAyMWNlNmEzNGU0ODI3ODhkNTczNTY5MWJmYzU1MSIsCiAgInByb2ZpbGVOYW1lIiA6ICJ2aWJlYm95IiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2Y5ZTc1ZjlmOGZkMmYwMzMyNTEwMzU1N2U1OTA1MDA5NzJjZDM2OGFjM2YxOWU0NjgyNjAxMGU5MWZmYzZiM2MiLAogICAgICAibWV0YWRhdGEiIDogewogICAgICAgICJtb2RlbCIgOiAic2xpbSIKICAgICAgfQogICAgfQogIH0KfQ==");
@@ -40,10 +40,10 @@ public class NPCConfig {
         config.addDefault("npcs.npc2.holo-elevate", 0.3);
         config.addDefault("npcs.npc2.equipment.main-hand", "GOLDEN_AXE");
         config.addDefault("npcs.npc2.equipment.off-hand", "FISHING_ROD");
-        config.addDefault("npcs.npc2.equipment.head", "LEATHER_HELMET");
-        config.addDefault("npcs.npc2.equipment.chest", "LEATHER_CHESTPLATE");
-        config.addDefault("npcs.npc2.equipment.legs", "LEATHER_LEGGINGS");
-        config.addDefault("npcs.npc2.equipment.boots", "LEATHER_BOOTS");
+        config.addDefault("npcs.npc2.equipment.head", "AIR");
+        config.addDefault("npcs.npc2.equipment.chest", "AIR");
+        config.addDefault("npcs.npc2.equipment.legs", "AIR");
+        config.addDefault("npcs.npc2.equipment.boots", "AIR");
 
         config.addDefault("npcs.npc3.location", new Location(Bukkit.getWorld("world"), 40d, 78d, 14d,  120, 0));
         config.addDefault("npcs.npc3.texture", "ewogICJ0aW1lc3RhbXAiIDogMTY3NDkxOTkyNDA4NiwKICAicHJvZmlsZUlkIiA6ICIxMzAyMWNlNmEzNGU0ODI3ODhkNTczNTY5MWJmYzU1MSIsCiAgInByb2ZpbGVOYW1lIiA6ICJ2aWJlYm95IiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2Y5ZTc1ZjlmOGZkMmYwMzMyNTEwMzU1N2U1OTA1MDA5NzJjZDM2OGFjM2YxOWU0NjgyNjAxMGU5MWZmYzZiM2MiLAogICAgICAibWV0YWRhdGEiIDogewogICAgICAgICJtb2RlbCIgOiAic2xpbSIKICAgICAgfQogICAgfQogIH0KfQ==");
@@ -52,10 +52,10 @@ public class NPCConfig {
         config.addDefault("npcs.npc3.holo-elevate", 0.3);
         config.addDefault("npcs.npc3.equipment.main-hand", "GOLDEN_AXE");
         config.addDefault("npcs.npc3.equipment.off-hand", "FISHING_ROD");
-        config.addDefault("npcs.npc3.equipment.head", "LEATHER_HELMET");
-        config.addDefault("npcs.npc3.equipment.chest", "LEATHER_CHESTPLATE");
-        config.addDefault("npcs.npc3.equipment.legs", "LEATHER_LEGGINGS");
-        config.addDefault("npcs.npc3.equipment.boots", "LEATHER_BOOTS");
+        config.addDefault("npcs.npc3.equipment.head", "AIR");
+        config.addDefault("npcs.npc3.equipment.chest", "AIR");
+        config.addDefault("npcs.npc3.equipment.legs", "AIR");
+        config.addDefault("npcs.npc3.equipment.boots", "AIR");
 
         try {
             config.options().copyDefaults(true);
