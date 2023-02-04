@@ -28,7 +28,7 @@ import java.util.HashMap;
  */
 public final class Lobby extends JavaPlugin {
 
-    Core core = (Core) Bukkit.getPluginManager().getPlugin("Core");
+    private final Core core = (Core) Bukkit.getPluginManager().getPlugin("Core");
 
     @Override
     public void onEnable() {

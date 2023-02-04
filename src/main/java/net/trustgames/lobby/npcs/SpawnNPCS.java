@@ -4,7 +4,7 @@ import net.minecraft.server.level.EntityPlayer;
 import net.trustgames.core.Core;
 import net.trustgames.core.managers.HoloManager;
 import net.trustgames.core.managers.NPCManager;
-import net.trustgames.core.utils.PlayerUtils;
+import net.trustgames.core.managers.PlayerManager;
 import net.trustgames.lobby.Lobby;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -25,21 +25,20 @@ public class SpawnNPCS implements Listener {
 
     private final Core core;
 
-    NPCConfig npcConfig;
-    NPCManager npcManager;
-    HoloManager holoManager;
-    YamlConfiguration config;
+    private final NPCManager npcManager;
+    private final HoloManager holoManager;
+    private final YamlConfiguration config;
 
     public SpawnNPCS(Lobby lobby, Core core) {
         this.lobby = lobby;
         this.core = lobby.getCore();
-        this.npcConfig = new NPCConfig(lobby);
         this.npcManager = new NPCManager(core);
         this.holoManager = new HoloManager();
+        NPCConfig npcConfig = new NPCConfig(lobby);
         this.config = YamlConfiguration.loadConfiguration(npcConfig.getNPCFile());
     }
 
-    HashMap<UUID, List<EntityPlayer>> npcs = new HashMap<>();
+    private final HashMap<UUID, List<EntityPlayer>> npcs = new HashMap<>();
 
     @EventHandler
     private void onPlayerJoin(PlayerJoinEvent event){
@@ -57,7 +56,7 @@ public class SpawnNPCS implements Listener {
      * @param player Player to spawn the NPCS for
      */
     private void spawn(Player player){
-        UUID uuid = PlayerUtils.getUUID(player);
+        UUID uuid = PlayerManager.getUUID(player);
         Set<String> keys = Objects.requireNonNull(config.getConfigurationSection("npcs")).getKeys(false);
         List<EntityPlayer> playerNpcs = new ArrayList<>();
 
@@ -85,7 +84,7 @@ public class SpawnNPCS implements Listener {
      */
     private void setData(Player player){
         Bukkit.getScheduler().runTaskLater(lobby, () -> {
-            UUID uuid = PlayerUtils.getUUID(player);
+            UUID uuid = PlayerManager.getUUID(player);
             for(EntityPlayer npc : npcs.get(uuid)) {
                 Location location = config.getLocation("npcs." + npc.displayName + ".location");
                 assert location != null;
@@ -107,7 +106,7 @@ public class SpawnNPCS implements Listener {
      */
     private void hide(Player player){
         Bukkit.getScheduler().runTaskLater(core, () -> {
-            UUID uuid = PlayerUtils.getUUID(player);
+            UUID uuid = PlayerManager.getUUID(player);
             for (EntityPlayer npc : npcs.get(uuid)) {
                 npcManager.hideTab(npc, player);
             }
