@@ -2,12 +2,12 @@ package net.trustgames.lobby.double_jump;
 
 import net.trustgames.core.managers.PlayerManager;
 import net.trustgames.lobby.Lobby;
+import net.trustgames.lobby.settings.LobbySettings;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.BlockFace;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -39,7 +39,6 @@ public class DoubleJump implements Listener {
 
     @EventHandler
     public void setVelocity(PlayerToggleFlightEvent event) {
-        FileConfiguration config = lobby.getConfig();
         Player player = event.getPlayer();
         UUID uuid = PlayerManager.getUUID(player);
 
@@ -53,13 +52,13 @@ public class DoubleJump implements Listener {
         player.setAllowFlight(false);
         player.setFlying(false);
 
-        double hor_spr = config.getDouble("settings.double-jump.horizontal-sprint");
-        double ver_spr = config.getDouble("settings.double-jump.vertical-sprint");
-        double hor = config.getDouble("settings.double-jump.horizontal");
-        double ver = config.getDouble("settings.double-jump.vertical");
+        double hor_run = LobbySettings.DOUBLE_JUMP_HOR_RUN;
+        double ver_run = LobbySettings.DOUBLE_JUMP_VER_RUN;
+        double hor = LobbySettings.DOUBLE_JUMP_HOR;
+        double ver = LobbySettings.DOUBLE_JUMP_VER;
 
         if (player.isSprinting()){
-            player.setVelocity(player.getLocation().getDirection().multiply(hor_spr).setY(ver_spr));
+            player.setVelocity(player.getLocation().getDirection().multiply(hor_run).setY(ver_run));
         }
         else{
             player.setVelocity(player.getLocation().getDirection().multiply(hor).setY(ver));

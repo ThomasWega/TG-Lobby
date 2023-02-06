@@ -54,12 +54,13 @@ public class SpawnNPCS implements Listener {
     @EventHandler
     private void onPlayerJoin(PlayerJoinEvent event){
         Player player = event.getPlayer();
+        UUID uuid = PlayerManager.getUUID(player);
 
         spawn(player);
         setData(player);
         hide(player);
-
         lookAtPlayer(player);
+        npcManager.interact(npcs.get(uuid), YamlConfiguration.loadConfiguration(npcConfig.getNPCFile()));
     }
 
     @EventHandler

@@ -2,7 +2,6 @@ package net.trustgames.lobby;
 
 import net.trustgames.core.Core;
 import net.trustgames.core.managers.ConfigManager;
-import net.trustgames.lobby.config.DefaultConfig;
 import net.trustgames.lobby.double_jump.DoubleJump;
 import net.trustgames.lobby.gamerules.LobbyGamerules;
 import net.trustgames.lobby.hotbar.HotbarListeners;
@@ -40,6 +39,7 @@ public final class Lobby extends JavaPlugin {
 
         // TODO polish NPC
         // TODO better NMS remap
+        // TODO LobbySettings enum config
 
         // create a data folder
         if (getDataFolder().mkdirs()){
@@ -65,7 +65,7 @@ public final class Lobby extends JavaPlugin {
         pluginManager.registerEvents(new Spawn(this), this);
         pluginManager.registerEvents(new HotbarListeners(), this);
         pluginManager.registerEvents(new DoubleJump(this), this);
-        pluginManager.registerEvents(new JoinLeaveMessages(this), this);
+        pluginManager.registerEvents(new JoinLeaveMessages(), this);
         pluginManager.registerEvents(new SpawnNPCS(this, core), this);
     }
 
@@ -87,8 +87,6 @@ public final class Lobby extends JavaPlugin {
     }
 
     private void createConfigsDefaults(){
-        DefaultConfig.create(getConfig()); getConfig().options().copyDefaults(true); saveConfig();
-
         NPCConfig npcConfig = new NPCConfig(this);
         npcConfig.createDefaults();
     }

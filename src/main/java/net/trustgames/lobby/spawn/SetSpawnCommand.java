@@ -1,6 +1,6 @@
 package net.trustgames.lobby.spawn;
 
-import net.trustgames.core.Core;
+import net.trustgames.core.settings.commands.CoreCommand;
 import net.trustgames.core.utils.ColorUtils;
 import net.trustgames.lobby.Lobby;
 import org.bukkit.ChatColor;
@@ -8,13 +8,11 @@ import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.util.Objects;
 
 /**
  * When a player with proper permission executes /setspawn, it saves his location to the spawn.yml file
@@ -30,11 +28,7 @@ public class SetSpawnCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-
-        Core core = lobby.getCore();
         Spawn spawn = new Spawn(lobby);
-
-        FileConfiguration configCore = core.getConfig();
         YamlConfiguration config = YamlConfiguration.loadConfiguration(spawn.getSpawnFile());
 
         if (sender instanceof Player player) {
@@ -49,14 +43,10 @@ public class SetSpawnCommand implements CommandExecutor {
                     throw new RuntimeException(e);
                 }
             } else {
-                String path = "messages.no-permission";
-                player.sendMessage(ColorUtils.color(Objects.requireNonNull(configCore.getString(path),
-                        "String on path " + path + " wasn't found in config!")));
+                player.sendMessage(ColorUtils.color(CoreCommand.COMMAND_NO_PERM.getValue()));
             }
         } else {
-            String path = "messages.only-in-game-command";
-            sender.sendMessage(ColorUtils.color(Objects.requireNonNull(configCore.getString(path),
-                    "String on path " + path + " wasn't found in config!")));
+            sender.sendMessage(ColorUtils.color(CoreCommand.COMMAND_ONLY_PLAYER.getValue()));
         }
         return true;
     }
