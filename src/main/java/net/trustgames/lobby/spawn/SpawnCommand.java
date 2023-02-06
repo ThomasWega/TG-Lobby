@@ -2,7 +2,7 @@ package net.trustgames.lobby.spawn;
 
 import net.trustgames.core.Core;
 import net.trustgames.core.managers.CooldownManager;
-import net.trustgames.core.settings.commands.CoreCommand;
+import net.trustgames.core.settings.command.CoreCommand;
 import net.trustgames.core.utils.ColorUtils;
 import net.trustgames.lobby.Lobby;
 import net.trustgames.lobby.settings.LobbySettings;

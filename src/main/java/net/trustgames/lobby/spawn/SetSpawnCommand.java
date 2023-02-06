@@ -1,6 +1,6 @@
 package net.trustgames.lobby.spawn;
 
-import net.trustgames.core.settings.commands.CoreCommand;
+import net.trustgames.core.settings.command.CoreCommand;
 import net.trustgames.core.utils.ColorUtils;
 import net.trustgames.lobby.Lobby;
 import org.bukkit.ChatColor;
