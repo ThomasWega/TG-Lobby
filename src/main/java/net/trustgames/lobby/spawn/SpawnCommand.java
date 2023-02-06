@@ -1,11 +1,11 @@
 package net.trustgames.lobby.spawn;
 
 import net.trustgames.core.Core;
+import net.trustgames.core.config.command.CommandConfig;
+import net.trustgames.core.config.cooldown.CooldownConfig;
 import net.trustgames.core.managers.CooldownManager;
-import net.trustgames.core.settings.command.CoreCommand;
-import net.trustgames.core.utils.ColorUtils;
 import net.trustgames.lobby.Lobby;
-import net.trustgames.lobby.settings.LobbySettings;
+import net.trustgames.lobby.config.command.LobbyCommandConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 /**
- When a player executes /spawn, it teleports the player to the spawn location from spawn.yml (if any is was set)
+ When a player executes /spawn, it teleports the player to the spawn location from spawn.yml (if any was set)
  */
 public class SpawnCommand implements CommandExecutor {
 
@@ -38,7 +38,7 @@ public class SpawnCommand implements CommandExecutor {
         if (sender instanceof Player player) {
 
             // if the player has a cooldown on this command
-            if (cooldownManager.commandCooldown(player, LobbySettings.COOLDOWN_SPAWN)){
+            if (cooldownManager.commandCooldown(player, CooldownConfig.MEDIUM.getValue())){
                 return true;
             }
 
@@ -47,12 +47,12 @@ public class SpawnCommand implements CommandExecutor {
             if (location != null) {
                 player.teleport(location);
 
-                player.sendMessage(ColorUtils.color(LobbySettings.SPAWN_TP));
+                player.sendMessage(LobbyCommandConfig.SPAWN_TP.getMessage());
             } else {
                 player.sendMessage(ChatColor.RED + "Spawn location isn't set!");
             }
         } else {
-            sender.sendMessage(ColorUtils.color(CoreCommand.COMMAND_ONLY_PLAYER.getValue()));
+            sender.sendMessage(CommandConfig.COMMAND_ONLY_PLAYER.getText());
         }
         return true;
     }

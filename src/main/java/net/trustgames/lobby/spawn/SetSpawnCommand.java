@@ -1,7 +1,6 @@
 package net.trustgames.lobby.spawn;
 
-import net.trustgames.core.settings.command.CoreCommand;
-import net.trustgames.core.utils.ColorUtils;
+import net.trustgames.core.config.command.CommandConfig;
 import net.trustgames.lobby.Lobby;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -43,10 +42,10 @@ public class SetSpawnCommand implements CommandExecutor {
                     throw new RuntimeException(e);
                 }
             } else {
-                player.sendMessage(ColorUtils.color(CoreCommand.COMMAND_NO_PERM.getValue()));
+                player.sendMessage(CommandConfig.COMMAND_NO_PERM.getText());
             }
         } else {
-            sender.sendMessage(ColorUtils.color(CoreCommand.COMMAND_ONLY_PLAYER.getValue()));
+            sender.sendMessage(CommandConfig.COMMAND_NO_PERM.getText());
         }
         return true;
     }

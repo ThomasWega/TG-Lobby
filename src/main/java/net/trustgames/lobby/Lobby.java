@@ -5,7 +5,7 @@ import net.trustgames.core.managers.ConfigManager;
 import net.trustgames.lobby.double_jump.DoubleJump;
 import net.trustgames.lobby.gamerules.LobbyGamerules;
 import net.trustgames.lobby.hotbar.HotbarListeners;
-import net.trustgames.lobby.join_leave.JoinLeaveMessages;
+import net.trustgames.lobby.player_session.JoinLeaveMessages;
 import net.trustgames.lobby.npcs.NPCConfig;
 import net.trustgames.lobby.npcs.SpawnNPCS;
 import net.trustgames.lobby.spawn.SetSpawnCommand;
@@ -39,7 +39,7 @@ public final class Lobby extends JavaPlugin {
 
         // TODO polish NPC
         // TODO better NMS remap
-        // TODO LobbySettings enum config
+        // TODO Add permissions for join/leave messages
 
         // create a data folder
         if (getDataFolder().mkdirs()){

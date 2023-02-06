@@ -2,7 +2,7 @@ package net.trustgames.lobby.double_jump;
 
 import net.trustgames.core.managers.PlayerManager;
 import net.trustgames.lobby.Lobby;
-import net.trustgames.lobby.settings.LobbySettings;
+import net.trustgames.lobby.config.DoubleJumpConfig;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -52,10 +52,10 @@ public class DoubleJump implements Listener {
         player.setAllowFlight(false);
         player.setFlying(false);
 
-        double hor_run = LobbySettings.DOUBLE_JUMP_HOR_RUN;
-        double ver_run = LobbySettings.DOUBLE_JUMP_VER_RUN;
-        double hor = LobbySettings.DOUBLE_JUMP_HOR;
-        double ver = LobbySettings.DOUBLE_JUMP_VER;
+        double hor_run = DoubleJumpConfig.HOR_RUN.getValue();
+        double ver_run = DoubleJumpConfig.VER_RUN.getValue();
+        double hor = DoubleJumpConfig.HOR.getValue();
+        double ver = DoubleJumpConfig.VER.getValue();
 
         if (player.isSprinting()){
             player.setVelocity(player.getLocation().getDirection().multiply(hor_run).setY(ver_run));
