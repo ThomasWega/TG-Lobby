@@ -4,9 +4,9 @@ import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.comphenix.protocol.wrappers.Pair;
 import net.minecraft.server.level.EntityPlayer;
 import net.trustgames.core.Core;
+import net.trustgames.core.cache.EntityCache;
 import net.trustgames.core.managers.HoloManager;
 import net.trustgames.core.managers.NPCManager;
-import net.trustgames.core.managers.PlayerManager;
 import net.trustgames.lobby.Lobby;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -54,7 +54,7 @@ public class SpawnNPCS implements Listener {
     @EventHandler
     private void onPlayerJoin(PlayerJoinEvent event){
         Player player = event.getPlayer();
-        UUID uuid = PlayerManager.getUUID(player);
+        UUID uuid = EntityCache.getUUID(player);
 
         spawn(player);
         setData(player);
@@ -66,7 +66,7 @@ public class SpawnNPCS implements Listener {
     @EventHandler
     private void onPlayerQuit(PlayerQuitEvent event){
         Player player = event.getPlayer();
-        UUID uuid = PlayerManager.getUUID(player);
+        UUID uuid = EntityCache.getUUID(player);
         npcs.remove(uuid);
     }
 
@@ -85,7 +85,7 @@ public class SpawnNPCS implements Listener {
      */
     private void lookAtPlayer(Player player){
         YamlConfiguration config = YamlConfiguration.loadConfiguration(npcConfig.getNPCFile());
-        UUID uuid = PlayerManager.getUUID(player);
+        UUID uuid = EntityCache.getUUID(player);
 
         for (EntityPlayer npc : npcs.get(uuid)){
             boolean lookAtPlayer = config.getBoolean("npcs." + npc.displayName + ".look-at-player");
@@ -103,7 +103,7 @@ public class SpawnNPCS implements Listener {
      */
     private void spawn(Player player){
         YamlConfiguration config = YamlConfiguration.loadConfiguration(npcConfig.getNPCFile());
-        UUID uuid = PlayerManager.getUUID(player);
+        UUID uuid = EntityCache.getUUID(player);
         Set<String> keys = Objects.requireNonNull(config.getConfigurationSection("npcs")).getKeys(false);
         List<EntityPlayer> playerNpcs = new ArrayList<>();
 
@@ -132,7 +132,7 @@ public class SpawnNPCS implements Listener {
     private void setData(Player player){
         Bukkit.getScheduler().runTaskLater(lobby, () -> {
             YamlConfiguration config = YamlConfiguration.loadConfiguration(npcConfig.getNPCFile());
-            UUID uuid = PlayerManager.getUUID(player);
+            UUID uuid = EntityCache.getUUID(player);
             for(EntityPlayer npc : npcs.get(uuid)) {
                 Location location = config.getLocation("npcs." + npc.displayName + ".location");
                 assert location != null;
@@ -172,7 +172,7 @@ public class SpawnNPCS implements Listener {
      */
     private void hide(Player player){
         Bukkit.getScheduler().runTaskLater(core, () -> {
-            UUID uuid = PlayerManager.getUUID(player);
+            UUID uuid = EntityCache.getUUID(player);
             for (EntityPlayer npc : npcs.get(uuid)) {
                 npcManager.hideTab(npc, player);
             }

@@ -4,6 +4,8 @@ import net.kyori.adventure.text.Component;
 import net.trustgames.core.utils.MiniMessageUtils;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 public enum JoinLeaveMessagesConfig {
     JOIN("<color:#6b8ae8>Join | </color>"),
     LEAVE("&#6b8ae8Leave | "),
@@ -20,10 +22,10 @@ public enum JoinLeaveMessagesConfig {
     /**
      * Replace tags with player info
      *
-     * @param player Player to replace the tags with info of
+     * @param uuid UUID of Player to replace the tags with info of
      * @return New formatted Component message with replaced tags
      */
-    public Component formatMessage(Player player) {
-        return MiniMessageUtils.format(player).deserialize(message);
+    public Component formatMessage(UUID uuid) {
+        return MiniMessageUtils.format(uuid).deserialize(message);
     }
 }

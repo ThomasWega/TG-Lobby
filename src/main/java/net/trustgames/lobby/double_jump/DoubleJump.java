@@ -1,6 +1,6 @@
 package net.trustgames.lobby.double_jump;
 
-import net.trustgames.core.managers.PlayerManager;
+import net.trustgames.core.cache.EntityCache;
 import net.trustgames.lobby.Lobby;
 import net.trustgames.lobby.config.DoubleJumpConfig;
 import org.bukkit.GameMode;
@@ -40,7 +40,7 @@ public class DoubleJump implements Listener {
     @EventHandler
     public void setVelocity(PlayerToggleFlightEvent event) {
         Player player = event.getPlayer();
-        UUID uuid = PlayerManager.getUUID(player);
+        UUID uuid = EntityCache.getUUID(player);
 
         if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR
                 || player.isFlying() || cooldowns.contains(uuid)) return;
@@ -71,7 +71,7 @@ public class DoubleJump implements Listener {
     }
 
     public void removeFromSet(Player player){
-        UUID uuid = PlayerManager.getUUID(player);
+        UUID uuid = EntityCache.getUUID(player);
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -87,7 +87,7 @@ public class DoubleJump implements Listener {
     @EventHandler
     public void removePlayer(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        UUID uuid = PlayerManager.getUUID(player);
+        UUID uuid = EntityCache.getUUID(player);
 
         cooldowns.remove(uuid);
 

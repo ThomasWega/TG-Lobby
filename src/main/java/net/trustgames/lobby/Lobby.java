@@ -40,6 +40,7 @@ public final class Lobby extends JavaPlugin {
         // TODO polish NPC
         // TODO better NMS remap
         // TODO Add permissions for join/leave messages
+        // TODO block place/break
 
         // create a data folder
         if (getDataFolder().mkdirs()){

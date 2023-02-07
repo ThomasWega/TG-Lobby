@@ -1,6 +1,7 @@
 package net.trustgames.lobby.spawn;
 
 import net.trustgames.core.Core;
+import net.trustgames.core.cache.EntityCache;
 import net.trustgames.core.config.command.CommandConfig;
 import net.trustgames.core.config.cooldown.CooldownConfig;
 import net.trustgames.core.managers.CooldownManager;
@@ -38,7 +39,7 @@ public class SpawnCommand implements CommandExecutor {
         if (sender instanceof Player player) {
 
             // if the player has a cooldown on this command
-            if (cooldownManager.commandCooldown(player, CooldownConfig.MEDIUM.getValue())){
+            if (cooldownManager.commandCooldown(EntityCache.getUUID(player), CooldownConfig.MEDIUM.getValue())){
                 return true;
             }
 
