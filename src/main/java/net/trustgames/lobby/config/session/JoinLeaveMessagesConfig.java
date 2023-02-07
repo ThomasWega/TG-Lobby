@@ -9,8 +9,8 @@ import java.util.UUID;
 public enum JoinLeaveMessagesConfig {
     JOIN("<color:#6b8ae8>Join | </color>"),
     LEAVE("<color:#6b8ae8>Leave | </color>"),
-    JOIN_MSG(JOIN.message + "<yellow><prefix></yellow><white><player_name></white> <gray>has joined the lobby!</gray>"),
-    LEAVE_MSG(LEAVE.message + "<yellow><prefix> </yellow><white><player_name></white> <gray>has left the lobby!</gray>");
+    JOIN_MSG(JOIN.message + "<prefix><hover:show_text:'TO ADD...'><click:run_command:'/say <player_name> TO ADD...'><white><player_name></click></hover> <gray>has joined the lobby!"),
+    LEAVE_MSG(LEAVE.message + "<prefix><hover:show_text:'TO ADD...'><click:run_command:'/say <player_name> TO ADD...'><white><player_name></click></hover> <gray>has left the lobby!");
 
 
     private final String message;
