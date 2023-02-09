@@ -3,6 +3,7 @@ package net.trustgames.lobby.hotbar;
 import net.kyori.adventure.text.Component;
 import net.trustgames.core.managers.ItemManager;
 import net.trustgames.core.managers.SkullManager;
+import net.trustgames.core.utils.ColorUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -41,13 +42,13 @@ public class HotbarItems {
                 "WsGW3iUx8g+xH1NraTlpxgnsp8ClAE40oerBpV+MnPNmBAbZ/WnZwVEI5w9pziuCG75oxuckrO/kyFFHzxivr+OXKoXYwi8jw+8ZRL7v5gappa5nvdbf5kkClNxmxkjDzbN0U01tM91OWIimKwLo5Lel+Zf02vtYw7CF9sM8rowLKAjQzo1Nydb0Hpo2WFsIe4Aa17vyXsHsv4OTDx4Mj1zUvXtFkgTzNCjBuBAfOBaGXp+m6Zo23XJAu010Rf6by0y8OuEm0XHKMY0SXlpE2AepIQDbaMQA2tlViVsDJLAIJJQh0SBILRxC6+8aGdQmC1AG1L7RmtDrIShx6pwF0gGK5BBG0BTtbJ++NtR0sIBk2oNFvm+TtsG/VmIHL6cDiJ7sxvbNJXrr5lp8YJ9Wsgn6P+iJ/qtdSGOfoEQkBmneRZvelbWeUYcpZi8xinoOmgQCDzIWnKZ96T73ArbBZBbeL+6+XGi7lnqv4DMqqfeyzG3YC6SmCzkiBABz5PDxKG0BthnT7Xw0rocBsxHhjWmWC5okskKHZql+Pk1PZnCXWuaC30HxScH11QHy0li4y3J5mclhqISd5/ZbGx/wuOcETQrFKh9M90qObf5VGNxAJovwdIfs3Zh+YCBdYWzsx8UCbLKmewfGWxpat1VgrHmSumE2uojdk81W8lCmyOs="
         );
         ItemMeta selectorMeta = ItemManager.createItemMeta(selectorStack,
-                ChatColor.GOLD + "Server Selector" + ChatColor.GRAY + " (Use)", itemFlags);
+                ColorUtils.color("&6Server Selector" + " &7(Use)"), itemFlags);
         selectorStack.setItemMeta(selectorMeta);
 
         // player profile
         ItemStack profileStack = ItemManager.createItemStack(Material.PLAYER_HEAD, 1);
         ItemMeta profileMeta = ItemManager.createItemMeta(profileStack,
-                ChatColor.GREEN + "My Profile" + ChatColor.GRAY + " (Use)", itemFlags);
+                ColorUtils.color("&aMy Profile" + " &7(Use)"), itemFlags);
         SkullMeta skullProfileMeta = (SkullMeta) profileMeta;
         skullProfileMeta.setOwningPlayer(player);
 

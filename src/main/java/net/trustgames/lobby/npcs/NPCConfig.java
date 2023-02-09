@@ -2,6 +2,7 @@ package net.trustgames.lobby.npcs;
 
 import net.trustgames.lobby.Lobby;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -27,6 +28,7 @@ public class NPCConfig {
         config.addDefault("npcs.npc1.signature", "Ea0OC1adIwyf7WQAhS7Uw1SG6PCYKbVq/HhvtibNSUL5yn0HGTNn01GEL3dj2XjOzdpugruZLqc+YJQF8ag6wnJj8WDoraZvIGbP5eJ4Amry+oi7KsAvQQZSPYln4nZv6vDhyItWHxorA8uF6MfN9LevDsyycQJovGgvRolSvXz7qSlUuLdhDB81qBeLBjnkoaDOjYTtOg2pim2gVLTInNLK9u2h0FKud80JwjdsbyajgXPTuiFgRI2328MTTWwZe/73aTG5XhK+18zWss+ucwQYg6NW4bMdGFxB9d7hmi9KyZUAUbcHVb96WZ7/RErjky7ATgszUBNA3xD+XghwPuqOlBjmPgUnPLPYyS7K5YNUujhW4MTZL+UxJ+LYa2eDSekR8uqGw7aqsyR2sCAealmQtIh44Z8tg+d/rqVqb8bdiPaSN/CA9ugO9I+uCnd2M/P39B6UTUq2Wib8lIwb0TJd8HBz6IKgqWtiTKHjYCbwnAx269av1SxMM5UkNygYP0RdOk7/h+QJxCa7TML57Mvqs2dBwHdKFnt3Y9sum4uvrXHAhXpBZ+HeYbOynnUXVbJhI/5mzdK7Y0Qf8OrY7w+5fZ+miq9KXUeuBdIj9AJE8zZJve9yymk0IKc2igINjBbPRTKLoOMkBQrHbKpr5aSOIHRtQYRjU6BmPnVYxwU=");
         config.addDefault("npcs.npc1.holo-text", List.of("&e&lCLICK TO PLAY", "&cSERVER-1", "&77 players"));
         config.addDefault("npcs.npc1.holo-elevate", 0.3);
+        config.addDefault("npcs.npc1.glow", "&e");
         config.addDefault("npcs.npc1.equipment.main-hand", "GOLDEN_AXE");
         config.addDefault("npcs.npc1.equipment.off-hand", "FISHING_ROD");
         config.addDefault("npcs.npc1.equipment.head", "AIR");
@@ -47,6 +49,7 @@ public class NPCConfig {
         config.addDefault("npcs.npc2.signature", "Ea0OC1adIwyf7WQAhS7Uw1SG6PCYKbVq/HhvtibNSUL5yn0HGTNn01GEL3dj2XjOzdpugruZLqc+YJQF8ag6wnJj8WDoraZvIGbP5eJ4Amry+oi7KsAvQQZSPYln4nZv6vDhyItWHxorA8uF6MfN9LevDsyycQJovGgvRolSvXz7qSlUuLdhDB81qBeLBjnkoaDOjYTtOg2pim2gVLTInNLK9u2h0FKud80JwjdsbyajgXPTuiFgRI2328MTTWwZe/73aTG5XhK+18zWss+ucwQYg6NW4bMdGFxB9d7hmi9KyZUAUbcHVb96WZ7/RErjky7ATgszUBNA3xD+XghwPuqOlBjmPgUnPLPYyS7K5YNUujhW4MTZL+UxJ+LYa2eDSekR8uqGw7aqsyR2sCAealmQtIh44Z8tg+d/rqVqb8bdiPaSN/CA9ugO9I+uCnd2M/P39B6UTUq2Wib8lIwb0TJd8HBz6IKgqWtiTKHjYCbwnAx269av1SxMM5UkNygYP0RdOk7/h+QJxCa7TML57Mvqs2dBwHdKFnt3Y9sum4uvrXHAhXpBZ+HeYbOynnUXVbJhI/5mzdK7Y0Qf8OrY7w+5fZ+miq9KXUeuBdIj9AJE8zZJve9yymk0IKc2igINjBbPRTKLoOMkBQrHbKpr5aSOIHRtQYRjU6BmPnVYxwU=");
         config.addDefault("npcs.npc2.holo-text", List.of("&e&lCLICK TO PLAY", "&cSERVER-1", "&77 players"));
         config.addDefault("npcs.npc2.holo-elevate", 0.3);
+        config.addDefault("npcs.npc2.glow", "&e");
         config.addDefault("npcs.npc2.equipment.main-hand", "GOLDEN_AXE");
         config.addDefault("npcs.npc2.equipment.off-hand", "FISHING_ROD");
         config.addDefault("npcs.npc2.equipment.head", "AIR");
@@ -67,6 +70,7 @@ public class NPCConfig {
         config.addDefault("npcs.npc3.signature", "Ea0OC1adIwyf7WQAhS7Uw1SG6PCYKbVq/HhvtibNSUL5yn0HGTNn01GEL3dj2XjOzdpugruZLqc+YJQF8ag6wnJj8WDoraZvIGbP5eJ4Amry+oi7KsAvQQZSPYln4nZv6vDhyItWHxorA8uF6MfN9LevDsyycQJovGgvRolSvXz7qSlUuLdhDB81qBeLBjnkoaDOjYTtOg2pim2gVLTInNLK9u2h0FKud80JwjdsbyajgXPTuiFgRI2328MTTWwZe/73aTG5XhK+18zWss+ucwQYg6NW4bMdGFxB9d7hmi9KyZUAUbcHVb96WZ7/RErjky7ATgszUBNA3xD+XghwPuqOlBjmPgUnPLPYyS7K5YNUujhW4MTZL+UxJ+LYa2eDSekR8uqGw7aqsyR2sCAealmQtIh44Z8tg+d/rqVqb8bdiPaSN/CA9ugO9I+uCnd2M/P39B6UTUq2Wib8lIwb0TJd8HBz6IKgqWtiTKHjYCbwnAx269av1SxMM5UkNygYP0RdOk7/h+QJxCa7TML57Mvqs2dBwHdKFnt3Y9sum4uvrXHAhXpBZ+HeYbOynnUXVbJhI/5mzdK7Y0Qf8OrY7w+5fZ+miq9KXUeuBdIj9AJE8zZJve9yymk0IKc2igINjBbPRTKLoOMkBQrHbKpr5aSOIHRtQYRjU6BmPnVYxwU=");
         config.addDefault("npcs.npc3.holo-text", List.of("&e&lCLICK TO PLAY", "&cSERVER-1", "&77 players"));
         config.addDefault("npcs.npc3.holo-elevate", 0.3);
+        config.addDefault("npcs.npc3.glow", "&e");
         config.addDefault("npcs.npc3.equipment.main-hand", "GOLDEN_AXE");
         config.addDefault("npcs.npc3.equipment.off-hand", "FISHING_ROD");
         config.addDefault("npcs.npc3.equipment.head", "AIR");

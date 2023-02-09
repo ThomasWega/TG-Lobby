@@ -41,7 +41,6 @@ public final class Lobby extends JavaPlugin {
         - hover on player name in join/leave messages, add info
          */
 
-        // TODO polish NPC
         // TODO better NMS remap
         // TODO Add permissions for join/leave messages
         // TODO block place/break

@@ -2,11 +2,13 @@ package net.trustgames.lobby.npcs;
 
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.comphenix.protocol.wrappers.Pair;
+import net.kyori.adventure.text.format.TextColor;
 import net.minecraft.server.level.EntityPlayer;
 import net.trustgames.core.Core;
 import net.trustgames.core.cache.EntityCache;
 import net.trustgames.core.managers.HoloManager;
 import net.trustgames.core.managers.NPCManager;
+import net.trustgames.core.utils.ColorUtils;
 import net.trustgames.lobby.Lobby;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -60,6 +62,7 @@ public class SpawnNPCS implements Listener {
         setData(player);
         hide(player);
         lookAtPlayer(player);
+
         npcManager.interact(npcs.get(uuid), YamlConfiguration.loadConfiguration(npcConfig.getNPCFile()));
     }
 
@@ -140,7 +143,10 @@ public class SpawnNPCS implements Listener {
                 float pitch = location.getPitch();
                 String texture = config.getString("npcs." + npc.displayName + ".texture");
                 String signature = config.getString("npcs." + npc.displayName + ".signature");
+                String glow = config.getString("npcs." + npc.displayName + ".glow");
 
+                if (glow != "false")
+                    npcManager.glow(npc, ColorUtils.color(glow).color());
                 npcManager.skin(npc, player, texture, signature);
 
                 ItemStack mainHand = new ItemStack(Material.valueOf(config.getString("npcs." + npc.displayName + ".equipment.main-hand")));
