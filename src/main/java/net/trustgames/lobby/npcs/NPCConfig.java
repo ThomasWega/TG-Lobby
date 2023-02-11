@@ -2,7 +2,6 @@ package net.trustgames.lobby.npcs;
 
 import net.trustgames.lobby.Lobby;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 

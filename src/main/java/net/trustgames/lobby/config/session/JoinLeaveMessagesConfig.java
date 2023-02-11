@@ -2,7 +2,6 @@ package net.trustgames.lobby.config.session;
 
 import net.kyori.adventure.text.Component;
 import net.trustgames.core.utils.MiniMessageUtils;
-import org.bukkit.entity.Player;
 
 import java.util.UUID;
 

@@ -2,7 +2,6 @@ package net.trustgames.lobby.npcs;
 
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.comphenix.protocol.wrappers.Pair;
-import net.kyori.adventure.text.format.TextColor;
 import net.minecraft.server.level.EntityPlayer;
 import net.trustgames.core.Core;
 import net.trustgames.core.cache.EntityCache;
@@ -145,7 +144,7 @@ public class SpawnNPCS implements Listener {
                 String signature = config.getString("npcs." + npc.displayName + ".signature");
                 String glow = config.getString("npcs." + npc.displayName + ".glow");
 
-                if (glow != "false")
+                if (glow != null && glow.equals("false"))
                     npcManager.glow(npc, ColorUtils.color(glow).color());
                 npcManager.skin(npc, player, texture, signature);
 
