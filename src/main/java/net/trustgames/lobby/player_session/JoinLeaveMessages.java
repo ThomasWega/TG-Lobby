@@ -2,7 +2,6 @@ package net.trustgames.lobby.player_session;
 
 import net.trustgames.core.cache.EntityCache;
 import net.trustgames.lobby.config.session.JoinLeaveMessagesConfig;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;

@@ -5,7 +5,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.trustgames.core.config.command.CommandConfig;
 
 public enum LobbyCommandConfig {
-    SPAWN_TP(CommandConfig.PREFIX + "<dark_gray>You've been teleported to the spawn location.");
+    SPAWN_TP(CommandConfig.PREFIX.getRaw() + "<dark_gray>You've been teleported to the spawn location.");
 
     private final String message;
 

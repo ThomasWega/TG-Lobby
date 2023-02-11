@@ -2,9 +2,10 @@ package net.trustgames.lobby;
 
 import net.trustgames.core.Core;
 import net.trustgames.core.managers.ConfigManager;
-import net.trustgames.lobby.double_jump.DoubleJump;
+import net.trustgames.lobby.movement.DoubleJump;
 import net.trustgames.lobby.gamerules.LobbyGamerules;
 import net.trustgames.lobby.hotbar.HotbarListeners;
+import net.trustgames.lobby.movement.PiggyBack;
 import net.trustgames.lobby.player_session.JoinLeaveMessages;
 import net.trustgames.lobby.npcs.NPCConfig;
 import net.trustgames.lobby.npcs.SpawnNPCS;
@@ -34,11 +35,12 @@ public final class Lobby extends JavaPlugin {
 
         /* THINGS TO ADD:
         - daily rewards
-        - carry players
          */
 
         /* SIDE ADDITIONS
         - hover on player name in join/leave messages, add info
+        - piggyback ignore when on vanish
+        - piggyback toggle
          */
 
         // TODO better NMS remap
@@ -69,6 +71,7 @@ public final class Lobby extends JavaPlugin {
         pluginManager.registerEvents(new Spawn(this), this);
         pluginManager.registerEvents(new HotbarListeners(), this);
         pluginManager.registerEvents(new DoubleJump(this), this);
+        pluginManager.registerEvents(new PiggyBack(this), this);
         pluginManager.registerEvents(new JoinLeaveMessages(), this);
         pluginManager.registerEvents(new SpawnNPCS(this, core), this);
     }

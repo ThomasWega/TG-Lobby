@@ -49,6 +49,7 @@ public class HotbarItems {
         ItemStack profileStack = ItemManager.createItemStack(Material.PLAYER_HEAD, 1);
         ItemMeta profileMeta = ItemManager.createItemMeta(profileStack,
                 ColorUtils.color("&aMy Profile" + " &7(Use)"), itemFlags);
+
         SkullMeta skullProfileMeta = (SkullMeta) profileMeta;
         skullProfileMeta.setOwningPlayer(player);
 
