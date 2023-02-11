@@ -54,13 +54,14 @@ public class SpawnNPCS implements Listener {
 
     @EventHandler
     private void onPlayerJoin(PlayerJoinEvent event){
+
         Player player = event.getPlayer();
         UUID uuid = EntityCache.getUUID(player);
 
         spawn(player);
         setData(player);
-        hide(player);
         lookAtPlayer(player);
+        hide(player);
 
         npcManager.interact(npcs.get(uuid), YamlConfiguration.loadConfiguration(npcConfig.getNPCFile()));
     }
@@ -115,7 +116,6 @@ public class SpawnNPCS implements Listener {
             double elevateY = config.getDouble("npcs." + name + ".holo-elevate");
 
             EntityPlayer npc = npcManager.create(location, name);
-            npcManager.hideName(npc);
             npcManager.add(npc, player);
 
             assert location != null;
@@ -144,8 +144,10 @@ public class SpawnNPCS implements Listener {
                 String signature = config.getString("npcs." + npc.displayName + ".signature");
                 String glow = config.getString("npcs." + npc.displayName + ".glow");
 
-                if (glow != null && glow.equals("false"))
+                if (glow != null && !glow.equals("false"))
                     npcManager.glow(npc, ColorUtils.color(glow).color());
+                else
+                    npcManager.hideName(npc);
                 npcManager.skin(npc, player, texture, signature);
 
                 ItemStack mainHand = new ItemStack(Material.valueOf(config.getString("npcs." + npc.displayName + ".equipment.main-hand")));

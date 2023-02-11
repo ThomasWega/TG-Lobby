@@ -46,6 +46,7 @@ public final class Lobby extends JavaPlugin {
         // TODO better NMS remap
         // TODO Add permissions for join/leave messages
         // TODO block place/break
+        // TODO piggyback pvp - cancel event
 
         // create a data folder
         if (getDataFolder().mkdirs()){

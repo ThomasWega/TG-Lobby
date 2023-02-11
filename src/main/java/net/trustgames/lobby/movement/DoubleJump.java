@@ -84,7 +84,7 @@ public class DoubleJump implements Listener {
 
     /**
      * Remove the player from the cooldowns list if the block two blocks far facing down
-     * from his location isn't air or if if has been more than 3 seconds till his last double jump.
+     * from his location isn't air or if it has been more than 3 seconds till his last double jump.
      * This is done so the player can't spam double jump in the air, but at the
      * same time he can jump on the ground and still be able to double jump.
      *
@@ -103,7 +103,6 @@ public class DoubleJump implements Listener {
                     cancel();
                 }
                 i++;
-                System.out.println(i);
             }
         }.runTaskTimerAsynchronously(lobby, 20, 7);
     }
