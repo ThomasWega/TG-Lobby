@@ -60,12 +60,13 @@ public class PiggyBack implements Listener {
             if (!damager.getPassengers().contains(target)) return;
 
             throwPassenger(player, passenger);
+            event.setDamage(0d);
         }
 
     }
 
     /**
-     * Add the players clicked on as passengers. If the player already
+     * Add the players shift-clicked on as passengers. If the player already
      * has 1 passenger, the next passenger will be set as the passenger of
      * the last passenger on the player
      *
@@ -74,6 +75,8 @@ public class PiggyBack implements Listener {
      */
     private void ride(Player player, Player clicked) {
         List<Entity> passengerList = player.getPassengers();
+
+        if (!player.isSneaking()) return;
 
         if (passengerList.isEmpty() || passengerList.size() == 1)
             player.addPassenger(clicked);
