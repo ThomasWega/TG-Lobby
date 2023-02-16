@@ -18,9 +18,9 @@ public enum PiggyBackConfig {
     }
 
     /**
-     * @return Value of the enum
+     * @return Double value of the enum
      */
-    public double getValue() {
+    public double getDouble() {
         return ((double) value);
     }
 

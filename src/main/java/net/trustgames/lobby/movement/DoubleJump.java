@@ -32,14 +32,14 @@ public class DoubleJump implements Listener {
 
     private static final ParticleBuilder particle = new ParticleBuilder(
             DoubleJumpConfig.PARTICLE.getParticle())
-            .count((int) DoubleJumpConfig.PARTICLE_COUNT.getValue())
+            .count((int) DoubleJumpConfig.PARTICLE_COUNT.getDouble())
             .offset(0.5d, 0.5d, 0.5d);
 
     private static final Sound sound = Sound.sound(
             DoubleJumpConfig.SOUND.getSoundKey(),
             Sound.Source.AMBIENT,
-            (float) DoubleJumpConfig.SOUND_VOLUME.getValue(),
-            (float) DoubleJumpConfig.SOUND_PITCH.getValue());
+            (float) DoubleJumpConfig.SOUND_VOLUME.getDouble(),
+            (float) DoubleJumpConfig.SOUND_PITCH.getDouble());
 
 
     @EventHandler
@@ -64,10 +64,10 @@ public class DoubleJump implements Listener {
         player.setAllowFlight(false);
         player.setFlying(false);
 
-        double hor_run = DoubleJumpConfig.HOR_RUN.getValue();
-        double ver_run = DoubleJumpConfig.VER_RUN.getValue();
-        double hor = DoubleJumpConfig.HOR.getValue();
-        double ver = DoubleJumpConfig.VER.getValue();
+        double hor_run = DoubleJumpConfig.HOR_RUN.getDouble();
+        double ver_run = DoubleJumpConfig.VER_RUN.getDouble();
+        double hor = DoubleJumpConfig.HOR.getDouble();
+        double ver = DoubleJumpConfig.VER.getDouble();
 
         if (player.isSprinting()){
             player.setVelocity(player.getLocation().getDirection().multiply(hor_run).setY(ver_run));

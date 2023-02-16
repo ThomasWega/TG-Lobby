@@ -30,13 +30,13 @@ public class PiggyBack implements Listener {
 
     private static final ParticleBuilder particle = new ParticleBuilder(
             PiggyBackConfig.PARTICLE.getParticle())
-            .count((int) PiggyBackConfig.PARTICLE_COUNT.getValue());
+            .count((int) PiggyBackConfig.PARTICLE_COUNT.getDouble());
 
     private static final Sound sound = Sound.sound(
             PiggyBackConfig.SOUND.getSoundKey(),
             Sound.Source.AMBIENT,
-            (float) PiggyBackConfig.SOUND_VOLUME.getValue(),
-            (float) PiggyBackConfig.SOUND_PITCH.getValue());
+            (float) PiggyBackConfig.SOUND_VOLUME.getDouble(),
+            (float) PiggyBackConfig.SOUND_PITCH.getDouble());
 
     @EventHandler
     private void onPlayerRightClick(PlayerInteractEntityEvent event) {
@@ -101,7 +101,7 @@ public class PiggyBack implements Listener {
         Location loc = player.getLocation();
         loc.setPitch(0);
         Vector vec = loc.getDirection()
-                .multiply(PiggyBackConfig.THROW_MULTIPLY.getValue());
+                .multiply(PiggyBackConfig.THROW_MULTIPLY.getDouble());
         passenger.setVelocity(vec);
 
         particle(passenger);

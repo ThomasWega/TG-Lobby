@@ -39,7 +39,7 @@ public class SpawnCommand implements CommandExecutor {
         if (sender instanceof Player player) {
 
             // if the player has a cooldown on this command
-            if (cooldownManager.commandCooldown(EntityCache.getUUID(player), CooldownConfig.MEDIUM.getValue())){
+            if (cooldownManager.commandCooldown(EntityCache.getUUID(player), CooldownConfig.MEDIUM.value)){
                 return true;
             }
 
