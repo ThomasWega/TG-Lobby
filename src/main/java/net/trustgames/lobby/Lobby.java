@@ -41,10 +41,8 @@ public final class Lobby extends JavaPlugin {
         - hover on player name in join/leave messages, add info
         - piggyback ignore when on vanish
         - piggyback toggle
-        - piggyback shift click
          */
 
-        // TODO better NMS remap
         // TODO Add permissions for join/leave messages
         // TODO block place/break
         // TODO piggyback pvp - cancel event (need to use different vectors as the player has no velocity when pvp is off or cancelled)

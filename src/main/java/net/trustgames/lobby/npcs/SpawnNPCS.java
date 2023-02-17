@@ -2,7 +2,7 @@ package net.trustgames.lobby.npcs;
 
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.comphenix.protocol.wrappers.Pair;
-import net.minecraft.server.level.EntityPlayer;
+import net.minecraft.server.level.ServerPlayer;
 import net.trustgames.core.Core;
 import net.trustgames.core.cache.EntityCache;
 import net.trustgames.core.managers.HoloManager;
@@ -47,10 +47,10 @@ public class SpawnNPCS implements Listener {
     }
 
     // stores list of all the npcs for given player
-    private final HashMap<UUID, List<EntityPlayer>> npcs = new HashMap<>();
+    private final HashMap<UUID, List<ServerPlayer>> npcs = new HashMap<>();
 
     // stores list of all the npcs that should be looking at the player
-    private final HashMap<EntityPlayer, Location> npcsLookAtPlayer = new HashMap<>();
+    private final HashMap<ServerPlayer, Location> npcsLookAtPlayer = new HashMap<>();
 
     @EventHandler
     private void onPlayerJoin(PlayerJoinEvent event){
@@ -76,7 +76,7 @@ public class SpawnNPCS implements Listener {
     @EventHandler
     private void onPlayerMove(PlayerMoveEvent event){
         Player player = event.getPlayer();
-        for (EntityPlayer npc : npcsLookAtPlayer.keySet()){
+        for (ServerPlayer npc : npcsLookAtPlayer.keySet()){
             npcManager.lookAtPlayer(npc, player, npcsLookAtPlayer.get(npc));
         }
     }
@@ -90,7 +90,7 @@ public class SpawnNPCS implements Listener {
         YamlConfiguration config = YamlConfiguration.loadConfiguration(npcConfig.getNPCFile());
         UUID uuid = EntityCache.getUUID(player);
 
-        for (EntityPlayer npc : npcs.get(uuid)){
+        for (ServerPlayer npc : npcs.get(uuid)){
             boolean lookAtPlayer = config.getBoolean("npcs." + npc.displayName + ".look-at-player");
             if (lookAtPlayer) {
                 Location location = config.getLocation("npcs." + npc.displayName + ".location");
@@ -108,14 +108,14 @@ public class SpawnNPCS implements Listener {
         YamlConfiguration config = YamlConfiguration.loadConfiguration(npcConfig.getNPCFile());
         UUID uuid = EntityCache.getUUID(player);
         Set<String> keys = Objects.requireNonNull(config.getConfigurationSection("npcs")).getKeys(false);
-        List<EntityPlayer> playerNpcs = new ArrayList<>();
+        List<ServerPlayer> playerNpcs = new ArrayList<>();
 
         for (String name : keys){
             Location location = config.getLocation("npcs." + name + ".location");
             List<String> holoText = config.getStringList("npcs." + name + ".holo-text");
             double elevateY = config.getDouble("npcs." + name + ".holo-elevate");
 
-            EntityPlayer npc = npcManager.create(location, name);
+            ServerPlayer npc = npcManager.create(location, name);
             npcManager.add(npc, player);
 
             assert location != null;
@@ -135,7 +135,7 @@ public class SpawnNPCS implements Listener {
         Bukkit.getScheduler().runTaskLater(lobby, () -> {
             YamlConfiguration config = YamlConfiguration.loadConfiguration(npcConfig.getNPCFile());
             UUID uuid = EntityCache.getUUID(player);
-            for(EntityPlayer npc : npcs.get(uuid)) {
+            for(ServerPlayer npc : npcs.get(uuid)) {
                 Location location = config.getLocation("npcs." + npc.displayName + ".location");
                 assert location != null;
                 float yaw = location.getYaw();
@@ -180,7 +180,7 @@ public class SpawnNPCS implements Listener {
     private void hide(Player player){
         Bukkit.getScheduler().runTaskLater(core, () -> {
             UUID uuid = EntityCache.getUUID(player);
-            for (EntityPlayer npc : npcs.get(uuid)) {
+            for (ServerPlayer npc : npcs.get(uuid)) {
                 npcManager.hideTab(npc, player);
             }
         }, 70);
