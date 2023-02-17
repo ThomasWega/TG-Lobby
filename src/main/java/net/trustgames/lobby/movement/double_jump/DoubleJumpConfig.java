@@ -1,19 +1,22 @@
-package net.trustgames.lobby.config.movement;
+package net.trustgames.lobby.movement.double_jump;
 
 import net.kyori.adventure.key.Key;
 import org.bukkit.Particle;
 
-public enum PiggyBackConfig {
-    THROW_MULTIPLY(3d),
-    PARTICLE("CRIT"),
-    PARTICLE_COUNT(3d),
-    SOUND("entity.ghast.shoot"),
+public enum DoubleJumpConfig {
+    HOR(0.8d),
+    VER(0.8d),
+    HOR_RUN(0.85d),
+    VER_RUN(0.6d),
+    PARTICLE("ELECTRIC_SPARK"),
+    PARTICLE_COUNT(5d),
+    SOUND("entity.bat.takeoff"),
     SOUND_VOLUME(1d),
     SOUND_PITCH(1d);
 
     private final Object value;
 
-    PiggyBackConfig(Object value) {
+    DoubleJumpConfig(Object value) {
         this.value = value;
     }
 

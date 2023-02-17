@@ -1,7 +1,9 @@
-package net.trustgames.lobby.spawn;
+package net.trustgames.lobby.spawn.commands;
 
-import net.trustgames.core.config.command.CommandConfig;
+import net.trustgames.core.config.CommandConfig;
 import net.trustgames.lobby.Lobby;
+import net.trustgames.lobby.config.LobbyPermissionConfig;
+import net.trustgames.lobby.spawn.SpawnHandler;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -27,11 +29,11 @@ public class SetSpawnCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        Spawn spawn = new Spawn(lobby);
+        SpawnHandler spawn = new SpawnHandler(lobby);
         YamlConfiguration config = YamlConfiguration.loadConfiguration(spawn.getSpawnFile());
 
         if (sender instanceof Player player) {
-            if (player.hasPermission("lobby.admin")) {
+            if (player.hasPermission(LobbyPermissionConfig.ADMIN.permission)) {
                 Location location = player.getLocation();
                 config.set("spawn.location", location);
                 try {

@@ -1,10 +1,9 @@
-package net.trustgames.lobby.movement;
+package net.trustgames.lobby.movement.piggyback;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.sound.Sound;
 import net.trustgames.lobby.Lobby;
-import net.trustgames.lobby.config.movement.PiggyBackConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -60,9 +59,8 @@ public class PiggyBack implements Listener {
             if (!damager.getPassengers().contains(target)) return;
 
             throwPassenger(player, passenger);
-            event.setDamage(0d);
+            event.setCancelled(true);
         }
-
     }
 
     /**
@@ -101,16 +99,22 @@ public class PiggyBack implements Listener {
         Location loc = player.getLocation();
         loc.setPitch(0);
         Vector vec = loc.getDirection()
-                .multiply(PiggyBackConfig.THROW_MULTIPLY.getDouble());
-        passenger.setVelocity(vec);
+                .multiply(PiggyBackConfig.THROW_MULTIPLY.getDouble())
+                .normalize();
+        vec.setY(vec.getY() + PiggyBackConfig.THROW_Y.getDouble())
+                .normalize();
 
-        particle(passenger);
+        // velocity needs to be set 1 tick later, as otherwise it doesn't do anything
+        Bukkit.getScheduler().runTaskLater(lobby.getCore(), () -> {
+            passenger.setVelocity(vec);
+            particle(passenger);
 
-        // if more player are on each other, set the remaining players as passengers
-        List<Entity> passengerList = passenger.getPassengers();
-        if (!passengerList.isEmpty()) {
-            player.addPassenger(passengerList.get(0));
-        }
+            // if more player are on each other, set the remaining players as passengers
+            List<Entity> passengerList = passenger.getPassengers();
+            if (!passengerList.isEmpty()) {
+                player.addPassenger(passengerList.get(0));
+            }
+        }, 1);
     }
 
     /**

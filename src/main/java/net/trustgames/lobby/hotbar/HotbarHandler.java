@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
  * Events which set, change, update or remove the hotbar items.
  * Also handles the item move, drop, drag
  */
-public class HotbarListeners implements Listener {
+public class HotbarHandler implements Listener {
 
     @EventHandler
     private void onPlayerJoin(PlayerJoinEvent event) {

@@ -1,4 +1,4 @@
-package net.trustgames.lobby.config.session;
+package net.trustgames.lobby.join_leave_messages;
 
 import net.kyori.adventure.text.Component;
 import net.trustgames.core.utils.MiniMessageUtils;

@@ -1,4 +1,4 @@
-package net.trustgames.lobby.npcs;
+package net.trustgames.lobby.npc;
 
 import net.trustgames.lobby.Lobby;
 import org.bukkit.Bukkit;

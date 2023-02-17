@@ -1,7 +1,6 @@
-package net.trustgames.lobby.player_session;
+package net.trustgames.lobby.join_leave_messages;
 
 import net.trustgames.core.cache.EntityCache;
-import net.trustgames.lobby.config.session.JoinLeaveMessagesConfig;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -9,7 +8,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.UUID;
 
-public class JoinLeaveMessages implements Listener {
+public class JoinLeaveMessagesHandler implements Listener {
 
     @EventHandler
     private void onPlayerJoin(PlayerJoinEvent event){

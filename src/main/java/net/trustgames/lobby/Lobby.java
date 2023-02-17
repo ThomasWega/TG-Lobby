@@ -2,16 +2,17 @@ package net.trustgames.lobby;
 
 import net.trustgames.core.Core;
 import net.trustgames.core.managers.ConfigManager;
-import net.trustgames.lobby.movement.DoubleJump;
-import net.trustgames.lobby.gamerules.LobbyGamerules;
-import net.trustgames.lobby.hotbar.HotbarListeners;
-import net.trustgames.lobby.movement.PiggyBack;
-import net.trustgames.lobby.player_session.JoinLeaveMessages;
-import net.trustgames.lobby.npcs.NPCConfig;
-import net.trustgames.lobby.npcs.SpawnNPCS;
-import net.trustgames.lobby.spawn.SetSpawnCommand;
-import net.trustgames.lobby.spawn.Spawn;
-import net.trustgames.lobby.spawn.SpawnCommand;
+import net.trustgames.lobby.hotbar.HotbarHandler;
+import net.trustgames.lobby.movement.double_jump.DoubleJump;
+import net.trustgames.lobby.movement.piggyback.PiggyBack;
+import net.trustgames.lobby.join_leave_messages.JoinLeaveMessagesHandler;
+import net.trustgames.lobby.npc.NPCConfig;
+import net.trustgames.lobby.npc.NPCHandler;
+import net.trustgames.lobby.protection.LobbyGamerulesHandler;
+import net.trustgames.lobby.protection.build.BlockProtectionHandler;
+import net.trustgames.lobby.spawn.commands.SetSpawnCommand;
+import net.trustgames.lobby.spawn.SpawnHandler;
+import net.trustgames.lobby.spawn.commands.SpawnCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
@@ -39,20 +40,22 @@ public final class Lobby extends JavaPlugin {
 
         /* SIDE ADDITIONS
         - hover on player name in join/leave messages, add info
+        - add permissions for join/leave messages
         - piggyback ignore when on vanish
         - piggyback toggle
          */
 
-        // TODO Add permissions for join/leave messages
-        // TODO block place/break
-        // TODO piggyback pvp - cancel event (need to use different vectors as the player has no velocity when pvp is off or cancelled)
+        // TODO add /spawn argument as player with staff permission
+        // TODO /build add argument player with staff permission
+        // TODO maybe move the npcHandler to core plugin???
+
 
         // create a data folder
         if (getDataFolder().mkdirs()){
             getLogger().warning("Created main plugin folder");
         }
 
-        LobbyGamerules.setGamerules();
+        LobbyGamerulesHandler.setGamerules();
 
         registerEvents();
         registerCommands();
@@ -68,12 +71,13 @@ public final class Lobby extends JavaPlugin {
     private void registerEvents(){
         PluginManager pluginManager = getServer().getPluginManager();
 
-        pluginManager.registerEvents(new Spawn(this), this);
-        pluginManager.registerEvents(new HotbarListeners(), this);
+        pluginManager.registerEvents(new SpawnHandler(this), this);
+        pluginManager.registerEvents(new HotbarHandler(), this);
         pluginManager.registerEvents(new DoubleJump(this), this);
         pluginManager.registerEvents(new PiggyBack(this), this);
-        pluginManager.registerEvents(new JoinLeaveMessages(), this);
-        pluginManager.registerEvents(new SpawnNPCS(this, core), this);
+        pluginManager.registerEvents(new JoinLeaveMessagesHandler(), this);
+        pluginManager.registerEvents(new NPCHandler(this), this);
+        pluginManager.registerEvents(new BlockProtectionHandler(), this);
     }
 
     private void registerCommands(){
@@ -82,6 +86,7 @@ public final class Lobby extends JavaPlugin {
         HashMap<PluginCommand, CommandExecutor> cmdList = new HashMap<>();
         cmdList.put(getCommand("setspawn"), new SetSpawnCommand(this));
         cmdList.put(getCommand("spawn"), new SpawnCommand(this));
+        cmdList.put(getCommand("build"), new BlockProtectionHandler());
 
         for (PluginCommand cmd : cmdList.keySet()) {
             cmd.setExecutor(cmdList.get(cmd));

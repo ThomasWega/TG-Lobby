@@ -1,4 +1,4 @@
-package net.trustgames.lobby.npcs;
+package net.trustgames.lobby.npc;
 
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.comphenix.protocol.wrappers.Pair;
@@ -26,7 +26,7 @@ import java.util.*;
 /**
  * Class used to spawn all the npcs and holograms
  */
-public class SpawnNPCS implements Listener {
+public class NPCHandler implements Listener {
 
     private final Lobby lobby;
 
@@ -38,7 +38,7 @@ public class SpawnNPCS implements Listener {
     private final NPCConfig npcConfig;
 
 
-    public SpawnNPCS(Lobby lobby, Core core) {
+    public NPCHandler(Lobby lobby) {
         this.lobby = lobby;
         this.core = lobby.getCore();
         this.npcManager = new NPCManager(core);

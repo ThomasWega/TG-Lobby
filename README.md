@@ -20,6 +20,9 @@ __- LORD:__
 __- TITAN:__  
 
 __- STAFF:__  
+build command
+build <player> command
 
 __- ADMIN:__  
 setspawn command  
+spawn <player> command

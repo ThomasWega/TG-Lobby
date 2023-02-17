@@ -1,11 +1,10 @@
-package net.trustgames.lobby.movement;
+package net.trustgames.lobby.movement.double_jump;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.sound.Sound;
 import net.trustgames.core.cache.EntityCache;
 import net.trustgames.lobby.Lobby;
-import net.trustgames.lobby.config.movement.DoubleJumpConfig;
 import org.bukkit.*;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -70,10 +69,16 @@ public class DoubleJump implements Listener {
         double ver = DoubleJumpConfig.VER.getDouble();
 
         if (player.isSprinting()){
-            player.setVelocity(player.getLocation().getDirection().multiply(hor_run).setY(ver_run));
+            player.setVelocity(player.getLocation().getDirection().normalize()
+                    .multiply(hor_run)
+                    .setY(ver_run)
+                    .normalize());
         }
         else{
-            player.setVelocity(player.getLocation().getDirection().multiply(hor).setY(ver));
+            player.setVelocity(player.getLocation().getDirection().normalize()
+                    .multiply(hor)
+                    .setY(ver)
+                    .normalize());
         }
 
         Audience.audience(Bukkit.getOnlinePlayers()).playSound(sound, player);

@@ -1,10 +1,10 @@
-package net.trustgames.lobby.gamerules;
+package net.trustgames.lobby.protection;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.World;
 
-public class LobbyGamerules {
+public class LobbyGamerulesHandler {
 
     public static void setGamerules() {
 

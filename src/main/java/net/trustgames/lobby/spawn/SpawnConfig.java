@@ -1,8 +1,8 @@
-package net.trustgames.lobby.config.command;
+package net.trustgames.lobby.spawn;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.trustgames.core.config.command.CommandConfig;
+import net.trustgames.core.config.CommandConfig;
 
 public enum SpawnConfig {
     SPAWN_TP(CommandConfig.PREFIX + "<dark_gray>You've been teleported to the spawn location");

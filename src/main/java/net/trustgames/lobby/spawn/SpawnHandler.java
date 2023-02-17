@@ -18,11 +18,11 @@ import java.io.File;
  * Events which handle the teleportation to spawn on player join or death.
  * Also has method to get the spawn.yml file
  */
-public class Spawn implements Listener {
+public class SpawnHandler implements Listener {
 
     private final Lobby lobby;
 
-    public Spawn(Lobby lobby) {
+    public SpawnHandler(Lobby lobby) {
         this.lobby = lobby;
     }
 

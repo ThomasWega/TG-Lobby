@@ -1,12 +1,13 @@
-package net.trustgames.lobby.spawn;
+package net.trustgames.lobby.spawn.commands;
 
 import net.trustgames.core.Core;
 import net.trustgames.core.cache.EntityCache;
-import net.trustgames.core.config.command.CommandConfig;
-import net.trustgames.core.config.cooldown.CooldownConfig;
+import net.trustgames.core.config.CommandConfig;
+import net.trustgames.core.config.CooldownConfig;
 import net.trustgames.core.managers.CooldownManager;
 import net.trustgames.lobby.Lobby;
-import net.trustgames.lobby.config.command.LobbyCommandConfig;
+import net.trustgames.lobby.config.LobbyCommandConfig;
+import net.trustgames.lobby.spawn.SpawnHandler;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -32,7 +33,7 @@ public class SpawnCommand implements CommandExecutor {
 
         Core core = lobby.getCore();
         CooldownManager cooldownManager = core.cooldownManager;
-        Spawn spawn = new Spawn(lobby);
+        SpawnHandler spawn = new SpawnHandler(lobby);
 
         YamlConfiguration config = YamlConfiguration.loadConfiguration(spawn.getSpawnFile());
 
