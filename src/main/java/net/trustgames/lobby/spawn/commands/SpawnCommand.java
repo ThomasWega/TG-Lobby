@@ -31,6 +31,7 @@ public class SpawnCommand implements CommandExecutor {
         this.lobby = lobby;
     }
 
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 

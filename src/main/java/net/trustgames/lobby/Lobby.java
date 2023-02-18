@@ -46,6 +46,7 @@ public final class Lobby extends JavaPlugin {
          */
 
         // TODO maybe move the npcHandler to core plugin???
+        // TODO use lamp
 
 
         // create a data folder
