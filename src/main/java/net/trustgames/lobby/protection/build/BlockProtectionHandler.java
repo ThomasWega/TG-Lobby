@@ -1,8 +1,10 @@
 package net.trustgames.lobby.protection.build;
 
+import net.kyori.adventure.text.Component;
 import net.trustgames.core.cache.EntityCache;
 import net.trustgames.core.config.CommandConfig;
 import net.trustgames.lobby.config.LobbyPermissionConfig;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -54,14 +56,39 @@ public class BlockProtectionHandler implements Listener, CommandExecutor {
                 player.sendMessage(CommandConfig.COMMAND_NO_PERM.getText());
                 return true;
             }
+
             UUID uuid = EntityCache.getUUID(player);
-            if (allowedPlayers.contains(uuid)) {
-                allowedPlayers.remove(uuid);
-                player.sendMessage(BuildProtectionConfig.OFF.getMessage());
+            Player target;
+            if(args.length >= 1){
+                for (String arg : args) {
+                    target = Bukkit.getPlayer(arg);
+
+                    if (target == null) {
+                        player.sendMessage(CommandConfig.COMMAND_INVALID_PLAYER.addName(Component.text(arg)));
+                        return true;
+                    }
+
+                    UUID uuid2 = EntityCache.getUUID(target);
+                    if (allowedPlayers.contains(uuid2)) {
+                        allowedPlayers.remove(uuid2);
+                        target.sendMessage(BuildProtectionConfig.OFF.getMessage());
+                        player.sendMessage(BuildProtectionConfig.OFF_OTHER.addName(Component.text(target.getName())));
+                    } else {
+                        allowedPlayers.add(uuid2);
+                        target.sendMessage(BuildProtectionConfig.ON.getMessage());
+                        player.sendMessage(BuildProtectionConfig.ON_OTHER.addName(Component.text(target.getName())));
+                    }
+                }
             } else {
-                allowedPlayers.add(uuid);
-                player.sendMessage(BuildProtectionConfig.ON.getMessage());
+                if (allowedPlayers.contains(uuid)) {
+                    allowedPlayers.remove(uuid);
+                    player.sendMessage(BuildProtectionConfig.OFF.getMessage());
+                } else {
+                    allowedPlayers.add(uuid);
+                    player.sendMessage(BuildProtectionConfig.ON.getMessage());
+                }
             }
+
         } else {
             sender.sendMessage(CommandConfig.COMMAND_ONLY_PLAYER.value.toString());
         }

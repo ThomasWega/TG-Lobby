@@ -1,13 +1,16 @@
 package net.trustgames.lobby.spawn.commands;
 
+import net.kyori.adventure.text.Component;
 import net.trustgames.core.Core;
 import net.trustgames.core.cache.EntityCache;
 import net.trustgames.core.config.CommandConfig;
 import net.trustgames.core.config.CooldownConfig;
 import net.trustgames.core.managers.CooldownManager;
 import net.trustgames.lobby.Lobby;
-import net.trustgames.lobby.config.LobbyCommandConfig;
+import net.trustgames.lobby.config.LobbyPermissionConfig;
+import net.trustgames.lobby.spawn.SpawnConfig;
 import net.trustgames.lobby.spawn.SpawnHandler;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -40,16 +43,32 @@ public class SpawnCommand implements CommandExecutor {
         if (sender instanceof Player player) {
 
             // if the player has a cooldown on this command
-            if (cooldownManager.commandCooldown(EntityCache.getUUID(player), CooldownConfig.MEDIUM.value)){
-                return true;
-            }
+            if (!player.hasPermission(LobbyPermissionConfig.STAFF.permission))
+              if (cooldownManager.commandCooldown(EntityCache.getUUID(player), CooldownConfig.MEDIUM.value)){
+                  return true;
+              }
 
             Location location = config.getLocation("spawn.location");
 
             if (location != null) {
-                player.teleport(location);
+                Player target = player;
+                if(args.length >= 1 && player.hasPermission(LobbyPermissionConfig.STAFF.permission)){
+                    for (String arg : args) {
+                        target = Bukkit.getPlayer(arg);
 
-                player.sendMessage(LobbyCommandConfig.SPAWN_TP.getMessage());
+                        if (target == null) {
+                            player.sendMessage(CommandConfig.COMMAND_INVALID_PLAYER.addName(Component.text(arg)));
+                            return true;
+                        }
+
+                        target.teleport(location);
+                        target.sendMessage(SpawnConfig.SPAWN_TP.getMessage());
+                        player.sendMessage(SpawnConfig.SPAWN_TP_OTHER.getMessage());
+                    }
+                } else {
+                    target.teleport(location);
+                    target.sendMessage(SpawnConfig.SPAWN_TP.getMessage());
+                }
             } else {
                 player.sendMessage(ChatColor.RED + "Spawn location isn't set!");
             }

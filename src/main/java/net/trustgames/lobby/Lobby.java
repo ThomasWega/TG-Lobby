@@ -45,8 +45,6 @@ public final class Lobby extends JavaPlugin {
         - piggyback toggle
          */
 
-        // TODO add /spawn argument as player with staff permission
-        // TODO /build add argument player with staff permission
         // TODO maybe move the npcHandler to core plugin???
 
 
