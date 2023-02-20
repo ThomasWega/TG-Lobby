@@ -3,15 +3,15 @@ package net.trustgames.lobby;
 import net.trustgames.core.Core;
 import net.trustgames.core.managers.ConfigManager;
 import net.trustgames.lobby.hotbar.HotbarHandler;
+import net.trustgames.lobby.join_leave_messages.JoinLeaveMessagesHandler;
 import net.trustgames.lobby.movement.double_jump.DoubleJump;
 import net.trustgames.lobby.movement.piggyback.PiggyBack;
-import net.trustgames.lobby.join_leave_messages.JoinLeaveMessagesHandler;
 import net.trustgames.lobby.npc.NPCConfig;
 import net.trustgames.lobby.npc.NPCHandler;
 import net.trustgames.lobby.protection.LobbyGamerulesHandler;
 import net.trustgames.lobby.protection.build.BlockProtectionHandler;
-import net.trustgames.lobby.spawn.commands.SetSpawnCommand;
 import net.trustgames.lobby.spawn.SpawnHandler;
+import net.trustgames.lobby.spawn.commands.SetSpawnCommand;
 import net.trustgames.lobby.spawn.commands.SpawnCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
@@ -46,8 +46,6 @@ public final class Lobby extends JavaPlugin {
          */
 
         // TODO maybe move the npcHandler to core plugin???
-        // TODO use lamp
-
 
         // create a data folder
         if (getDataFolder().mkdirs()){
