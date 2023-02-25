@@ -87,6 +87,8 @@ public class NPCHandler implements Listener {
      * @param player Player that the NPC will be facing
      */
     private void lookAtPlayer(Player player){
+        if(!player.isOnline()) return;
+
         YamlConfiguration config = YamlConfiguration.loadConfiguration(npcConfig.getNPCFile());
         UUID uuid = EntityCache.getUUID(player);
 
@@ -105,6 +107,8 @@ public class NPCHandler implements Listener {
      * @param player Player to spawn the NPCS for
      */
     private void spawn(Player player){
+        if(!player.isOnline()) return;
+
         YamlConfiguration config = YamlConfiguration.loadConfiguration(npcConfig.getNPCFile());
         UUID uuid = EntityCache.getUUID(player);
         Set<String> keys = Objects.requireNonNull(config.getConfigurationSection("npcs")).getKeys(false);
@@ -132,6 +136,8 @@ public class NPCHandler implements Listener {
      * @param player Player to set the data for NPCs to
      */
     private void setData(Player player){
+        if(!player.isOnline()) return;
+
         Bukkit.getScheduler().runTaskLater(lobby, () -> {
             YamlConfiguration config = YamlConfiguration.loadConfiguration(npcConfig.getNPCFile());
             UUID uuid = EntityCache.getUUID(player);
@@ -178,6 +184,8 @@ public class NPCHandler implements Listener {
      * @param player Player to hide the NPCs for
      */
     private void hide(Player player){
+        if(!player.isOnline()) return;
+
         Bukkit.getScheduler().runTaskLater(core, () -> {
             UUID uuid = EntityCache.getUUID(player);
             for (ServerPlayer npc : npcs.get(uuid)) {
