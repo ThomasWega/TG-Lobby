@@ -29,15 +29,16 @@ public class BlockProtectionHandler implements Listener, CommandExecutor {
      * the event is cancelled.
      */
     @EventHandler
-    private void onBlockPlace(BlockPlaceEvent event){
+    private void onBlockPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
         UUID uuid = EntityCache.getUUID(player);
 
         if (!allowedPlayers.contains(uuid))
             event.setCancelled(true);
     }
+
     @EventHandler
-    private void onBlockBreak(BlockBreakEvent event){
+    private void onBlockBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
         UUID uuid = EntityCache.getUUID(player);
         if (!allowedPlayers.contains(uuid))
@@ -51,15 +52,15 @@ public class BlockProtectionHandler implements Listener, CommandExecutor {
      */
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (sender instanceof Player player){
-            if (!player.hasPermission(LobbyPermissionConfig.STAFF.permission)){
+        if (sender instanceof Player player) {
+            if (!player.hasPermission(LobbyPermissionConfig.STAFF.permission)) {
                 player.sendMessage(CommandConfig.COMMAND_NO_PERM.getText());
                 return true;
             }
 
             UUID uuid = EntityCache.getUUID(player);
             Player target;
-            if(args.length >= 1){
+            if (args.length >= 1) {
                 for (String arg : args) {
                     target = Bukkit.getPlayer(arg);
 
@@ -96,7 +97,7 @@ public class BlockProtectionHandler implements Listener, CommandExecutor {
     }
 
     @EventHandler
-    private void onPlayerQuit(PlayerQuitEvent event){
+    private void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         UUID uuid = EntityCache.getUUID(player);
 

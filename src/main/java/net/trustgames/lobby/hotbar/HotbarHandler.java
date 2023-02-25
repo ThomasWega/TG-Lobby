@@ -36,7 +36,7 @@ public class HotbarHandler implements Listener {
     }
 
     @EventHandler
-    private void itemDragEvent(InventoryDragEvent event){
+    private void itemDragEvent(InventoryDragEvent event) {
         event.setCancelled(true);
     }
 

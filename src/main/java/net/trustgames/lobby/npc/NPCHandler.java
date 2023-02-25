@@ -36,7 +36,10 @@ public class NPCHandler implements Listener {
     private final HoloManager holoManager;
 
     private final NPCConfig npcConfig;
-
+    // stores list of all the npcs for given player
+    private final HashMap<UUID, List<ServerPlayer>> npcs = new HashMap<>();
+    // stores list of all the npcs that should be looking at the player
+    private final HashMap<ServerPlayer, Location> npcsLookAtPlayer = new HashMap<>();
 
     public NPCHandler(Lobby lobby) {
         this.lobby = lobby;
@@ -46,14 +49,8 @@ public class NPCHandler implements Listener {
         npcConfig = new NPCConfig(lobby);
     }
 
-    // stores list of all the npcs for given player
-    private final HashMap<UUID, List<ServerPlayer>> npcs = new HashMap<>();
-
-    // stores list of all the npcs that should be looking at the player
-    private final HashMap<ServerPlayer, Location> npcsLookAtPlayer = new HashMap<>();
-
     @EventHandler
-    private void onPlayerJoin(PlayerJoinEvent event){
+    private void onPlayerJoin(PlayerJoinEvent event) {
 
         Player player = event.getPlayer();
         UUID uuid = EntityCache.getUUID(player);
@@ -67,16 +64,16 @@ public class NPCHandler implements Listener {
     }
 
     @EventHandler
-    private void onPlayerQuit(PlayerQuitEvent event){
+    private void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         UUID uuid = EntityCache.getUUID(player);
         npcs.remove(uuid);
     }
 
     @EventHandler
-    private void onPlayerMove(PlayerMoveEvent event){
+    private void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
-        for (ServerPlayer npc : npcsLookAtPlayer.keySet()){
+        for (ServerPlayer npc : npcsLookAtPlayer.keySet()) {
             npcManager.lookAtPlayer(npc, player, npcsLookAtPlayer.get(npc));
         }
     }
@@ -86,13 +83,13 @@ public class NPCHandler implements Listener {
      *
      * @param player Player that the NPC will be facing
      */
-    private void lookAtPlayer(Player player){
-        if(!player.isOnline()) return;
+    private void lookAtPlayer(Player player) {
+        if (!player.isOnline()) return;
 
         YamlConfiguration config = YamlConfiguration.loadConfiguration(npcConfig.getNPCFile());
         UUID uuid = EntityCache.getUUID(player);
 
-        for (ServerPlayer npc : npcs.get(uuid)){
+        for (ServerPlayer npc : npcs.get(uuid)) {
             boolean lookAtPlayer = config.getBoolean("npcs." + npc.displayName + ".look-at-player");
             if (lookAtPlayer) {
                 Location location = config.getLocation("npcs." + npc.displayName + ".location");
@@ -106,15 +103,15 @@ public class NPCHandler implements Listener {
      *
      * @param player Player to spawn the NPCS for
      */
-    private void spawn(Player player){
-        if(!player.isOnline()) return;
+    private void spawn(Player player) {
+        if (!player.isOnline()) return;
 
         YamlConfiguration config = YamlConfiguration.loadConfiguration(npcConfig.getNPCFile());
         UUID uuid = EntityCache.getUUID(player);
         Set<String> keys = Objects.requireNonNull(config.getConfigurationSection("npcs")).getKeys(false);
         List<ServerPlayer> playerNpcs = new ArrayList<>();
 
-        for (String name : keys){
+        for (String name : keys) {
             Location location = config.getLocation("npcs." + name + ".location");
             List<String> holoText = config.getStringList("npcs." + name + ".holo-text");
             double elevateY = config.getDouble("npcs." + name + ".holo-elevate");
@@ -135,13 +132,13 @@ public class NPCHandler implements Listener {
      *
      * @param player Player to set the data for NPCs to
      */
-    private void setData(Player player){
-        if(!player.isOnline()) return;
+    private void setData(Player player) {
+        if (!player.isOnline()) return;
 
         Bukkit.getScheduler().runTaskLater(lobby, () -> {
             YamlConfiguration config = YamlConfiguration.loadConfiguration(npcConfig.getNPCFile());
             UUID uuid = EntityCache.getUUID(player);
-            for(ServerPlayer npc : npcs.get(uuid)) {
+            for (ServerPlayer npc : npcs.get(uuid)) {
                 Location location = config.getLocation("npcs." + npc.displayName + ".location");
                 assert location != null;
                 float yaw = location.getYaw();
@@ -183,8 +180,8 @@ public class NPCHandler implements Listener {
      *
      * @param player Player to hide the NPCs for
      */
-    private void hide(Player player){
-        if(!player.isOnline()) return;
+    private void hide(Player player) {
+        if (!player.isOnline()) return;
 
         Bukkit.getScheduler().runTaskLater(core, () -> {
             UUID uuid = EntityCache.getUUID(player);

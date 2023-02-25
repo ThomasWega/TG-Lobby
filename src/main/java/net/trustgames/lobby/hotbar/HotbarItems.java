@@ -25,7 +25,8 @@ public class HotbarItems {
 
     static Inventory inventory;
 
-    /** list of hotbar items to add
+    /**
+     * list of hotbar items to add
      *
      * @param player Player to set items to
      */
@@ -69,16 +70,14 @@ public class HotbarItems {
         hideMeta.displayName(Component.text(ChatColor.WHITE + "Hide Players" + ChatColor.GRAY + " (Use)"));
 
         List<Component> hideLore = new ArrayList<>();
-        if (Bukkit.getOnlinePlayers().size() == 1){
+        if (Bukkit.getOnlinePlayers().size() == 1) {
             hideLore.add(Component.text(""));
             hideLore.add(Component.text(ChatColor.DARK_GRAY + "Nobody else is online :("));
-        }
-        else if (Bukkit.getOnlinePlayers().size() == 2){
+        } else if (Bukkit.getOnlinePlayers().size() == 2) {
             hideLore.add(Component.text(""));
             hideLore.add(Component.text(ChatColor.DARK_GRAY + "Hide " + (Bukkit.getOnlinePlayers().size() - 1) + " player by"));
             hideLore.add(Component.text(ChatColor.DARK_GRAY + "clicking with this item"));
-        }
-        else {
+        } else {
             hideLore.add(Component.text(""));
             hideLore.add(Component.text(ChatColor.DARK_GRAY + "Hide " + (Bukkit.getOnlinePlayers().size() - 1) + " players by"));
             hideLore.add(Component.text(ChatColor.DARK_GRAY + "clicking with this item"));
@@ -90,10 +89,9 @@ public class HotbarItems {
         // loop through the online player and set for each one the new amount
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             if (hideStack.getAmount() <= 64) {
-                if (Bukkit.getOnlinePlayers().size() == 1){
+                if (Bukkit.getOnlinePlayers().size() == 1) {
                     hideStack.setAmount(1);
-                }
-                else{
+                } else {
                     hideStack.setAmount(Bukkit.getOnlinePlayers().size() - 1);
                 }
                 onlinePlayer.getInventory().setItem(6, hideStack);

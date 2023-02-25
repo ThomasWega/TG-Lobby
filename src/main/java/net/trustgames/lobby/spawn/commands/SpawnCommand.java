@@ -21,7 +21,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 /**
- When a player executes /spawn, it teleports the player to the spawn location from spawn.yml (if any was set)
+ * When a player executes /spawn, it teleports the player to the spawn location from spawn.yml (if any was set)
  */
 public class SpawnCommand implements CommandExecutor {
 
@@ -45,15 +45,15 @@ public class SpawnCommand implements CommandExecutor {
 
             // if the player has a cooldown on this command
             if (!player.hasPermission(LobbyPermissionConfig.STAFF.permission))
-              if (cooldownManager.commandCooldown(EntityCache.getUUID(player), CooldownConfig.MEDIUM.value)){
-                  return true;
-              }
+                if (cooldownManager.commandCooldown(EntityCache.getUUID(player), CooldownConfig.MEDIUM.value)) {
+                    return true;
+                }
 
             Location location = config.getLocation("spawn.location");
 
             if (location != null) {
                 Player target = player;
-                if(args.length >= 1 && player.hasPermission(LobbyPermissionConfig.STAFF.permission)){
+                if (args.length >= 1 && player.hasPermission(LobbyPermissionConfig.STAFF.permission)) {
                     for (String arg : args) {
                         target = Bukkit.getPlayer(arg);
 

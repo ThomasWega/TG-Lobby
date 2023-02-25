@@ -28,14 +28,14 @@ public enum PiggyBackConfig {
     /**
      * @return Particle of the enum
      */
-    public Particle getParticle(){
+    public Particle getParticle() {
         return Particle.valueOf(String.valueOf(value));
     }
 
     /**
      * @return Sound key of the enum
      */
-    public Key getSoundKey(){
+    public Key getSoundKey() {
         //noinspection PatternValidation
         return Key.key(String.valueOf(value));
     }

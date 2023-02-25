@@ -21,21 +21,19 @@ import java.util.List;
 
 public class PiggyBack implements Listener {
 
-    private final Lobby lobby;
-
-    public PiggyBack(Lobby lobby) {
-        this.lobby = lobby;
-    }
-
     private static final ParticleBuilder particle = new ParticleBuilder(
             PiggyBackConfig.PARTICLE.getParticle())
             .count((int) PiggyBackConfig.PARTICLE_COUNT.getDouble());
-
     private static final Sound sound = Sound.sound(
             PiggyBackConfig.SOUND.getSoundKey(),
             Sound.Source.AMBIENT,
             (float) PiggyBackConfig.SOUND_VOLUME.getDouble(),
             (float) PiggyBackConfig.SOUND_PITCH.getDouble());
+    private final Lobby lobby;
+
+    public PiggyBack(Lobby lobby) {
+        this.lobby = lobby;
+    }
 
     @EventHandler
     private void onPlayerRightClick(PlayerInteractEntityEvent event) {
@@ -68,7 +66,7 @@ public class PiggyBack implements Listener {
      * has 1 passenger, the next passenger will be set as the passenger of
      * the last passenger on the player
      *
-     * @param player Player holding the passengers
+     * @param player  Player holding the passengers
      * @param clicked Player that was clicked and will become a passenger now
      */
     private void ride(Player player, Player clicked) {
@@ -90,7 +88,7 @@ public class PiggyBack implements Listener {
      * Player can have more passengers, but can only throw one at time. The rest
      * of the players will still remain his passengers
      *
-     * @param player Player that damaged the passenger
+     * @param player    Player that damaged the passenger
      * @param passenger Player that is sitting on the player
      */
     private void throwPassenger(Player player, Player passenger) {
@@ -129,10 +127,12 @@ public class PiggyBack implements Listener {
         new BukkitRunnable() {
 
             int i = 0;
+
             @Override
             public void run() {
                 if (i == 30) cancel();
-                if (!(passenger.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.AIR)) cancel();
+                if (!(passenger.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.AIR))
+                    cancel();
 
                 particle.location(passenger.getLocation()).spawn();
                 i++;

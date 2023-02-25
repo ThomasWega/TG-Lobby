@@ -48,7 +48,7 @@ public final class Lobby extends JavaPlugin {
         // TODO maybe move the npcHandler to core plugin???
 
         // create a data folder
-        if (getDataFolder().mkdirs()){
+        if (getDataFolder().mkdirs()) {
             getLogger().warning("Created main plugin folder");
         }
 
@@ -65,7 +65,7 @@ public final class Lobby extends JavaPlugin {
     public void onDisable() {
     }
 
-    private void registerEvents(){
+    private void registerEvents() {
         PluginManager pluginManager = getServer().getPluginManager();
 
         pluginManager.registerEvents(new SpawnHandler(this), this);
@@ -77,7 +77,7 @@ public final class Lobby extends JavaPlugin {
         pluginManager.registerEvents(new BlockProtectionHandler(), this);
     }
 
-    private void registerCommands(){
+    private void registerCommands() {
 
         // List of command to register
         HashMap<PluginCommand, CommandExecutor> cmdList = new HashMap<>();
@@ -90,17 +90,17 @@ public final class Lobby extends JavaPlugin {
         }
     }
 
-    private void createConfigs(){
+    private void createConfigs() {
         ConfigManager.createConfig(new File(getDataFolder(), "spawn.yml"));
         ConfigManager.createConfig(new File(getDataFolder(), "npcs.yml"));
     }
 
-    private void createConfigsDefaults(){
+    private void createConfigsDefaults() {
         NPCConfig npcConfig = new NPCConfig(this);
         npcConfig.createDefaults();
     }
-    
-    
+
+
     /**
      * @return The Core plugin instance of TrustGames.net
      */

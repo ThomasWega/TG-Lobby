@@ -5,7 +5,9 @@ import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.sound.Sound;
 import net.trustgames.core.cache.EntityCache;
 import net.trustgames.lobby.Lobby;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,25 +23,21 @@ import java.util.UUID;
 
 public class DoubleJump implements Listener {
 
-    private final Lobby lobby;
-
-    public DoubleJump(Lobby lobby) {
-        this.lobby = lobby;
-    }
-
-    private final Set<UUID> cooldowns = new HashSet<>();
-
     private static final ParticleBuilder particle = new ParticleBuilder(
             DoubleJumpConfig.PARTICLE.getParticle())
             .count((int) DoubleJumpConfig.PARTICLE_COUNT.getDouble())
             .offset(0.5d, 0.5d, 0.5d);
-
     private static final Sound sound = Sound.sound(
             DoubleJumpConfig.SOUND.getSoundKey(),
             Sound.Source.AMBIENT,
             (float) DoubleJumpConfig.SOUND_VOLUME.getDouble(),
             (float) DoubleJumpConfig.SOUND_PITCH.getDouble());
+    private final Lobby lobby;
+    private final Set<UUID> cooldowns = new HashSet<>();
 
+    public DoubleJump(Lobby lobby) {
+        this.lobby = lobby;
+    }
 
     @EventHandler
     public void setFly(PlayerJoinEvent event) {
@@ -68,13 +66,12 @@ public class DoubleJump implements Listener {
         double hor = DoubleJumpConfig.HOR.getDouble();
         double ver = DoubleJumpConfig.VER.getDouble();
 
-        if (player.isSprinting()){
+        if (player.isSprinting()) {
             player.setVelocity(player.getLocation().getDirection().normalize()
                     .multiply(hor_run)
                     .setY(ver_run)
                     .normalize());
-        }
-        else{
+        } else {
             player.setVelocity(player.getLocation().getDirection().normalize()
                     .multiply(hor)
                     .setY(ver)
@@ -95,14 +92,15 @@ public class DoubleJump implements Listener {
      *
      * @param player Player to remove from the set
      */
-    public void removeFromSet(Player player){
+    public void removeFromSet(Player player) {
         UUID uuid = EntityCache.getUUID(player);
         new BukkitRunnable() {
             int i = 0;
+
             @Override
             public void run() {
                 if (!(player.getLocation().getBlock().getRelative(BlockFace.DOWN, 2)
-                        .getType() == Material.AIR) || i >= 7){
+                        .getType() == Material.AIR) || i >= 7) {
                     cooldowns.remove(uuid);
                     player.setAllowFlight(true);
                     cancel();

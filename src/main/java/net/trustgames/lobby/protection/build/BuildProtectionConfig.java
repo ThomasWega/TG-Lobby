@@ -12,7 +12,6 @@ public enum BuildProtectionConfig {
     OFF_OTHER(CommandConfig.PREFIX.value + "<dark_gray>You've disallowed player <player_name> to break or place blocks");
 
 
-
     private final String message;
 
     BuildProtectionConfig(String message) {
@@ -27,12 +26,12 @@ public enum BuildProtectionConfig {
     }
 
     /**
-     {@literal Replace <player_name> tag with given component}
+     * {@literal Replace <player_name> tag with given component}
      *
      * @param component Component to replace the tag with
      * @return New formatted Component with replaced component tag
      */
-    public Component addName(Component component){
+    public Component addName(Component component) {
         return MiniMessageUtils.addName(component).deserialize(message);
     }
 }
