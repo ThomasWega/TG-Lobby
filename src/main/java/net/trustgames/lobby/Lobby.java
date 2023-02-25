@@ -13,6 +13,7 @@ import net.trustgames.lobby.protection.build.BlockProtectionHandler;
 import net.trustgames.lobby.spawn.SpawnHandler;
 import net.trustgames.lobby.spawn.commands.SetSpawnCommand;
 import net.trustgames.lobby.spawn.commands.SpawnCommand;
+import net.trustgames.lobby.xpbar.PlayerLevelHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
@@ -46,6 +47,7 @@ public final class Lobby extends JavaPlugin {
          */
 
         // TODO maybe move the npcHandler to core plugin???
+        // TODO improve and finish hotbar
 
         // create a data folder
         if (getDataFolder().mkdirs()) {
@@ -75,6 +77,7 @@ public final class Lobby extends JavaPlugin {
         pluginManager.registerEvents(new JoinLeaveMessagesHandler(), this);
         pluginManager.registerEvents(new NPCHandler(this), this);
         pluginManager.registerEvents(new BlockProtectionHandler(), this);
+        pluginManager.registerEvents(new PlayerLevelHandler(this), this);
     }
 
     private void registerCommands() {
