@@ -27,7 +27,7 @@ public enum BuildProtectionConfig {
     }
 
     /**
-     * Replace component tag with given component
+     {@literal Replace <component> tag with given component}
      *
      * @param component Component to replace the tag with
      * @return New formatted Component with replaced component tag
