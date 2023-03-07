@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-public class NPCConfig {
+public final class NPCConfig {
 
     private final Lobby lobby;
 

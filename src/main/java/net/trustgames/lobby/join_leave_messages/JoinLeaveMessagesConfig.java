@@ -24,7 +24,7 @@ public enum JoinLeaveMessagesConfig {
      * @param uuid UUID of Player to replace the tags with info of
      * @return New formatted Component message with replaced tags
      */
-    public Component formatMessage(UUID uuid) {
+    public final Component formatMessage(UUID uuid) {
         return MiniMessageUtils.format(uuid).deserialize(message);
     }
 }

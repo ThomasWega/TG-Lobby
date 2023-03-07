@@ -26,7 +26,7 @@ import java.util.*;
 /**
  * Class used to spawn all the npcs and holograms
  */
-public class NPCHandler implements Listener {
+public final class NPCHandler implements Listener {
 
     private final Lobby lobby;
 

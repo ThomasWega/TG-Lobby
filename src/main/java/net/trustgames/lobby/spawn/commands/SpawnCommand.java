@@ -23,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * When a player executes /spawn, it teleports the player to the spawn location from spawn.yml (if any was set)
  */
-public class SpawnCommand implements CommandExecutor {
+public final class SpawnCommand implements CommandExecutor {
 
     private final Lobby lobby;
 
@@ -58,7 +58,7 @@ public class SpawnCommand implements CommandExecutor {
                         target = Bukkit.getPlayer(arg);
 
                         if (target == null) {
-                            player.sendMessage(CommandConfig.COMMAND_INVALID_PLAYER.addName(Component.text(arg)));
+                            player.sendMessage(CommandConfig.COMMAND_PLAYER_OFFLINE.addName(Component.text(arg)));
                             return true;
                         }
 
@@ -74,7 +74,7 @@ public class SpawnCommand implements CommandExecutor {
                 player.sendMessage(ChatColor.RED + "Spawn location isn't set!");
             }
         } else {
-            sender.sendMessage(CommandConfig.COMMAND_ONLY_PLAYER.getText());
+            sender.sendMessage(CommandConfig.COMMAND_PLAYER_ONLY.getText());
         }
         return true;
     }

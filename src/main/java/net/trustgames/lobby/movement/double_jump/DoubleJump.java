@@ -21,7 +21,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-public class DoubleJump implements Listener {
+public final class DoubleJump implements Listener {
 
     private static final ParticleBuilder particle = new ParticleBuilder(
             DoubleJumpConfig.PARTICLE.getParticle())

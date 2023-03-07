@@ -16,7 +16,7 @@
         <java.version>17</java.version>
         <minecraft.version>1.19.2-R0.1-SNAPSHOT</minecraft.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <tg.core>C:\Users\tomik\OneDrive\Documents\IntelliJ - Projects\TGCore\target\original-core-0.2-SNAPSHOT.jar</tg.core>
+        <tg.core>/Users/weglarz/Documents/IdeaProjects/TG-CORE/target/original-core-0.2-SNAPSHOT.jar</tg.core>
     </properties>
     <url>www.trustgames.net</url>
 

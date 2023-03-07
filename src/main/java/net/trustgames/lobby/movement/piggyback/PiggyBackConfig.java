@@ -21,21 +21,21 @@ public enum PiggyBackConfig {
     /**
      * @return Double value of the enum
      */
-    public double getDouble() {
+    public final double getDouble() {
         return ((double) value);
     }
 
     /**
      * @return Particle of the enum
      */
-    public Particle getParticle() {
+    public final Particle getParticle() {
         return Particle.valueOf(String.valueOf(value));
     }
 
     /**
      * @return Sound key of the enum
      */
-    public Key getSoundKey() {
+    public final Key getSoundKey() {
         //noinspection PatternValidation
         return Key.key(String.valueOf(value));
     }

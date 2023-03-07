@@ -21,7 +21,7 @@ import java.util.List;
  * Handles the creation, adding and updating of items
  * in the player's hotbar
  */
-public class HotbarItems {
+public final class HotbarItems {
 
     static Inventory inventory;
 

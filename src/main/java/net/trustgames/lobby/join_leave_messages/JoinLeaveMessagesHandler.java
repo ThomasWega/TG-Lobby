@@ -8,7 +8,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.UUID;
 
-public class JoinLeaveMessagesHandler implements Listener {
+public final class JoinLeaveMessagesHandler implements Listener {
 
     @EventHandler
     private void onPlayerJoin(PlayerJoinEvent event) {

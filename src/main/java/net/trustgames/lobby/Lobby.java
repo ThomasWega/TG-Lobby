@@ -48,6 +48,7 @@ public final class Lobby extends JavaPlugin {
 
         // TODO maybe move the npcHandler to core plugin???
         // TODO improve and finish hotbar
+        // TODO still using command executor
 
         // create a data folder
         if (getDataFolder().mkdirs()) {

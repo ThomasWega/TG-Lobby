@@ -19,7 +19,7 @@ import java.io.IOException;
  * When a player with proper permission executes /setspawn, it saves his location to the spawn.yml file
  * The players are then teleported there on login
  */
-public class SetSpawnCommand implements CommandExecutor {
+public final class SetSpawnCommand implements CommandExecutor {
 
     private final Lobby lobby;
 

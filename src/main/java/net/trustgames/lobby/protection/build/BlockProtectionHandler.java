@@ -20,7 +20,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-public class BlockProtectionHandler implements Listener, CommandExecutor {
+public final class BlockProtectionHandler implements Listener, CommandExecutor {
 
     private static final Set<UUID> allowedPlayers = new HashSet<>();
 
@@ -65,7 +65,7 @@ public class BlockProtectionHandler implements Listener, CommandExecutor {
                     target = Bukkit.getPlayer(arg);
 
                     if (target == null) {
-                        player.sendMessage(CommandConfig.COMMAND_INVALID_PLAYER.addName(Component.text(arg)));
+                        player.sendMessage(CommandConfig.COMMAND_PLAYER_OFFLINE.addName(Component.text(arg)));
                         return true;
                     }
 
@@ -91,7 +91,7 @@ public class BlockProtectionHandler implements Listener, CommandExecutor {
             }
 
         } else {
-            sender.sendMessage(CommandConfig.COMMAND_ONLY_PLAYER.value.toString());
+            sender.sendMessage(CommandConfig.COMMAND_PLAYER_ONLY.value.toString());
         }
         return true;
     }

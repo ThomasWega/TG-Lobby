@@ -4,7 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.World;
 
-public class LobbyGamerulesHandler {
+public final class LobbyGamerulesHandler {
 
     public static void setGamerules() {
 

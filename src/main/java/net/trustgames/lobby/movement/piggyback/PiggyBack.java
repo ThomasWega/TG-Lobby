@@ -19,7 +19,7 @@ import org.bukkit.util.Vector;
 
 import java.util.List;
 
-public class PiggyBack implements Listener {
+public final class PiggyBack implements Listener {
 
     private static final ParticleBuilder particle = new ParticleBuilder(
             PiggyBackConfig.PARTICLE.getParticle())

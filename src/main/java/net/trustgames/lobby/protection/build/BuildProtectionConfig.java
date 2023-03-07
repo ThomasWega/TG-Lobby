@@ -21,7 +21,7 @@ public enum BuildProtectionConfig {
     /**
      * @return Formatted component message
      */
-    public Component getMessage() {
+    public final Component getMessage() {
         return MiniMessage.miniMessage().deserialize(message);
     }
 
@@ -31,7 +31,7 @@ public enum BuildProtectionConfig {
      * @param component Component to replace the tag with
      * @return New formatted Component with replaced component tag
      */
-    public Component addName(Component component) {
+    public final Component addName(Component component) {
         return MiniMessageUtils.addName(component).deserialize(message);
     }
 }
