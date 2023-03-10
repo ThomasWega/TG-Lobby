@@ -2,7 +2,7 @@ package net.trustgames.lobby.spawn.commands;
 
 import net.kyori.adventure.text.Component;
 import net.trustgames.core.Core;
-import net.trustgames.core.cache.EntityCache;
+import net.trustgames.core.cache.UUIDCache;
 import net.trustgames.core.config.CommandConfig;
 import net.trustgames.core.config.CooldownConfig;
 import net.trustgames.core.managers.CooldownManager;
@@ -45,7 +45,7 @@ public final class SpawnCommand implements CommandExecutor {
 
             // if the player has a cooldown on this command
             if (!player.hasPermission(LobbyPermissionConfig.STAFF.permission))
-                if (cooldownManager.commandCooldown(EntityCache.getUUID(player), CooldownConfig.MEDIUM.value)) {
+                if (cooldownManager.commandCooldown(UUIDCache.get(player.getName()), CooldownConfig.MEDIUM.value)) {
                     return true;
                 }
 

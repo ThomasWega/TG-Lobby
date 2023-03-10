@@ -1,12 +1,11 @@
 package net.trustgames.lobby;
 
 import net.trustgames.core.Core;
-import net.trustgames.core.managers.ConfigManager;
+import net.trustgames.core.managers.FileManager;
 import net.trustgames.lobby.hotbar.HotbarHandler;
 import net.trustgames.lobby.join_leave_messages.JoinLeaveMessagesHandler;
 import net.trustgames.lobby.movement.double_jump.DoubleJump;
 import net.trustgames.lobby.movement.piggyback.PiggyBack;
-import net.trustgames.lobby.npc.NPCConfig;
 import net.trustgames.lobby.npc.NPCHandler;
 import net.trustgames.lobby.protection.LobbyGamerulesHandler;
 import net.trustgames.lobby.protection.build.BlockProtectionHandler;
@@ -61,7 +60,6 @@ public final class Lobby extends JavaPlugin {
         registerCommands();
 
         createConfigs();
-        createConfigsDefaults();
     }
 
     @Override
@@ -95,13 +93,14 @@ public final class Lobby extends JavaPlugin {
     }
 
     private void createConfigs() {
-        ConfigManager.createConfig(new File(getDataFolder(), "spawn.yml"));
-        ConfigManager.createConfig(new File(getDataFolder(), "npcs.yml"));
-    }
+        File[] configs = new File[]{
+                new File(getDataFolder(), "spawn.yml"),
+                new File(getDataFolder(), "npcs.yml")
+        };
 
-    private void createConfigsDefaults() {
-        NPCConfig npcConfig = new NPCConfig(this);
-        npcConfig.createDefaults();
+        for (File file : configs){
+            FileManager.createFile(this, file);
+        }
     }
 
 

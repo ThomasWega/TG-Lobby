@@ -1,7 +1,7 @@
 package net.trustgames.lobby.protection.build;
 
 import net.kyori.adventure.text.Component;
-import net.trustgames.core.cache.EntityCache;
+import net.trustgames.core.cache.UUIDCache;
 import net.trustgames.core.config.CommandConfig;
 import net.trustgames.lobby.config.LobbyPermissionConfig;
 import org.bukkit.Bukkit;
@@ -31,7 +31,7 @@ public final class BlockProtectionHandler implements Listener, CommandExecutor {
     @EventHandler
     private void onBlockPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
-        UUID uuid = EntityCache.getUUID(player);
+        UUID uuid = UUIDCache.get(player.getName());
 
         if (!allowedPlayers.contains(uuid))
             event.setCancelled(true);
@@ -40,7 +40,7 @@ public final class BlockProtectionHandler implements Listener, CommandExecutor {
     @EventHandler
     private void onBlockBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
-        UUID uuid = EntityCache.getUUID(player);
+        UUID uuid = UUIDCache.get(player.getName());
         if (!allowedPlayers.contains(uuid))
             event.setCancelled(true);
     }
@@ -58,7 +58,7 @@ public final class BlockProtectionHandler implements Listener, CommandExecutor {
                 return true;
             }
 
-            UUID uuid = EntityCache.getUUID(player);
+            UUID uuid = UUIDCache.get(player.getName());
             Player target;
             if (args.length >= 1) {
                 for (String arg : args) {
@@ -69,7 +69,7 @@ public final class BlockProtectionHandler implements Listener, CommandExecutor {
                         return true;
                     }
 
-                    UUID uuid2 = EntityCache.getUUID(target);
+                    UUID uuid2 = UUIDCache.get(target.getName());
                     if (allowedPlayers.contains(uuid2)) {
                         allowedPlayers.remove(uuid2);
                         target.sendMessage(BuildProtectionConfig.OFF.getMessage());
@@ -99,7 +99,7 @@ public final class BlockProtectionHandler implements Listener, CommandExecutor {
     @EventHandler
     private void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        UUID uuid = EntityCache.getUUID(player);
+        UUID uuid = UUIDCache.get(player.getName());
 
         allowedPlayers.remove(uuid);
     }

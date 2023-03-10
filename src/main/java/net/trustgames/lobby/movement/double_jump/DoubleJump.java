@@ -3,7 +3,7 @@ package net.trustgames.lobby.movement.double_jump;
 import com.destroystokyo.paper.ParticleBuilder;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.sound.Sound;
-import net.trustgames.core.cache.EntityCache;
+import net.trustgames.core.cache.UUIDCache;
 import net.trustgames.lobby.Lobby;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -49,7 +49,7 @@ public final class DoubleJump implements Listener {
     @EventHandler
     public void setVelocity(PlayerToggleFlightEvent event) {
         Player player = event.getPlayer();
-        UUID uuid = EntityCache.getUUID(player);
+        UUID uuid = UUIDCache.get(player.getName());
 
         if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR
                 || player.isFlying() || cooldowns.contains(uuid) || player.getVehicle() != null) return;
@@ -93,7 +93,7 @@ public final class DoubleJump implements Listener {
      * @param player Player to remove from the set
      */
     public void removeFromSet(Player player) {
-        UUID uuid = EntityCache.getUUID(player);
+        UUID uuid = UUIDCache.get(player.getName());
         new BukkitRunnable() {
             int i = 0;
 
@@ -113,7 +113,7 @@ public final class DoubleJump implements Listener {
     @EventHandler
     public void removePlayer(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        UUID uuid = EntityCache.getUUID(player);
+        UUID uuid = UUIDCache.get(player.getName());
 
         cooldowns.remove(uuid);
 

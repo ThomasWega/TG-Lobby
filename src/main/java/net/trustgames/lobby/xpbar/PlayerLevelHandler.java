@@ -1,11 +1,11 @@
 package net.trustgames.lobby.xpbar;
 
 import net.trustgames.core.Core;
-import net.trustgames.core.cache.EntityCache;
+import net.trustgames.core.cache.UUIDCache;
 import net.trustgames.core.config.database.player_data.PlayerDataType;
 import net.trustgames.core.config.database.player_data.PlayerDataUpdate;
 import net.trustgames.core.player.data.PlayerData;
-import net.trustgames.core.player.data.additional.level.PlayerLevel;
+import net.trustgames.core.utils.LevelUtils;
 import net.trustgames.lobby.Lobby;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -31,20 +31,19 @@ public final class PlayerLevelHandler implements Listener {
     @EventHandler
     private void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        UUID uuid = EntityCache.getUUID(player);
+        UUID uuid = UUIDCache.get(player.getName());
         PlayerData playerData = new PlayerData(core, uuid, PlayerDataType.XP);
-        PlayerLevel playerLevel = new PlayerLevel(core, uuid);
 
         new BukkitRunnable() {
             @Override
             public void run() {
                 if (!player.isOnline()) cancel();
-
-                playerData.getData(xp -> playerLevel.getLevel(level -> {
-                    float levelProgress = playerLevel.getProgress(xp);
+                playerData.getData(xp -> {
+                    int level = LevelUtils.getLevelByXp(xp);
+                    float levelProgress = LevelUtils.getProgress(xp);
                     player.setExp(levelProgress);
                     player.setLevel(level);
-                }));
+                });
             }
         }.runTaskTimer(lobby, 4, PlayerDataUpdate.INTERVAL.getTicks());
     }
