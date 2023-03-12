@@ -4,7 +4,6 @@ import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.comphenix.protocol.wrappers.Pair;
 import net.minecraft.server.level.ServerPlayer;
 import net.trustgames.core.Core;
-import net.trustgames.core.cache.UUIDCache;
 import net.trustgames.core.managers.packets.HoloManager;
 import net.trustgames.core.managers.packets.NPCManager;
 import net.trustgames.core.utils.ColorUtils;
@@ -36,7 +35,7 @@ public final class NPCHandler implements Listener {
 
     private final NPCConfig npcConfig;
     // stores list of all the npcs for given player
-    private final HashMap<UUID, List<ServerPlayer>> npcs = new HashMap<>();
+    private final HashMap<String, List<ServerPlayer>> npcs = new HashMap<>();
     // stores list of all the npcs that should be looking at the player
     private final HashMap<ServerPlayer, Location> npcsLookAtPlayer = new HashMap<>();
 
@@ -51,21 +50,18 @@ public final class NPCHandler implements Listener {
     private void onPlayerJoin(PlayerJoinEvent event) {
 
         Player player = event.getPlayer();
-        UUID uuid = UUIDCache.get(player.getName());
+            spawn(player);
+            setData(player);
+            lookAtPlayer(player);
+            hide(player);
 
-        spawn(player);
-        setData(player);
-        lookAtPlayer(player);
-        hide(player);
-
-        npcManager.interact(npcs.get(uuid), YamlConfiguration.loadConfiguration(npcConfig.getNPCFile()));
+            npcManager.interact(npcs.get(player.getName()), YamlConfiguration.loadConfiguration(npcConfig.getNPCFile()));
     }
 
     @EventHandler
     private void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        UUID uuid = UUIDCache.get(player.getName());
-        npcs.remove(uuid);
+        npcs.remove(player.getName());
     }
 
     @EventHandler
@@ -85,9 +81,7 @@ public final class NPCHandler implements Listener {
         if (!player.isOnline()) return;
 
         YamlConfiguration config = YamlConfiguration.loadConfiguration(npcConfig.getNPCFile());
-        UUID uuid = UUIDCache.get(player.getName());
-
-        for (ServerPlayer npc : npcs.get(uuid)) {
+        for (ServerPlayer npc : npcs.get(player.getName())) {
             boolean lookAtPlayer = config.getBoolean("npcs." + npc.displayName + ".look-at-player");
             if (lookAtPlayer) {
                 Location location = config.getLocation("npcs." + npc.displayName + ".location");
@@ -105,7 +99,6 @@ public final class NPCHandler implements Listener {
         if (!player.isOnline()) return;
 
         YamlConfiguration config = YamlConfiguration.loadConfiguration(npcConfig.getNPCFile());
-        UUID uuid = UUIDCache.get(player.getName());
         Set<String> keys = Objects.requireNonNull(config.getConfigurationSection("npcs")).getKeys(false);
         List<ServerPlayer> playerNpcs = new ArrayList<>();
 
@@ -122,7 +115,7 @@ public final class NPCHandler implements Listener {
 
             playerNpcs.add(npc);
         }
-        npcs.put(uuid, playerNpcs);
+        npcs.put(player.getName(), playerNpcs);
     }
 
     /**
@@ -135,8 +128,7 @@ public final class NPCHandler implements Listener {
             if (!player.isOnline()) return;
 
             YamlConfiguration config = YamlConfiguration.loadConfiguration(npcConfig.getNPCFile());
-            UUID uuid = UUIDCache.get(player.getName());
-            for (ServerPlayer npc : npcs.get(uuid)) {
+            for (ServerPlayer npc : npcs.get(player.getName())) {
                 Location location = config.getLocation("npcs." + npc.displayName + ".location");
                 assert location != null;
                 float yaw = location.getYaw();
@@ -181,8 +173,7 @@ public final class NPCHandler implements Listener {
     private void hide(Player player) {
         Bukkit.getScheduler().runTaskLater(core, () -> {
             if (!player.isOnline()) return;
-            UUID uuid = UUIDCache.get(player.getName());
-            for (ServerPlayer npc : npcs.get(uuid)) {
+            for (ServerPlayer npc : npcs.get(player.getName())) {
                 npcManager.hideTab(npc, player);
             }
         }, 70);

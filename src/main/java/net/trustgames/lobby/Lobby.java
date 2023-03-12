@@ -1,5 +1,6 @@
 package net.trustgames.lobby;
 
+import lombok.Getter;
 import net.trustgames.core.Core;
 import net.trustgames.core.managers.FileManager;
 import net.trustgames.lobby.hotbar.HotbarHandler;
@@ -18,9 +19,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * Lobby plugin which is used on the lobbies of TrustGames.net network.
@@ -29,7 +32,9 @@ import java.util.HashMap;
  */
 public final class Lobby extends JavaPlugin {
 
-    private final Core core = (Core) Bukkit.getPluginManager().getPlugin("Core");
+    @Getter
+    @NotNull
+    private final Core core = (Core) Objects.requireNonNull(Bukkit.getPluginManager().getPlugin("Core"));
 
     @Override
     public void onEnable() {
@@ -48,6 +53,9 @@ public final class Lobby extends JavaPlugin {
         // TODO maybe move the npcHandler to core plugin???
         // TODO improve and finish hotbar
         // TODO still using command executor
+        // TODO do for other also - everytime a new Player joins, the npcs info is taken from the config and all is created again.
+        // TODO dont format messages by player UUID!!!!
+        // ^ do this only once and then only spawn them
 
         // create a data folder
         if (getDataFolder().mkdirs()) {
@@ -73,7 +81,7 @@ public final class Lobby extends JavaPlugin {
         pluginManager.registerEvents(new HotbarHandler(), this);
         pluginManager.registerEvents(new DoubleJump(this), this);
         pluginManager.registerEvents(new PiggyBack(this), this);
-        pluginManager.registerEvents(new JoinLeaveMessagesHandler(), this);
+        pluginManager.registerEvents(new JoinLeaveMessagesHandler(core), this);
         pluginManager.registerEvents(new NPCHandler(this), this);
         pluginManager.registerEvents(new BlockProtectionHandler(), this);
         pluginManager.registerEvents(new PlayerLevelHandler(this), this);
@@ -101,13 +109,5 @@ public final class Lobby extends JavaPlugin {
         for (File file : configs){
             FileManager.createFile(this, file);
         }
-    }
-
-
-    /**
-     * @return The Core plugin instance of TrustGames.net
-     */
-    public Core getCore() {
-        return core;
     }
 }

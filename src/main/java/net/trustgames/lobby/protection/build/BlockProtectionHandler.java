@@ -1,7 +1,6 @@
 package net.trustgames.lobby.protection.build;
 
 import net.kyori.adventure.text.Component;
-import net.trustgames.core.cache.UUIDCache;
 import net.trustgames.core.config.CommandConfig;
 import net.trustgames.lobby.config.LobbyPermissionConfig;
 import org.bukkit.Bukkit;
@@ -18,11 +17,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 public final class BlockProtectionHandler implements Listener, CommandExecutor {
 
-    private static final Set<UUID> allowedPlayers = new HashSet<>();
+    private final Set<String> allowedPlayers = new HashSet<>();
+
 
     /**
      * If player isn't in the map of allowed players to interact with blocks,
@@ -30,18 +29,15 @@ public final class BlockProtectionHandler implements Listener, CommandExecutor {
      */
     @EventHandler
     private void onBlockPlace(BlockPlaceEvent event) {
-        Player player = event.getPlayer();
-        UUID uuid = UUIDCache.get(player.getName());
-
-        if (!allowedPlayers.contains(uuid))
+        String playerName = event.getPlayer().getName();
+        if (!allowedPlayers.contains(playerName))
             event.setCancelled(true);
     }
 
     @EventHandler
     private void onBlockBreak(BlockBreakEvent event) {
-        Player player = event.getPlayer();
-        UUID uuid = UUIDCache.get(player.getName());
-        if (!allowedPlayers.contains(uuid))
+        String playerName = event.getPlayer().getName();
+        if (!allowedPlayers.contains(playerName))
             event.setCancelled(true);
     }
 
@@ -57,50 +53,45 @@ public final class BlockProtectionHandler implements Listener, CommandExecutor {
                 player.sendMessage(CommandConfig.COMMAND_NO_PERM.getText());
                 return true;
             }
-
-            UUID uuid = UUIDCache.get(player.getName());
-            Player target;
+            String playerName = player.getName();
             if (args.length >= 1) {
-                for (String arg : args) {
-                    target = Bukkit.getPlayer(arg);
+                    for (String arg : args) {
+                        Player target = Bukkit.getPlayer(arg);
 
-                    if (target == null) {
-                        player.sendMessage(CommandConfig.COMMAND_PLAYER_OFFLINE.addName(Component.text(arg)));
-                        return true;
-                    }
+                        if (target == null) {
+                            player.sendMessage(CommandConfig.COMMAND_PLAYER_OFFLINE.addName(Component.text(arg)));
+                            return true;
+                        }
 
-                    UUID uuid2 = UUIDCache.get(target.getName());
-                    if (allowedPlayers.contains(uuid2)) {
-                        allowedPlayers.remove(uuid2);
-                        target.sendMessage(BuildProtectionConfig.OFF.getMessage());
-                        player.sendMessage(BuildProtectionConfig.OFF_OTHER.addName(Component.text(target.getName())));
-                    } else {
-                        allowedPlayers.add(uuid2);
-                        target.sendMessage(BuildProtectionConfig.ON.getMessage());
-                        player.sendMessage(BuildProtectionConfig.ON_OTHER.addName(Component.text(target.getName())));
+                        String targetName = target.getName();
+                            if (allowedPlayers.contains(targetName)) {
+                                allowedPlayers.remove(targetName);
+                                target.sendMessage(BuildProtectionConfig.OFF.getMessage());
+                                player.sendMessage(BuildProtectionConfig.OFF_OTHER.addName(Component.text(target.getName())));
+                            } else {
+                                allowedPlayers.add(targetName);
+                                target.sendMessage(BuildProtectionConfig.ON.getMessage());
+                                player.sendMessage(BuildProtectionConfig.ON_OTHER.addName(Component.text(target.getName())));
+                            }
                     }
-                }
-            } else {
-                if (allowedPlayers.contains(uuid)) {
-                    allowedPlayers.remove(uuid);
-                    player.sendMessage(BuildProtectionConfig.OFF.getMessage());
                 } else {
-                    allowedPlayers.add(uuid);
-                    player.sendMessage(BuildProtectionConfig.ON.getMessage());
+                    if (allowedPlayers.contains(playerName)) {
+                        allowedPlayers.remove(playerName);
+                        player.sendMessage(BuildProtectionConfig.OFF.getMessage());
+                    } else {
+                        allowedPlayers.add(playerName);
+                        player.sendMessage(BuildProtectionConfig.ON.getMessage());
+                    }
                 }
-            }
-
-        } else {
-            sender.sendMessage(CommandConfig.COMMAND_PLAYER_ONLY.value.toString());
+            } else{
+                sender.sendMessage(CommandConfig.COMMAND_PLAYER_ONLY.value.toString());
         }
         return true;
     }
 
     @EventHandler
     private void onPlayerQuit(PlayerQuitEvent event) {
-        Player player = event.getPlayer();
-        UUID uuid = UUIDCache.get(player.getName());
-
-        allowedPlayers.remove(uuid);
+        String playerName = event.getPlayer().getName();
+        allowedPlayers.remove(playerName);
     }
 }
