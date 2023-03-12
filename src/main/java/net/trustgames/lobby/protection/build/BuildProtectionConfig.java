@@ -28,10 +28,10 @@ public enum BuildProtectionConfig {
     /**
      * {@literal Replace <player_name> tag with given component}
      *
-     * @param component Component to replace the tag with
+     * @param name Name to replace the tag with
      * @return New formatted Component with replaced component tag
      */
-    public final Component addName(Component component) {
-        return MiniMessageUtils.addName(component).deserialize(message);
+    public final Component addName(String name) {
+        return MiniMessageUtils.addName(name).deserialize(message);
     }
 }

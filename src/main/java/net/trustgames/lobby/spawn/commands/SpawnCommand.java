@@ -1,6 +1,5 @@
 package net.trustgames.lobby.spawn.commands;
 
-import net.kyori.adventure.text.Component;
 import net.trustgames.core.Core;
 import net.trustgames.core.config.CommandConfig;
 import net.trustgames.core.config.CooldownConfig;
@@ -55,7 +54,7 @@ public final class SpawnCommand implements CommandExecutor {
                         target = Bukkit.getPlayer(arg);
 
                         if (target == null) {
-                            player.sendMessage(CommandConfig.COMMAND_PLAYER_OFFLINE.addName(Component.text(arg)));
+                            player.sendMessage(CommandConfig.COMMAND_PLAYER_OFFLINE.addName(arg));
                             return true;
                         }
 

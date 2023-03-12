@@ -4,7 +4,6 @@ import lombok.Getter;
 import net.trustgames.core.Core;
 import net.trustgames.core.managers.FileManager;
 import net.trustgames.lobby.hotbar.HotbarHandler;
-import net.trustgames.lobby.join_leave_messages.JoinLeaveMessagesHandler;
 import net.trustgames.lobby.movement.double_jump.DoubleJump;
 import net.trustgames.lobby.movement.piggyback.PiggyBack;
 import net.trustgames.lobby.npc.NPCHandler;
@@ -55,7 +54,9 @@ public final class Lobby extends JavaPlugin {
         // TODO still using command executor
         // TODO do for other also - everytime a new Player joins, the npcs info is taken from the config and all is created again.
         // TODO dont format messages by player UUID!!!!
-        // ^ do this only once and then only spawn them
+        //      do this only once and then only spawn them
+        // TODO update the xpbar only on custom event that is fired when the data in database is changed.
+        //      And also first time on PlayerJoin, to set the xp.
 
         // create a data folder
         if (getDataFolder().mkdirs()) {
@@ -81,7 +82,6 @@ public final class Lobby extends JavaPlugin {
         pluginManager.registerEvents(new HotbarHandler(), this);
         pluginManager.registerEvents(new DoubleJump(this), this);
         pluginManager.registerEvents(new PiggyBack(this), this);
-        pluginManager.registerEvents(new JoinLeaveMessagesHandler(core), this);
         pluginManager.registerEvents(new NPCHandler(this), this);
         pluginManager.registerEvents(new BlockProtectionHandler(), this);
         pluginManager.registerEvents(new PlayerLevelHandler(this), this);
