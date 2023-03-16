@@ -21,7 +21,6 @@ public final class BlockProtectionHandler implements Listener, CommandExecutor {
 
     private final Set<String> allowedPlayers = new HashSet<>();
 
-
     /**
      * If player isn't in the map of allowed players to interact with blocks,
      * the event is cancelled.
@@ -54,36 +53,36 @@ public final class BlockProtectionHandler implements Listener, CommandExecutor {
             }
             String playerName = player.getName();
             if (args.length >= 1) {
-                    for (String arg : args) {
-                        Player target = Bukkit.getPlayer(arg);
+                for (String arg : args) {
+                    Player target = Bukkit.getPlayer(arg);
 
-                        if (target == null) {
-                            player.sendMessage(CommandConfig.COMMAND_PLAYER_OFFLINE.addName(arg));
-                            return true;
-                        }
-
-                        String targetName = target.getName();
-                            if (allowedPlayers.contains(targetName)) {
-                                allowedPlayers.remove(targetName);
-                                target.sendMessage(BuildProtectionConfig.OFF.getMessage());
-                                player.sendMessage(BuildProtectionConfig.OFF_OTHER.addName(targetName));
-                            } else {
-                                allowedPlayers.add(targetName);
-                                target.sendMessage(BuildProtectionConfig.ON.getMessage());
-                                player.sendMessage(BuildProtectionConfig.ON_OTHER.addName(targetName));
-                            }
+                    if (target == null) {
+                        player.sendMessage(CommandConfig.COMMAND_PLAYER_OFFLINE.addName(arg));
+                        return true;
                     }
-                } else {
-                    if (allowedPlayers.contains(playerName)) {
-                        allowedPlayers.remove(playerName);
-                        player.sendMessage(BuildProtectionConfig.OFF.getMessage());
+
+                    String targetName = target.getName();
+                    if (allowedPlayers.contains(targetName)) {
+                        allowedPlayers.remove(targetName);
+                        target.sendMessage(BuildProtectionConfig.OFF.getMessage());
+                        player.sendMessage(BuildProtectionConfig.OFF_OTHER.addName(targetName));
                     } else {
-                        allowedPlayers.add(playerName);
-                        player.sendMessage(BuildProtectionConfig.ON.getMessage());
+                        allowedPlayers.add(targetName);
+                        target.sendMessage(BuildProtectionConfig.ON.getMessage());
+                        player.sendMessage(BuildProtectionConfig.ON_OTHER.addName(targetName));
                     }
                 }
-            } else{
-                sender.sendMessage(CommandConfig.COMMAND_PLAYER_ONLY.value.toString());
+            } else {
+                if (allowedPlayers.contains(playerName)) {
+                    allowedPlayers.remove(playerName);
+                    player.sendMessage(BuildProtectionConfig.OFF.getMessage());
+                } else {
+                    allowedPlayers.add(playerName);
+                    player.sendMessage(BuildProtectionConfig.ON.getMessage());
+                }
+            }
+        } else {
+            sender.sendMessage(CommandConfig.COMMAND_PLAYER_ONLY.value.toString());
         }
         return true;
     }

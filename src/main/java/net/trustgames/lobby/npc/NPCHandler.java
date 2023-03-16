@@ -50,12 +50,12 @@ public final class NPCHandler implements Listener {
     private void onPlayerJoin(PlayerJoinEvent event) {
 
         Player player = event.getPlayer();
-            spawn(player);
-            setData(player);
-            lookAtPlayer(player);
-            hide(player);
+        spawn(player);
+        setData(player);
+        lookAtPlayer(player);
+        hide(player);
 
-            npcManager.interact(npcs.get(player.getName()), YamlConfiguration.loadConfiguration(npcConfig.getNPCFile()));
+        npcManager.interact(npcs.get(player.getName()), YamlConfiguration.loadConfiguration(npcConfig.getNPCFile()));
     }
 
     @EventHandler

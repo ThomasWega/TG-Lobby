@@ -6,7 +6,11 @@ import org.bukkit.World;
 
 public final class LobbyGamerulesHandler {
 
-    public static void setGamerules() {
+    public LobbyGamerulesHandler() {
+        setGamerules();
+    }
+
+    public void setGamerules() {
 
         for (World world : Bukkit.getServer().getWorlds()) {
 

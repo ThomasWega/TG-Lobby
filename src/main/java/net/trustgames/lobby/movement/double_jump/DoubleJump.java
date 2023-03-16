@@ -48,37 +48,37 @@ public final class DoubleJump implements Listener {
     public void setVelocity(PlayerToggleFlightEvent event) {
         Player player = event.getPlayer();
         String playerName = player.getName();
-            if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR
-                    || player.isFlying() || cooldowns.contains(playerName) || player.getVehicle() != null) return;
+        if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR
+                || player.isFlying() || cooldowns.contains(playerName) || player.getVehicle() != null) return;
 
-            cooldowns.add(playerName);
+        cooldowns.add(playerName);
 
-            event.setCancelled(true);
+        event.setCancelled(true);
 
-            player.setAllowFlight(false);
-            player.setFlying(false);
+        player.setAllowFlight(false);
+        player.setFlying(false);
 
-            double hor_run = DoubleJumpConfig.HOR_RUN.getDouble();
-            double ver_run = DoubleJumpConfig.VER_RUN.getDouble();
-            double hor = DoubleJumpConfig.HOR.getDouble();
-            double ver = DoubleJumpConfig.VER.getDouble();
+        double hor_run = DoubleJumpConfig.HOR_RUN.getDouble();
+        double ver_run = DoubleJumpConfig.VER_RUN.getDouble();
+        double hor = DoubleJumpConfig.HOR.getDouble();
+        double ver = DoubleJumpConfig.VER.getDouble();
 
-            if (player.isSprinting()) {
-                player.setVelocity(player.getLocation().getDirection().normalize()
-                        .multiply(hor_run)
-                        .setY(ver_run)
-                        .normalize());
-            } else {
-                player.setVelocity(player.getLocation().getDirection().normalize()
-                        .multiply(hor)
-                        .setY(ver)
-                        .normalize());
-            }
+        if (player.isSprinting()) {
+            player.setVelocity(player.getLocation().getDirection().normalize()
+                    .multiply(hor_run)
+                    .setY(ver_run)
+                    .normalize());
+        } else {
+            player.setVelocity(player.getLocation().getDirection().normalize()
+                    .multiply(hor)
+                    .setY(ver)
+                    .normalize());
+        }
 
-            Audience.audience(Bukkit.getOnlinePlayers()).playSound(sound, player);
-            particle.location(player.getLocation()).spawn();
+        Audience.audience(Bukkit.getOnlinePlayers()).playSound(sound, player);
+        particle.location(player.getLocation()).spawn();
 
-            removeFromSet(player);
+        removeFromSet(player);
     }
 
     /**

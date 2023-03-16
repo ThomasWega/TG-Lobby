@@ -1,13 +1,11 @@
 package net.trustgames.lobby.spawn.commands;
 
-import net.trustgames.core.Core;
 import net.trustgames.core.config.CommandConfig;
 import net.trustgames.core.config.CooldownConfig;
 import net.trustgames.core.managers.CooldownManager;
 import net.trustgames.lobby.Lobby;
 import net.trustgames.lobby.config.LobbyPermissionConfig;
 import net.trustgames.lobby.spawn.SpawnConfig;
-import net.trustgames.lobby.spawn.SpawnHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -23,22 +21,17 @@ import org.jetbrains.annotations.NotNull;
  */
 public final class SpawnCommand implements CommandExecutor {
 
-    private final Lobby lobby;
+    private final CooldownManager cooldownManager;
+    private final YamlConfiguration config;
 
     public SpawnCommand(Lobby lobby) {
-        this.lobby = lobby;
+        this.cooldownManager = new CooldownManager();
+        this.config = YamlConfiguration.loadConfiguration(SpawnConfig.getSpawnFile(lobby));
     }
 
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-
-        Core core = lobby.getCore();
-        CooldownManager cooldownManager = core.cooldownManager;
-        SpawnHandler spawn = new SpawnHandler(lobby);
-
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(spawn.getSpawnFile());
-
         if (sender instanceof Player player) {
             // if the player has a cooldown on this command
             if (!player.hasPermission(LobbyPermissionConfig.STAFF.permission))

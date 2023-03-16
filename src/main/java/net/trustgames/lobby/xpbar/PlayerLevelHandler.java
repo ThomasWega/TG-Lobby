@@ -3,8 +3,8 @@ package net.trustgames.lobby.xpbar;
 import net.trustgames.core.Core;
 import net.trustgames.core.cache.PlayerDataCache;
 import net.trustgames.core.cache.UUIDCache;
-import net.trustgames.core.config.player_data.PlayerDataType;
-import net.trustgames.core.config.player_data.PlayerDataUpdate;
+import net.trustgames.core.player.data.config.PlayerDataConfig;
+import net.trustgames.core.player.data.config.PlayerDataType;
 import net.trustgames.core.utils.LevelUtils;
 import net.trustgames.lobby.Lobby;
 import org.bukkit.entity.Player;
@@ -39,6 +39,7 @@ public final class PlayerLevelHandler implements Listener {
                 assert uuid != null; // uuid never null
                 PlayerDataCache dataCache = new PlayerDataCache(core, uuid, PlayerDataType.XP);
                 dataCache.get(xp -> {
+                    assert xp != null; // xp never null
                     int xpInt = Integer.parseInt(xp);
                     int level = LevelUtils.getLevelByXp(xpInt);
                     float levelProgress = LevelUtils.getProgress(xpInt);
@@ -46,6 +47,6 @@ public final class PlayerLevelHandler implements Listener {
                     player.setLevel(level);
                 });
             }
-        }.runTaskTimer(lobby, 4, PlayerDataUpdate.INTERVAL.getTicks()));
+        }.runTaskTimer(lobby, 4, PlayerDataConfig.UPDATE_INTERVAL.getTicks()));
     }
 }

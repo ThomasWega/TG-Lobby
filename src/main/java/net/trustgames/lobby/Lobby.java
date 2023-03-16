@@ -1,5 +1,6 @@
 package net.trustgames.lobby;
 
+import com.destroystokyo.paper.utils.PaperPluginLogger;
 import lombok.Getter;
 import net.trustgames.core.Core;
 import net.trustgames.core.managers.FileManager;
@@ -18,11 +19,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 /**
  * Lobby plugin which is used on the lobbies of TrustGames.net network.
@@ -31,12 +32,13 @@ import java.util.Objects;
  */
 public final class Lobby extends JavaPlugin {
 
+    public static final Logger LOGGER = PaperPluginLogger.getLogger("Lobby");
     @Getter
-    @NotNull
-    private final Core core = (Core) Objects.requireNonNull(Bukkit.getPluginManager().getPlugin("Core"));
+    private Core core;
 
     @Override
     public void onEnable() {
+        new LobbyGamerulesHandler();
 
         /* THINGS TO ADD:
         - daily rewards
@@ -58,12 +60,13 @@ public final class Lobby extends JavaPlugin {
         // TODO update the xpbar only on custom event that is fired when the data in database is changed.
         //      And also first time on PlayerJoin, to set the xp.
 
+        // get the core instance
+        core = (Core) Objects.requireNonNull(Bukkit.getPluginManager().getPlugin("Core"));
+
         // create a data folder
         if (getDataFolder().mkdirs()) {
             getLogger().warning("Created main plugin folder");
         }
-
-        LobbyGamerulesHandler.setGamerules();
 
         registerEvents();
         registerCommands();
@@ -106,7 +109,7 @@ public final class Lobby extends JavaPlugin {
                 new File(getDataFolder(), "npcs.yml")
         };
 
-        for (File file : configs){
+        for (File file : configs) {
             FileManager.createFile(this, file);
         }
     }

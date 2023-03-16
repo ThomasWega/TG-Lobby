@@ -2,7 +2,6 @@ package net.trustgames.lobby.spawn;
 
 import com.destroystokyo.paper.event.player.PlayerPostRespawnEvent;
 import net.trustgames.lobby.Lobby;
-import net.trustgames.lobby.logger.LobbyLogger;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -11,7 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import java.io.File;
+import static net.trustgames.lobby.Lobby.LOGGER;
 
 
 /**
@@ -20,22 +19,21 @@ import java.io.File;
  */
 public final class SpawnHandler implements Listener {
 
-    private final Lobby lobby;
+    private final YamlConfiguration config;
 
     public SpawnHandler(Lobby lobby) {
-        this.lobby = lobby;
+        this.config = YamlConfiguration.loadConfiguration(SpawnConfig.getSpawnFile(lobby));
     }
 
     @EventHandler
     private void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(getSpawnFile());
         Location location = config.getLocation("spawn.location");
         if (location != null) {
             player.teleport(location);
         } else {
-            LobbyLogger.LOGGER.severe("Spawn location isn't set!");
+            LOGGER.severe("Spawn location isn't set!");
         }
     }
 
@@ -43,17 +41,12 @@ public final class SpawnHandler implements Listener {
     private void onPlayerDeath(PlayerPostRespawnEvent event) {
         Player player = event.getPlayer();
 
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(getSpawnFile());
         Location location = config.getLocation("spawn.location");
         if (location != null) {
             player.teleport(location);
         } else {
-            LobbyLogger.LOGGER.severe("Spawn location isn't set!");
+            LOGGER.severe("Spawn location isn't set!");
             player.sendMessage(ChatColor.RED + "Spawn location isn't set! Set it with /setspawn");
         }
-    }
-
-    public File getSpawnFile() {
-        return new File(lobby.getDataFolder(), "spawn.yml");
     }
 }
