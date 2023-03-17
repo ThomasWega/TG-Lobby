@@ -8,8 +8,8 @@ import net.trustgames.core.utils.MiniMessageUtils;
 public enum BuildProtectionConfig {
     ON(CommandConfig.PREFIX.value + "<green>From now on, you can place or break blocks"),
     OFF(CommandConfig.PREFIX.value + "<red>From now on, you can't place or break blocks"),
-    ON_OTHER(CommandConfig.PREFIX.value + "<dark_gray>You've allowed player <player_name> to break or place blocks"),
-    OFF_OTHER(CommandConfig.PREFIX.value + "<dark_gray>You've disallowed player <player_name> to break or place blocks");
+    ON_OTHER(CommandConfig.PREFIX.value + "<dark_gray>You've allowed player <component> to break or place blocks"),
+    OFF_OTHER(CommandConfig.PREFIX.value + "<dark_gray>You've disallowed player <component> to break or place blocks");
 
 
     private final String message;
@@ -26,12 +26,12 @@ public enum BuildProtectionConfig {
     }
 
     /**
-     * {@literal Replace <player_name> tag with given component}
+     * {@literal Replace <component> tag with given Component}
      *
-     * @param name Name to replace the tag with
-     * @return New formatted Component with replaced component tag
+     * @param component Component to replace the tag with
+     * @return New formatted Component with replaced id tag
      */
-    public final Component addName(String name) {
-        return MiniMessageUtils.addName(name).deserialize(message);
+    public final Component addComponent(Component component) {
+        return MiniMessageUtils.addComponent(component).deserialize(message);
     }
 }

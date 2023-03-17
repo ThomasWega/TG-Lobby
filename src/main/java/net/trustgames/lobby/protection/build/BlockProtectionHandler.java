@@ -1,5 +1,6 @@
 package net.trustgames.lobby.protection.build;
 
+import net.kyori.adventure.text.Component;
 import net.trustgames.core.config.CommandConfig;
 import net.trustgames.lobby.config.LobbyPermissionConfig;
 import org.bukkit.Bukkit;
@@ -57,7 +58,7 @@ public final class BlockProtectionHandler implements Listener, CommandExecutor {
                     Player target = Bukkit.getPlayer(arg);
 
                     if (target == null) {
-                        player.sendMessage(CommandConfig.COMMAND_PLAYER_OFFLINE.addName(arg));
+                        player.sendMessage(CommandConfig.COMMAND_PLAYER_OFFLINE.addComponent(Component.text(arg)));
                         return true;
                     }
 
@@ -65,11 +66,11 @@ public final class BlockProtectionHandler implements Listener, CommandExecutor {
                     if (allowedPlayers.contains(targetName)) {
                         allowedPlayers.remove(targetName);
                         target.sendMessage(BuildProtectionConfig.OFF.getMessage());
-                        player.sendMessage(BuildProtectionConfig.OFF_OTHER.addName(targetName));
+                        player.sendMessage(BuildProtectionConfig.OFF_OTHER.addComponent(Component.text(targetName)));
                     } else {
                         allowedPlayers.add(targetName);
                         target.sendMessage(BuildProtectionConfig.ON.getMessage());
-                        player.sendMessage(BuildProtectionConfig.ON_OTHER.addName(targetName));
+                        player.sendMessage(BuildProtectionConfig.ON_OTHER.addComponent(Component.text(targetName)));
                     }
                 }
             } else {

@@ -57,8 +57,6 @@ public final class Lobby extends JavaPlugin {
         // TODO do for other also - everytime a new Player joins, the npcs info is taken from the config and all is created again.
         // TODO dont format messages by player UUID!!!!
         //      do this only once and then only spawn them
-        // TODO update the xpbar only on custom event that is fired when the data in database is changed.
-        //      And also first time on PlayerJoin, to set the xp.
 
         // get the core instance
         core = (Core) Objects.requireNonNull(Bukkit.getPluginManager().getPlugin("Core"));
