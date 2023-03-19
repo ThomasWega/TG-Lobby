@@ -10,11 +10,13 @@ import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -37,14 +39,14 @@ public final class DoubleJump implements Listener {
         this.lobby = lobby;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.NORMAL)
     public void setFly(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
         player.setAllowFlight(true);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.NORMAL)
     public void setVelocity(PlayerToggleFlightEvent event) {
         Player player = event.getPlayer();
         String playerName = player.getName();
@@ -89,7 +91,7 @@ public final class DoubleJump implements Listener {
      *
      * @param player Player to remove from the set
      */
-    public void removeFromSet(Player player) {
+    public void removeFromSet(@NotNull Player player) {
         new BukkitRunnable() {
             final String playerName = player.getName();
             int i = 0;
@@ -107,7 +109,7 @@ public final class DoubleJump implements Listener {
         }.runTaskTimerAsynchronously(lobby, 20, 7);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     public void removePlayer(PlayerQuitEvent event) {
         String playerName = event.getPlayer().getName();
         cooldowns.remove(playerName);

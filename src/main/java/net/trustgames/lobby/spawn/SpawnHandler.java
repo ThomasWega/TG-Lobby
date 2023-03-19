@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
@@ -25,7 +26,7 @@ public final class SpawnHandler implements Listener {
         this.config = YamlConfiguration.loadConfiguration(SpawnConfig.getSpawnFile(lobby));
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOW)
     private void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
@@ -37,7 +38,7 @@ public final class SpawnHandler implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOW)
     private void onPlayerDeath(PlayerPostRespawnEvent event) {
         Player player = event.getPlayer();
 

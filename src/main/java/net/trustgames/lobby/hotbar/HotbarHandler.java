@@ -2,6 +2,7 @@ package net.trustgames.lobby.hotbar;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
@@ -15,7 +16,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
  */
 public final class HotbarHandler implements Listener {
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.NORMAL)
     private void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
@@ -25,22 +26,22 @@ public final class HotbarHandler implements Listener {
         HotbarItems.hidePlayersItem();
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     private void onPlayerQuit(PlayerQuitEvent event) {
         HotbarItems.hidePlayersItem();
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.NORMAL)
     private void itemClickEvent(InventoryClickEvent event) {
         event.setCancelled(true);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.NORMAL)
     private void itemDragEvent(InventoryDragEvent event) {
         event.setCancelled(true);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.NORMAL)
     private void itemDropEvent(PlayerDropItemEvent event) {
         event.setCancelled(true);
     }

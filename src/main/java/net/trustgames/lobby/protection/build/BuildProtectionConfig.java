@@ -32,6 +32,6 @@ public enum BuildProtectionConfig {
      * @return New formatted Component with replaced id tag
      */
     public final Component addComponent(Component component) {
-        return MiniMessageUtils.addComponent(component).deserialize(message);
+        return MiniMessageUtils.component(component).deserialize(message);
     }
 }

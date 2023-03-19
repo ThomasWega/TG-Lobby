@@ -11,11 +11,13 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -35,7 +37,7 @@ public final class PiggyBack implements Listener {
         this.lobby = lobby;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     private void onPlayerRightClick(PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
         Entity entity = event.getRightClicked();
@@ -47,7 +49,7 @@ public final class PiggyBack implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.NORMAL)
     private void onPlayerLeftClick(EntityDamageByEntityEvent event) {
         Entity damager = event.getDamager();
         Entity target = event.getEntity();
@@ -69,7 +71,7 @@ public final class PiggyBack implements Listener {
      * @param player  Player holding the passengers
      * @param clicked Player that was clicked and will become a passenger now
      */
-    private void ride(Player player, Player clicked) {
+    private void ride(@NotNull Player player, @NotNull Player clicked) {
         List<Entity> passengerList = player.getPassengers();
 
         if (!player.isSneaking()) return;
@@ -91,7 +93,7 @@ public final class PiggyBack implements Listener {
      * @param player    Player that damaged the passenger
      * @param passenger Player that is sitting on the player
      */
-    private void throwPassenger(Player player, Player passenger) {
+    private void throwPassenger(@NotNull Player player, @NotNull Player passenger) {
         player.removePassenger(passenger);
 
         Location loc = player.getLocation();

@@ -9,6 +9,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -26,14 +27,14 @@ public final class BlockProtectionHandler implements Listener, CommandExecutor {
      * If player isn't in the map of allowed players to interact with blocks,
      * the event is cancelled.
      */
-    @EventHandler
+    @EventHandler(priority = EventPriority.NORMAL)
     private void onBlockPlace(BlockPlaceEvent event) {
         String playerName = event.getPlayer().getName();
         if (!allowedPlayers.contains(playerName))
             event.setCancelled(true);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.NORMAL)
     private void onBlockBreak(BlockBreakEvent event) {
         String playerName = event.getPlayer().getName();
         if (!allowedPlayers.contains(playerName))
@@ -88,7 +89,7 @@ public final class BlockProtectionHandler implements Listener, CommandExecutor {
         return true;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     private void onPlayerQuit(PlayerQuitEvent event) {
         String playerName = event.getPlayer().getName();
         allowedPlayers.remove(playerName);

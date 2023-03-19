@@ -22,11 +22,9 @@ import org.jetbrains.annotations.NotNull;
  */
 public final class SpawnCommand implements CommandExecutor {
 
-    private final CooldownManager cooldownManager;
     private final YamlConfiguration config;
 
     public SpawnCommand(Lobby lobby) {
-        this.cooldownManager = new CooldownManager();
         this.config = YamlConfiguration.loadConfiguration(SpawnConfig.getSpawnFile(lobby));
     }
 
@@ -36,7 +34,7 @@ public final class SpawnCommand implements CommandExecutor {
         if (sender instanceof Player player) {
             // if the player has a cooldown on this command
             if (!player.hasPermission(LobbyPermissionConfig.STAFF.permission))
-                if (cooldownManager.commandCooldown(player, CooldownConfig.MEDIUM.value)) {
+                if (CooldownManager.handle(player, CooldownConfig.MEDIUM.value)) {
                     return true;
                 }
             Location location = config.getLocation("spawn.location");

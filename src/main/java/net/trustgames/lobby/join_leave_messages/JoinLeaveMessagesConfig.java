@@ -25,6 +25,6 @@ public enum JoinLeaveMessagesConfig {
      * @return New formatted Component message with replaced tags
      */
     public final Component formatMessage(Player player) {
-        return MiniMessageUtils.format(player).deserialize(message);
+        return MiniMessageUtils.player(player).deserialize(message);
     }
 }

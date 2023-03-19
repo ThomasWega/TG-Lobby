@@ -5,6 +5,7 @@ import lombok.Getter;
 import net.trustgames.core.Core;
 import net.trustgames.core.managers.FileManager;
 import net.trustgames.lobby.hotbar.HotbarHandler;
+import net.trustgames.lobby.join_leave_messages.JoinLeaveMessagesHandler;
 import net.trustgames.lobby.movement.double_jump.DoubleJump;
 import net.trustgames.lobby.movement.piggyback.PiggyBack;
 import net.trustgames.lobby.npc.NPCHandler;
@@ -86,6 +87,7 @@ public final class Lobby extends JavaPlugin {
         pluginManager.registerEvents(new NPCHandler(this), this);
         pluginManager.registerEvents(new BlockProtectionHandler(), this);
         pluginManager.registerEvents(new PlayerLevelHandler(this), this);
+        pluginManager.registerEvents(new JoinLeaveMessagesHandler(), this);
     }
 
     private void registerCommands() {

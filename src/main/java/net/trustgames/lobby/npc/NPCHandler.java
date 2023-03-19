@@ -2,6 +2,7 @@ package net.trustgames.lobby.npc;
 
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.comphenix.protocol.wrappers.Pair;
+import net.kyori.adventure.text.format.TextColor;
 import net.minecraft.server.level.ServerPlayer;
 import net.trustgames.core.Core;
 import net.trustgames.core.managers.packets.HoloManager;
@@ -14,12 +15,15 @@ import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.util.*;
 
 /**
@@ -32,8 +36,8 @@ public final class NPCHandler implements Listener {
     private final Core core;
 
     private final NPCManager npcManager;
+    private final YamlConfiguration config;
 
-    private final NPCConfig npcConfig;
     // stores list of all the npcs for given player
     private final HashMap<String, List<ServerPlayer>> npcs = new HashMap<>();
     // stores list of all the npcs that should be looking at the player
@@ -43,7 +47,7 @@ public final class NPCHandler implements Listener {
         this.lobby = lobby;
         this.core = lobby.getCore();
         this.npcManager = new NPCManager(core);
-        npcConfig = new NPCConfig(lobby);
+        this.config = YamlConfiguration.loadConfiguration(new File(lobby.getDataFolder(), "npcs.yml"));
     }
 
     @EventHandler
@@ -55,16 +59,16 @@ public final class NPCHandler implements Listener {
         lookAtPlayer(player);
         hide(player);
 
-        npcManager.interact(npcs.get(player.getName()), YamlConfiguration.loadConfiguration(npcConfig.getNPCFile()));
+        npcManager.interact(npcs.get(player.getName()), config);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     private void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         npcs.remove(player.getName());
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     private void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
         for (ServerPlayer npc : npcsLookAtPlayer.keySet()) {
@@ -77,10 +81,9 @@ public final class NPCHandler implements Listener {
      *
      * @param player Player that the NPC will be facing
      */
-    private void lookAtPlayer(Player player) {
+    private void lookAtPlayer(@NotNull Player player) {
         if (!player.isOnline()) return;
 
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(npcConfig.getNPCFile());
         for (ServerPlayer npc : npcs.get(player.getName())) {
             boolean lookAtPlayer = config.getBoolean("npcs." + npc.displayName + ".look-at-player");
             if (lookAtPlayer) {
@@ -95,10 +98,9 @@ public final class NPCHandler implements Listener {
      *
      * @param player Player to spawn the NPCS for
      */
-    private void spawn(Player player) {
+    private void spawn(@NotNull Player player) {
         if (!player.isOnline()) return;
 
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(npcConfig.getNPCFile());
         Set<String> keys = Objects.requireNonNull(config.getConfigurationSection("npcs")).getKeys(false);
         List<ServerPlayer> playerNpcs = new ArrayList<>();
 
@@ -123,11 +125,10 @@ public final class NPCHandler implements Listener {
      *
      * @param player Player to set the data for NPCs to
      */
-    private void setData(Player player) {
+    private void setData(@NotNull Player player) {
         Bukkit.getScheduler().runTaskLater(lobby, () -> {
             if (!player.isOnline()) return;
 
-            YamlConfiguration config = YamlConfiguration.loadConfiguration(npcConfig.getNPCFile());
             for (ServerPlayer npc : npcs.get(player.getName())) {
                 Location location = config.getLocation("npcs." + npc.displayName + ".location");
                 assert location != null;
@@ -137,11 +138,16 @@ public final class NPCHandler implements Listener {
                 String signature = config.getString("npcs." + npc.displayName + ".signature");
                 String glow = config.getString("npcs." + npc.displayName + ".glow");
 
-                if (glow != null && !glow.equals("false"))
-                    npcManager.glow(npc, ColorUtils.color(glow).color());
-                else
+                if (glow != null && !glow.equals("false")) {
+                    TextColor color = ColorUtils.color(glow).color();
+                    if (color != null)
+                        npcManager.glow(npc, color);
+                } else {
                     npcManager.hideName(npc);
-                npcManager.skin(npc, player, texture, signature);
+                }
+
+                if (texture != null && signature != null)
+                    npcManager.skin(npc, player, texture, signature);
 
                 ItemStack mainHand = new ItemStack(Material.valueOf(config.getString("npcs." + npc.displayName + ".equipment.main-hand")));
                 ItemStack offHand = new ItemStack(Material.valueOf(config.getString("npcs." + npc.displayName + ".equipment.off-hand")));
@@ -170,7 +176,7 @@ public final class NPCHandler implements Listener {
      *
      * @param player Player to hide the NPCs for
      */
-    private void hide(Player player) {
+    private void hide(@NotNull Player player) {
         Bukkit.getScheduler().runTaskLater(core, () -> {
             if (!player.isOnline()) return;
             for (ServerPlayer npc : npcs.get(player.getName())) {

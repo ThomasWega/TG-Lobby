@@ -10,8 +10,10 @@ import net.trustgames.lobby.Lobby;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
@@ -26,20 +28,24 @@ public final class PlayerLevelHandler implements Listener {
         this.core = lobby.getCore();
     }
 
-    @EventHandler
-    private void onPlayerJoin(PlayerJoinEvent event){
+    @EventHandler(priority = EventPriority.HIGH)
+    private void onPlayerJoin(PlayerJoinEvent event) {
         UUIDCache uuidCache = new UUIDCache(core, event.getPlayer().getName());
-        uuidCache.get(this::sync);
+        uuidCache.get(uuid -> {
+            if (uuid != null)
+                sync(uuid);
+        });
     }
-    @EventHandler
-    private void onDataUpdate(PlayerDataUpdateEvent event){
+
+    @EventHandler(priority = EventPriority.HIGH)
+    private void onDataUpdate(PlayerDataUpdateEvent event) {
         UUID uuid = event.getUuid();
         sync(uuid);
     }
 
-    private void sync(UUID uuid){
+    private void sync(@NotNull UUID uuid) {
         Player player = Bukkit.getPlayer(uuid);
-        if (player != null && player.isOnline()){
+        if (player != null && player.isOnline()) {
             PlayerDataCache dataCache = new PlayerDataCache(core, uuid, PlayerDataType.XP);
             dataCache.get(xp -> {
                 assert xp != null; // xp never null
