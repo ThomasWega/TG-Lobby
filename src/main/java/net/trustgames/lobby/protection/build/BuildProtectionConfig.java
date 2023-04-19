@@ -3,13 +3,17 @@ package net.trustgames.lobby.protection.build;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.trustgames.core.config.CommandConfig;
-import net.trustgames.core.utils.MiniMessageUtils;
+import net.trustgames.middleware.utils.MiniMessageUtils;
 
 public enum BuildProtectionConfig {
-    ON(CommandConfig.PREFIX.value + "<green>From now on, you can place or break blocks"),
-    OFF(CommandConfig.PREFIX.value + "<red>From now on, you can't place or break blocks"),
-    ON_OTHER(CommandConfig.PREFIX.value + "<dark_gray>You've allowed player <component> to break or place blocks"),
-    OFF_OTHER(CommandConfig.PREFIX.value + "<dark_gray>You've disallowed player <component> to break or place blocks");
+    SENDER_ON(CommandConfig.PREFIX.value + "<green>From now on, you can place or break blocks"),
+    SENDER_OFF(CommandConfig.PREFIX.value + "<red>From now on, you can't place or break blocks"),
+    SENDER_ON_OTHER(CommandConfig.PREFIX.value + "<green>You've allowed player <component> to break or place blocks"),
+    SENDER_OFF_OTHER(CommandConfig.PREFIX.value + "<red>You've disallowed player <component> to break or place blocks"),
+    TARGET_ON(CommandConfig.PREFIX.value + "<green>You've been allowed to break or place blocks by player <white><component>"),
+    TARGET_OFF(CommandConfig.PREFIX.value + "<red>You've been disallowed to break or place blocks by player <white><component>"),
+    TARGET_ON_SILENT(SENDER_ON_OTHER.message + ". <white>The player won't be notified about this"),
+    TARGET_OFF_SILENT(SENDER_OFF_OTHER.message + ". <white>The player won't not be notified about this");
 
 
     private final String message;

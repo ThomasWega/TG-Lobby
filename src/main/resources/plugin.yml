@@ -14,6 +14,3 @@ commands:
     permission: lobby.admin
   spawn:
     description: teleports you to spawn
-  build:
-    description: allows staff to build
-    permission: lobby.staff

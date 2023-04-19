@@ -1,7 +1,8 @@
 package net.trustgames.lobby.join_leave_messages;
 
 import net.kyori.adventure.text.Component;
-import net.trustgames.core.utils.MiniMessageUtils;
+import net.trustgames.core.managers.LuckPermsManager;
+import net.trustgames.middleware.utils.MiniMessageUtils;
 import org.bukkit.entity.Player;
 
 
@@ -25,6 +26,7 @@ public enum JoinLeaveMessagesConfig {
      * @return New formatted Component message with replaced tags
      */
     public final Component formatMessage(Player player) {
-        return MiniMessageUtils.player(player).deserialize(message);
+        return MiniMessageUtils.withPrefix(player.getName(), LuckPermsManager.getPlayerPrefix(player))
+                .deserialize(message);
     }
 }

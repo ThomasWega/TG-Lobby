@@ -106,7 +106,7 @@ public final class DoubleJump implements Listener {
                 }
                 i++;
             }
-        }.runTaskTimerAsynchronously(lobby, 20, 7);
+        }.runTaskTimer(lobby, 20, 7);
     }
 
     @EventHandler(priority = EventPriority.HIGH)
