@@ -21,7 +21,8 @@ public class BuildProtectionCommand {
         this.commandManager = commandManager;
 
         // MAIN COMMAND
-        Command.Builder<CommandSender> buildCommand = commandManager.commandBuilder("build",
+        Command.Builder<CommandSender> buildCommand = commandManager.commandBuilder(
+                "build",
                         ArgumentDescription.of(
                                 "Allows the sender or target to freely place and destroy blocks"))
                 .permission(LobbyPermissionConfig.STAFF.permission);
@@ -34,7 +35,6 @@ public class BuildProtectionCommand {
     private void personalCommand(Command.Builder<CommandSender> buildCommand) {
         commandManager.command(buildCommand
                 .senderType(Player.class)
-                .permission(LobbyPermissionConfig.STAFF.permission)
                 .handler(context -> {
                     CommandSender sender = context.getSender();
                     String senderName = sender.getName();
@@ -53,8 +53,7 @@ public class BuildProtectionCommand {
     private void targetsCommand(Command.Builder<CommandSender> buildCommand) {
 
         // TARGET argument
-        CommandArgument<CommandSender, Player> targetsArgument =
-                PlayerArgument.of("targets");
+        CommandArgument<CommandSender, Player> targetArg = PlayerArgument.of("target");
 
         // SILENT flag
         CommandFlag<Void> silentFlag = CommandFlag.builder("silent")
@@ -63,12 +62,11 @@ public class BuildProtectionCommand {
                 ).build();
 
         commandManager.command(buildCommand
-                .argument(targetsArgument)
+                .argument(targetArg)
                 .flag(silentFlag)
-                .permission(LobbyPermissionConfig.STAFF.permission)
                 .handler(context -> {
                     CommandSender sender = context.getSender();
-                    Player target = context.get(targetsArgument);
+                    Player target = context.get(targetArg);
                     boolean silent = context.flags().isPresent(silentFlag);
                     String targetName = target.getName();
                     String senderName = sender.getName();
@@ -78,17 +76,27 @@ public class BuildProtectionCommand {
                         if (silent){
                             sender.sendMessage(BuildProtectionConfig.TARGET_OFF_SILENT.addComponent(Component.text(targetName)));
                         } else {
-                            sender.sendMessage(BuildProtectionConfig.SENDER_OFF_OTHER.addComponent(Component.text(targetName)));
-                            target.sendMessage(BuildProtectionConfig.TARGET_OFF.addComponent(Component.text(senderName)));
+                            // if the sender and target are the same person
+                            if (targetName.equals(senderName)){
+                                target.sendMessage(BuildProtectionConfig.SENDER_OFF.getMessage());
+                            } else {
+                                target.sendMessage(BuildProtectionConfig.TARGET_OFF.addComponent(Component.text(senderName)));
+                                sender.sendMessage(BuildProtectionConfig.SENDER_OFF_OTHER.addComponent(Component.text(targetName)));
+                            }
                         }
                         // add to the allowed list
                     } else {
                         allowedPlayers.add(targetName);
-                        if (silent){
+                        if (silent) {
                             sender.sendMessage(BuildProtectionConfig.TARGET_ON_SILENT.addComponent(Component.text(targetName)));
                         } else {
-                            sender.sendMessage(BuildProtectionConfig.SENDER_ON_OTHER.addComponent(Component.text(targetName)));
-                            target.sendMessage(BuildProtectionConfig.TARGET_ON.addComponent(Component.text(senderName)));
+                            // if the sender and target are the same person
+                            if (targetName.equals(senderName)){
+                                target.sendMessage(BuildProtectionConfig.SENDER_ON.getMessage());
+                            } else {
+                                target.sendMessage(BuildProtectionConfig.TARGET_ON.addComponent(Component.text(senderName)));
+                                sender.sendMessage(BuildProtectionConfig.SENDER_ON_OTHER.addComponent(Component.text(targetName)));
+                            }
                         }
                     }
                 })

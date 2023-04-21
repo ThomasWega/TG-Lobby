@@ -8,9 +8,4 @@ depend:
 authors: [ Wega ]
 description: Lobby for TrustGames.net
 website: www.trustgames.net
-commands:
-  setspawn:
-    description: sets the spawn location
-    permission: lobby.admin
-  spawn:
-    description: teleports you to spawn
+#commands: - Using Cloud command framework's automatic registration

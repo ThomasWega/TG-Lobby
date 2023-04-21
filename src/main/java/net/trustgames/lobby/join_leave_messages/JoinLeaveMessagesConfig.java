@@ -2,7 +2,7 @@ package net.trustgames.lobby.join_leave_messages;
 
 import net.kyori.adventure.text.Component;
 import net.trustgames.core.managers.LuckPermsManager;
-import net.trustgames.middleware.utils.MiniMessageUtils;
+import net.trustgames.toolkit.utils.MiniMessageUtils;
 import org.bukkit.entity.Player;
 
 

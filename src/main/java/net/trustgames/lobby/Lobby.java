@@ -1,6 +1,5 @@
 package net.trustgames.lobby;
 
-import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.destroystokyo.paper.utils.PaperPluginLogger;
 import lombok.Getter;
@@ -18,18 +17,14 @@ import net.trustgames.lobby.spawn.SpawnHandler;
 import net.trustgames.lobby.spawn.commands.SetSpawnCommand;
 import net.trustgames.lobby.spawn.commands.SpawnCommand;
 import net.trustgames.lobby.xpbar.PlayerLevelHandler;
-import net.trustgames.middleware.Middleware;
+import net.trustgames.toolkit.Toolkit;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Objects;
-import java.util.function.Function;
 import java.util.logging.Logger;
 
 /**
@@ -43,7 +38,7 @@ public final class Lobby extends JavaPlugin {
     @Getter
     private Core core;
     @Getter
-    private Middleware middleware;
+    private Toolkit toolkit;
     @Getter
     private PaperCommandManager<CommandSender> commandManager;
 
@@ -69,16 +64,16 @@ public final class Lobby extends JavaPlugin {
         // TODO improve and finish hotbar
         // TODO do for other also - everytime a new Player joins, the npcs info is taken from the config and all is created again.
         //    ^  do this only once and then only spawn them
-        // TODO split BuildProtection into command and handler
+        // TODO custom messages for cloud
 
-        // TODO finish commands
+        // TODO commands add cooldown (first make CooldownManager per instance)
 
         // TEST still using command executor
         // TEST /setspawn
 
         // get the core instance
         core = (Core) Objects.requireNonNull(Bukkit.getPluginManager().getPlugin("Core"));
-        middleware = core.getMiddleware();
+        toolkit = core.getToolkit();
 
         // create a data folder
         if (getDataFolder().mkdirs()) {
@@ -105,33 +100,16 @@ public final class Lobby extends JavaPlugin {
         pluginManager.registerEvents(new NPCHandler(this), this);
         pluginManager.registerEvents(new BuildProtectionHandler(), this);
         pluginManager.registerEvents(new JoinLeaveMessagesHandler(), this);
-        pluginManager.registerEvents(new PlayerLevelHandler(middleware), this);
+        pluginManager.registerEvents(new PlayerLevelHandler(toolkit), this);
     }
 
     private void registerCommands() {
 
-        // List of command to register
-        HashMap<PluginCommand, CommandExecutor> cmdList = new HashMap<>();
-        cmdList.put(getCommand("setspawn"), new SetSpawnCommand(this));
-        cmdList.put(getCommand("spawn"), new SpawnCommand(this));
-    //    cmdList.put(getCommand("build"), new BuildProtectionHandler(this));
-
-        try {
-            commandManager = new PaperCommandManager<>(
-                    this,
-                    CommandExecutionCoordinator.simpleCoordinator(),
-                    Function.identity(),
-                    Function.identity()
-            );
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to initialize Command Manager", e);
-        }
+        commandManager = core.getCommandManager();
 
         new BuildProtectionCommand(commandManager);
-
-        for (PluginCommand cmd : cmdList.keySet()) {
-            cmd.setExecutor(cmdList.get(cmd));
-        }
+        new SetSpawnCommand(this);
+        new SpawnCommand(this);
     }
 
     private void createConfigs() {

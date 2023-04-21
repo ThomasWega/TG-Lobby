@@ -2,8 +2,8 @@ package net.trustgames.lobby.protection.build;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.trustgames.core.config.CommandConfig;
-import net.trustgames.middleware.utils.MiniMessageUtils;
+import net.trustgames.toolkit.config.CommandConfig;
+import net.trustgames.toolkit.utils.MiniMessageUtils;
 
 public enum BuildProtectionConfig {
     SENDER_ON(CommandConfig.PREFIX.value + "<green>From now on, you can place or break blocks"),
