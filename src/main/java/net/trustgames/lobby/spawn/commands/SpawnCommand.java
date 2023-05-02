@@ -6,8 +6,8 @@ import cloud.commandframework.arguments.CommandArgument;
 import cloud.commandframework.bukkit.parsers.PlayerArgument;
 import cloud.commandframework.paper.PaperCommandManager;
 import net.trustgames.lobby.Lobby;
-import net.trustgames.lobby.config.LobbyPermissionConfig;
 import net.trustgames.lobby.spawn.SpawnConfig;
+import net.trustgames.toolkit.config.PermissionConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
@@ -51,7 +51,7 @@ public final class SpawnCommand {
         CommandArgument<CommandSender, Player> targetArg = PlayerArgument.of("target");
 
         commandManager.command(spawnCommand
-                .permission(LobbyPermissionConfig.STAFF.permission)
+                .permission(PermissionConfig.STAFF.permission)
                 .argument(targetArg)
                 .handler(context -> {
                     CommandSender sender = context.getSender();

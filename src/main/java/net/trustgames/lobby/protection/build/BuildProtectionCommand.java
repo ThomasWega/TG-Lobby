@@ -7,7 +7,7 @@ import cloud.commandframework.arguments.flags.CommandFlag;
 import cloud.commandframework.bukkit.parsers.PlayerArgument;
 import cloud.commandframework.paper.PaperCommandManager;
 import net.kyori.adventure.text.Component;
-import net.trustgames.lobby.config.LobbyPermissionConfig;
+import net.trustgames.toolkit.config.PermissionConfig;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -22,10 +22,10 @@ public class BuildProtectionCommand {
 
         // MAIN COMMAND
         Command.Builder<CommandSender> buildCommand = commandManager.commandBuilder(
-                "build",
+                        "build",
                         ArgumentDescription.of(
                                 "Allows the sender or target to freely place and destroy blocks"))
-                .permission(LobbyPermissionConfig.STAFF.permission);
+                .permission(PermissionConfig.STAFF.permission);
 
         personalCommand(buildCommand);
         targetsCommand(buildCommand);
@@ -73,11 +73,11 @@ public class BuildProtectionCommand {
                     // remove from the allowed list
                     if (allowedPlayers.contains(targetName)) {
                         allowedPlayers.remove(targetName);
-                        if (silent){
+                        if (silent) {
                             sender.sendMessage(BuildProtectionConfig.TARGET_OFF_SILENT.addComponent(Component.text(targetName)));
                         } else {
                             // if the sender and target are the same person
-                            if (targetName.equals(senderName)){
+                            if (targetName.equals(senderName)) {
                                 target.sendMessage(BuildProtectionConfig.SENDER_OFF.getMessage());
                             } else {
                                 target.sendMessage(BuildProtectionConfig.TARGET_OFF.addComponent(Component.text(senderName)));
@@ -91,7 +91,7 @@ public class BuildProtectionCommand {
                             sender.sendMessage(BuildProtectionConfig.TARGET_ON_SILENT.addComponent(Component.text(targetName)));
                         } else {
                             // if the sender and target are the same person
-                            if (targetName.equals(senderName)){
+                            if (targetName.equals(senderName)) {
                                 target.sendMessage(BuildProtectionConfig.SENDER_ON.getMessage());
                             } else {
                                 target.sendMessage(BuildProtectionConfig.TARGET_ON.addComponent(Component.text(senderName)));

@@ -2,7 +2,6 @@ package net.trustgames.lobby.spawn;
 
 import com.destroystokyo.paper.event.player.PlayerPostRespawnEvent;
 import net.trustgames.lobby.Lobby;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -32,11 +31,12 @@ public final class SpawnHandler implements Listener {
         Player player = event.getPlayer();
 
         Location location = config.getLocation("spawn.location");
-        if (location != null) {
-            player.teleport(location);
-        } else {
+        if (location == null) {
             LOGGER.severe("Spawn location isn't set!");
+            return;
         }
+
+        player.teleportAsync(location);
     }
 
     @EventHandler(priority = EventPriority.LOW)
@@ -44,11 +44,11 @@ public final class SpawnHandler implements Listener {
         Player player = event.getPlayer();
 
         Location location = config.getLocation("spawn.location");
-        if (location != null) {
-            player.teleport(location);
-        } else {
+        if (location == null) {
             LOGGER.severe("Spawn location isn't set!");
-            player.sendMessage(ChatColor.RED + "Spawn location isn't set! Set it with /setspawn");
+            return;
         }
+
+        player.teleportAsync(location);
     }
 }

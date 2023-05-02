@@ -9,7 +9,6 @@ import net.trustgames.lobby.hotbar.HotbarHandler;
 import net.trustgames.lobby.join_leave_messages.JoinLeaveMessagesHandler;
 import net.trustgames.lobby.movement.double_jump.DoubleJump;
 import net.trustgames.lobby.movement.piggyback.PiggyBack;
-import net.trustgames.lobby.npc.NPCHandler;
 import net.trustgames.lobby.protection.LobbyGamerulesHandler;
 import net.trustgames.lobby.protection.build.BuildProtectionCommand;
 import net.trustgames.lobby.protection.build.BuildProtectionHandler;
@@ -52,25 +51,6 @@ public final class Lobby extends JavaPlugin {
         - cosmetics
          */
 
-        /* SIDE ADDITIONS
-        - hover on player name in join/leave messages, add info
-        - add permissions for join/leave messages
-        - piggyback ignore when on vanish
-        - piggyback toggle
-         */
-
-
-        // TODO maybe move the npcHandler to core plugin???
-        // TODO improve and finish hotbar
-        // TODO do for other also - everytime a new Player joins, the npcs info is taken from the config and all is created again.
-        //    ^  do this only once and then only spawn them
-        // TODO custom messages for cloud
-
-        // TODO commands add cooldown (first make CooldownManager per instance)
-
-        // TEST still using command executor
-        // TEST /setspawn
-
         // get the core instance
         core = (Core) Objects.requireNonNull(Bukkit.getPluginManager().getPlugin("Core"));
         toolkit = core.getToolkit();
@@ -97,14 +77,12 @@ public final class Lobby extends JavaPlugin {
         pluginManager.registerEvents(new HotbarHandler(), this);
         pluginManager.registerEvents(new DoubleJump(this), this);
         pluginManager.registerEvents(new PiggyBack(this), this);
-        pluginManager.registerEvents(new NPCHandler(this), this);
         pluginManager.registerEvents(new BuildProtectionHandler(), this);
         pluginManager.registerEvents(new JoinLeaveMessagesHandler(), this);
         pluginManager.registerEvents(new PlayerLevelHandler(toolkit), this);
     }
 
     private void registerCommands() {
-
         commandManager = core.getCommandManager();
 
         new BuildProtectionCommand(commandManager);
@@ -115,7 +93,6 @@ public final class Lobby extends JavaPlugin {
     private void createConfigs() {
         File[] configs = new File[]{
                 new File(getDataFolder(), "spawn.yml"),
-                new File(getDataFolder(), "npcs.yml")
         };
 
         for (File file : configs) {

@@ -17,6 +17,10 @@ public enum SpawnConfig {
     SPAWN_TP(CommandConfig.PREFIX.value + "<dark_gray>You've been teleported to the spawn location"),
     SPAWN_TP_OTHER(CommandConfig.PREFIX.value + "<dark_gray>You've teleported the player(s) to the spawn location");
 
+    @Getter
+    @Setter
+    @Nullable
+    private static Location spawnLocation;
     private final String message;
 
     SpawnConfig(String message) {
@@ -28,24 +32,13 @@ public enum SpawnConfig {
     }
 
     /**
-     * @return Formatted component message
-     */
-    public final Component getMessage() {
-        return MiniMessage.miniMessage().deserialize(message);
-    }
-
-    @Getter @Setter
-    @Nullable
-    private static Location spawnLocation;
-
-    /**
      * Updates the spawn location saved in the config file
      *
-     * @param lobby Instance of Lobby
+     * @param lobby    Instance of Lobby
      * @param location new Spawn Location
      * @return If setting new location was successful
      */
-    public static boolean updateSpawnLocation(Lobby lobby, Location location){
+    public static boolean updateSpawnLocation(Lobby lobby, Location location) {
         File spawnFile = getSpawnFile(lobby);
         YamlConfiguration config = YamlConfiguration.loadConfiguration(spawnFile);
         config.set("spawn.location", location);
@@ -57,5 +50,12 @@ public enum SpawnConfig {
             e.printStackTrace();
             return false;
         }
+    }
+
+    /**
+     * @return Formatted component message
+     */
+    public final Component getMessage() {
+        return MiniMessage.miniMessage().deserialize(message);
     }
 }

@@ -40,10 +40,7 @@ public final class PlayerLevelHandler implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     private void onPlayerJoin(PlayerJoinEvent event) {
         UUIDCache uuidCache = new UUIDCache(toolkit, event.getPlayer().getName());
-        uuidCache.get(uuid -> {
-            if (uuid != null)
-                update(uuid);
-        });
+        uuidCache.get(uuid -> uuid.ifPresent(this::update));
     }
 
     private void update(@NotNull UUID uuid) {
@@ -51,8 +48,9 @@ public final class PlayerLevelHandler implements Listener {
         if (player != null && player.isOnline()) {
             PlayerDataCache dataCache = new PlayerDataCache(toolkit, uuid, PlayerDataType.XP);
             dataCache.get(xp -> {
-                assert xp != null; // xp never null
-                int xpInt = Integer.parseInt(xp);
+                if (xp.isEmpty()) return;
+
+                int xpInt = Integer.parseInt(xp.get());
                 int level = getLevelByXp(xpInt);
                 float levelProgress = getProgress(xpInt);
                 player.setExp(levelProgress);

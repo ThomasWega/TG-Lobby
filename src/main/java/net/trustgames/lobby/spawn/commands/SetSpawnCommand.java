@@ -4,8 +4,8 @@ import cloud.commandframework.ArgumentDescription;
 import cloud.commandframework.Command;
 import cloud.commandframework.paper.PaperCommandManager;
 import net.trustgames.lobby.Lobby;
-import net.trustgames.lobby.config.LobbyPermissionConfig;
 import net.trustgames.lobby.spawn.SpawnConfig;
+import net.trustgames.toolkit.config.PermissionConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -21,14 +21,14 @@ public final class SetSpawnCommand {
         register();
     }
 
-    private void register(){
+    private void register() {
         Command.Builder<CommandSender> setSpawnCommand = commandManager.commandBuilder(
                 "setspawn",
                 ArgumentDescription.of("ADD"));
 
         commandManager.command(setSpawnCommand
                 .senderType(Player.class)
-                .permission(LobbyPermissionConfig.STAFF.permission)
+                .permission(PermissionConfig.STAFF.permission)
                 .handler(context -> {
                     Player player = ((Player) context.getSender());
                     if (SpawnConfig.updateSpawnLocation(lobby, player.getLocation())) {
