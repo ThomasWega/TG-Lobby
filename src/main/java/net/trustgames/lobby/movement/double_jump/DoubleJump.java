@@ -20,6 +20,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 public final class DoubleJump implements Listener {
 
@@ -33,7 +34,7 @@ public final class DoubleJump implements Listener {
             (float) DoubleJumpConfig.SOUND_VOLUME.getDouble(),
             (float) DoubleJumpConfig.SOUND_PITCH.getDouble());
     private final Lobby lobby;
-    private final Set<String> cooldowns = new HashSet<>();
+    private final Set<UUID> cooldowns = new HashSet<>();
 
     public DoubleJump(Lobby lobby) {
         this.lobby = lobby;
@@ -49,11 +50,11 @@ public final class DoubleJump implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void setVelocity(PlayerToggleFlightEvent event) {
         Player player = event.getPlayer();
-        String playerName = player.getName();
+        UUID uuid = player.getUniqueId();
         if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR
-                || player.isFlying() || cooldowns.contains(playerName) || player.getVehicle() != null) return;
+                || player.isFlying() || cooldowns.contains(uuid) || player.getVehicle() != null) return;
 
-        cooldowns.add(playerName);
+        cooldowns.add(uuid);
 
         event.setCancelled(true);
 
@@ -93,14 +94,13 @@ public final class DoubleJump implements Listener {
      */
     public void removeFromSet(@NotNull Player player) {
         new BukkitRunnable() {
-            final String playerName = player.getName();
             int i = 0;
 
             @Override
             public void run() {
                 if (!(player.getLocation().getBlock().getRelative(BlockFace.DOWN, 2)
                         .getType() == Material.AIR) || i >= 7) {
-                    cooldowns.remove(playerName);
+                    cooldowns.remove(player.getUniqueId());
                     player.setAllowFlight(true);
                     cancel();
                 }
@@ -110,8 +110,7 @@ public final class DoubleJump implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void removePlayer(PlayerQuitEvent event) {
-        String playerName = event.getPlayer().getName();
-        cooldowns.remove(playerName);
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        cooldowns.remove(event.getPlayer().getUniqueId());
     }
 }

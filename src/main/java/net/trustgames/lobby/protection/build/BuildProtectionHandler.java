@@ -9,30 +9,28 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 public final class BuildProtectionHandler implements Listener {
 
     // using Set as to prevent duplicates
-    public static final Set<String> allowedPlayers = new HashSet<>();
+    public static final Set<UUID> allowedPlayers = new HashSet<>();
 
 
     @EventHandler(priority = EventPriority.NORMAL)
     private void onBlockPlace(BlockPlaceEvent event) {
-        String playerName = event.getPlayer().getName();
-        if (!allowedPlayers.contains(playerName))
+        if (!allowedPlayers.contains(event.getPlayer().getUniqueId()))
             event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
     private void onBlockBreak(BlockBreakEvent event) {
-        String playerName = event.getPlayer().getName();
-        if (!allowedPlayers.contains(playerName))
+        if (!allowedPlayers.contains(event.getPlayer().getUniqueId()))
             event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.HIGH)
     private void onPlayerQuit(PlayerQuitEvent event) {
-        String playerName = event.getPlayer().getName();
-        allowedPlayers.remove(playerName);
+        allowedPlayers.remove(event.getPlayer().getUniqueId());
     }
 }

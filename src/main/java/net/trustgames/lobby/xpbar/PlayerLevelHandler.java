@@ -2,10 +2,9 @@ package net.trustgames.lobby.xpbar;
 
 import net.trustgames.toolkit.Toolkit;
 import net.trustgames.toolkit.cache.PlayerDataCache;
-import net.trustgames.toolkit.cache.UUIDCache;
 import net.trustgames.toolkit.database.player.data.config.PlayerDataType;
 import net.trustgames.toolkit.managers.rabbit.RabbitManager;
-import net.trustgames.toolkit.managers.rabbit.extras.RabbitQueues;
+import net.trustgames.toolkit.managers.rabbit.extras.queues.PlayerDataUpdateQueues;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -39,8 +38,7 @@ public final class PlayerLevelHandler implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     private void onPlayerJoin(PlayerJoinEvent event) {
-        UUIDCache uuidCache = new UUIDCache(toolkit, event.getPlayer().getName());
-        uuidCache.get(uuid -> uuid.ifPresent(this::update));
+        update(event.getPlayer().getUniqueId());
     }
 
     private void update(@NotNull UUID uuid) {
@@ -65,7 +63,7 @@ public final class PlayerLevelHandler implements Listener {
 
         rabbitManager.onChannelInitialized(() ->
                 rabbitManager.onDelivery(
-                        RabbitQueues.EVENT_PLAYER_DATA_UPDATE.name,
+                        PlayerDataUpdateQueues.PLAYER_DATA_UPDATE_XP.name,
                         json -> {
                             UUID uuid = UUID.fromString(json.getString("uuid"));
                             update(uuid);

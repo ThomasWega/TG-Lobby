@@ -11,6 +11,8 @@ import net.trustgames.toolkit.config.PermissionConfig;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 import static net.trustgames.lobby.protection.build.BuildProtectionHandler.allowedPlayers;
 
 public class BuildProtectionCommand {
@@ -36,14 +38,14 @@ public class BuildProtectionCommand {
         commandManager.command(buildCommand
                 .senderType(Player.class)
                 .handler(context -> {
-                    CommandSender sender = context.getSender();
-                    String senderName = sender.getName();
-                    if (allowedPlayers.contains(senderName)) {
-                        allowedPlayers.remove(senderName);
-                        sender.sendMessage(BuildProtectionConfig.SENDER_OFF.getMessage());
+                    Player player = ((Player) context.getSender());
+                    UUID uuid = player.getUniqueId();
+                    if (allowedPlayers.contains(uuid)) {
+                        allowedPlayers.remove(uuid);
+                        player.sendMessage(BuildProtectionConfig.SENDER_OFF.getMessage());
                     } else {
-                        allowedPlayers.add(senderName);
-                        sender.sendMessage(BuildProtectionConfig.SENDER_ON.getMessage());
+                        allowedPlayers.add(uuid);
+                        player.sendMessage(BuildProtectionConfig.SENDER_ON.getMessage());
                     }
                 })
         );
@@ -68,11 +70,12 @@ public class BuildProtectionCommand {
                     CommandSender sender = context.getSender();
                     Player target = context.get(targetArg);
                     boolean silent = context.flags().isPresent(silentFlag);
+                    UUID targetUuid = target.getUniqueId();
                     String targetName = target.getName();
                     String senderName = sender.getName();
                     // remove from the allowed list
-                    if (allowedPlayers.contains(targetName)) {
-                        allowedPlayers.remove(targetName);
+                    if (allowedPlayers.contains(targetUuid)) {
+                        allowedPlayers.remove(targetUuid);
                         if (silent) {
                             sender.sendMessage(BuildProtectionConfig.TARGET_OFF_SILENT.addComponent(Component.text(targetName)));
                         } else {
@@ -86,7 +89,7 @@ public class BuildProtectionCommand {
                         }
                         // add to the allowed list
                     } else {
-                        allowedPlayers.add(targetName);
+                        allowedPlayers.add(targetUuid);
                         if (silent) {
                             sender.sendMessage(BuildProtectionConfig.TARGET_ON_SILENT.addComponent(Component.text(targetName)));
                         } else {
