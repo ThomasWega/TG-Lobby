@@ -17,6 +17,7 @@ import net.trustgames.lobby.spawn.commands.SetSpawnCommand;
 import net.trustgames.lobby.spawn.commands.SpawnCommand;
 import net.trustgames.lobby.xpbar.PlayerLevelHandler;
 import net.trustgames.toolkit.Toolkit;
+import net.trustgames.toolkit.database.player.data.event.PlayerDataUpdateEventManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginManager;
@@ -43,6 +44,10 @@ public final class Lobby extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        // get the core instance
+        core = (Core) Objects.requireNonNull(Bukkit.getPluginManager().getPlugin("Core"));
+        toolkit = core.getToolkit();
+
         new LobbyGamerulesHandler();
 
         /* THINGS TO ADD:
@@ -50,10 +55,6 @@ public final class Lobby extends JavaPlugin {
         - level rewards
         - cosmetics
          */
-
-        // get the core instance
-        core = (Core) Objects.requireNonNull(Bukkit.getPluginManager().getPlugin("Core"));
-        toolkit = core.getToolkit();
 
         // create a data folder
         if (getDataFolder().mkdirs()) {
@@ -71,6 +72,8 @@ public final class Lobby extends JavaPlugin {
     }
 
     private void registerEvents() {
+        new PlayerDataUpdateEventManager(toolkit.getRabbitManager()).receiveEvents();
+
         PluginManager pluginManager = getServer().getPluginManager();
 
         pluginManager.registerEvents(new SpawnHandler(this), this);

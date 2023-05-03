@@ -28,7 +28,7 @@ public final class SetSpawnCommand {
 
         commandManager.command(setSpawnCommand
                 .senderType(Player.class)
-                .permission(PermissionConfig.STAFF.permission)
+                .permission(PermissionConfig.STAFF.getPermission())
                 .handler(context -> {
                     Player player = ((Player) context.getSender());
                     if (SpawnConfig.updateSpawnLocation(lobby, player.getLocation())) {

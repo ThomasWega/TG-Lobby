@@ -27,7 +27,7 @@ public class BuildProtectionCommand {
                         "build",
                         ArgumentDescription.of(
                                 "Allows the sender or target to freely place and destroy blocks"))
-                .permission(PermissionConfig.STAFF.permission);
+                .permission(PermissionConfig.STAFF.getPermission());
 
         personalCommand(buildCommand);
         targetsCommand(buildCommand);
@@ -42,10 +42,10 @@ public class BuildProtectionCommand {
                     UUID uuid = player.getUniqueId();
                     if (allowedPlayers.contains(uuid)) {
                         allowedPlayers.remove(uuid);
-                        player.sendMessage(BuildProtectionConfig.SENDER_OFF.getMessage());
+                        player.sendMessage(BuildProtectionConfig.SENDER_OFF.getFormatted());
                     } else {
                         allowedPlayers.add(uuid);
-                        player.sendMessage(BuildProtectionConfig.SENDER_ON.getMessage());
+                        player.sendMessage(BuildProtectionConfig.SENDER_ON.getFormatted());
                     }
                 })
         );
@@ -81,7 +81,7 @@ public class BuildProtectionCommand {
                         } else {
                             // if the sender and target are the same person
                             if (targetName.equals(senderName)) {
-                                target.sendMessage(BuildProtectionConfig.SENDER_OFF.getMessage());
+                                target.sendMessage(BuildProtectionConfig.SENDER_OFF.getFormatted());
                             } else {
                                 target.sendMessage(BuildProtectionConfig.TARGET_OFF.addComponent(Component.text(senderName)));
                                 sender.sendMessage(BuildProtectionConfig.SENDER_OFF_OTHER.addComponent(Component.text(targetName)));
@@ -95,7 +95,7 @@ public class BuildProtectionCommand {
                         } else {
                             // if the sender and target are the same person
                             if (targetName.equals(senderName)) {
-                                target.sendMessage(BuildProtectionConfig.SENDER_ON.getMessage());
+                                target.sendMessage(BuildProtectionConfig.SENDER_ON.getFormatted());
                             } else {
                                 target.sendMessage(BuildProtectionConfig.TARGET_ON.addComponent(Component.text(senderName)));
                                 sender.sendMessage(BuildProtectionConfig.SENDER_ON_OTHER.addComponent(Component.text(targetName)));

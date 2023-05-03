@@ -40,7 +40,7 @@ public final class SpawnCommand {
                         return;
                     }
                     player.teleportAsync(location, PlayerTeleportEvent.TeleportCause.COMMAND)
-                            .thenRun(() -> player.sendMessage(SpawnConfig.SPAWN_TP.getMessage()));
+                            .thenRun(() -> player.sendMessage(SpawnConfig.SPAWN_TP.getFormatted()));
                 })
         );
     }
@@ -51,7 +51,7 @@ public final class SpawnCommand {
         CommandArgument<CommandSender, Player> targetArg = PlayerArgument.of("target");
 
         commandManager.command(spawnCommand
-                .permission(PermissionConfig.STAFF.permission)
+                .permission(PermissionConfig.STAFF.getPermission())
                 .argument(targetArg)
                 .handler(context -> {
                     CommandSender sender = context.getSender();
@@ -64,10 +64,10 @@ public final class SpawnCommand {
 
                     target.teleportAsync(location, PlayerTeleportEvent.TeleportCause.COMMAND)
                             .thenRun(() -> {
-                                target.sendMessage(SpawnConfig.SPAWN_TP.getMessage());
+                                target.sendMessage(SpawnConfig.SPAWN_TP.getFormatted());
                                 // if the sender and target are the same person
                                 if (!sender.getName().equals(target.getName())) {
-                                    sender.sendMessage(SpawnConfig.SPAWN_TP_OTHER.getMessage());
+                                    sender.sendMessage(SpawnConfig.SPAWN_TP_OTHER.getFormatted());
                                 }
                             });
                 })

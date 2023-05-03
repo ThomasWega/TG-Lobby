@@ -14,8 +14,8 @@ import java.io.File;
 import java.io.IOException;
 
 public enum SpawnConfig {
-    SPAWN_TP(CommandConfig.PREFIX.value + "<dark_gray>You've been teleported to the spawn location"),
-    SPAWN_TP_OTHER(CommandConfig.PREFIX.value + "<dark_gray>You've teleported the player(s) to the spawn location");
+    SPAWN_TP(CommandConfig.PREFIX.getString() + "<dark_gray>You've been teleported to the spawn location"),
+    SPAWN_TP_OTHER(CommandConfig.PREFIX.getString() + "<dark_gray>You've teleported the player(s) to the spawn location");
 
     @Getter
     @Setter
@@ -55,7 +55,7 @@ public enum SpawnConfig {
     /**
      * @return Formatted component message
      */
-    public final Component getMessage() {
+    public final Component getFormatted() {
         return MiniMessage.miniMessage().deserialize(message);
     }
 }
