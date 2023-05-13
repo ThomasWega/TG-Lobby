@@ -6,7 +6,6 @@ import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
@@ -26,7 +25,7 @@ public final class SpawnHandler implements Listener {
         SpawnConfig.setSpawnLocation(config.getLocation("spawn.location"));
     }
 
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler
     private void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
@@ -36,10 +35,10 @@ public final class SpawnHandler implements Listener {
             return;
         }
 
-        player.teleportAsync(location);
+        player.teleport(location);
     }
 
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler
     private void onPlayerDeath(PlayerPostRespawnEvent event) {
         Player player = event.getPlayer();
 
@@ -49,6 +48,6 @@ public final class SpawnHandler implements Listener {
             return;
         }
 
-        player.teleportAsync(location);
+        player.teleport(location);
     }
 }

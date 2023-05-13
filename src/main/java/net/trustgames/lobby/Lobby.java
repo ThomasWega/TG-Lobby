@@ -18,6 +18,7 @@ import net.trustgames.lobby.spawn.commands.SpawnCommand;
 import net.trustgames.lobby.xpbar.PlayerLevelHandler;
 import net.trustgames.toolkit.Toolkit;
 import net.trustgames.toolkit.database.player.data.event.PlayerDataUpdateEventManager;
+import net.trustgames.toolkit.managers.rabbit.config.RabbitExchange;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginManager;
@@ -33,7 +34,6 @@ import java.util.logging.Logger;
  * but unlike Core shouldn't be used on any mini-games servers.
  */
 public final class Lobby extends JavaPlugin {
-
     public static final Logger LOGGER = PaperPluginLogger.getLogger("Lobby");
     @Getter
     private Core core;
@@ -58,7 +58,7 @@ public final class Lobby extends JavaPlugin {
 
         // create a data folder
         if (getDataFolder().mkdirs()) {
-            getLogger().warning("Created main plugin folder");
+            LOGGER.warning("Created main plugin folder");
         }
 
         registerEvents();
@@ -72,7 +72,7 @@ public final class Lobby extends JavaPlugin {
     }
 
     private void registerEvents() {
-        new PlayerDataUpdateEventManager(toolkit.getRabbitManager()).receiveEvents();
+        new PlayerDataUpdateEventManager(toolkit.getRabbitManager()).receiveEvents(RabbitExchange.EVENT_PLAYER_DATA_UPDATE);
 
         PluginManager pluginManager = getServer().getPluginManager();
 

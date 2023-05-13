@@ -101,6 +101,13 @@
         </resources>
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>trustgames-repo</id>
+            <url>http://81.201.49.240:8080/private</url>
+        </repository>
+    </distributionManagement>
+
     <repositories>
         <repository>
             <id>papermc-repo</id>
@@ -125,22 +132,14 @@
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.19.2-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.19.2-R0.1-SNAPSHOT</version>
-            <classifier>remapped-mojang</classifier>
+            <version>1.19.4-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.trustgames</groupId>
             <artifactId>core</artifactId>
             <version>0.2-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${tg.core}</systemPath>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.comphenix.protocol</groupId>

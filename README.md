@@ -1,28 +1,17 @@
 # TGLobby
 Lobby for TrustGames.net
 
-###### Permissions
-- lobby.admin
-- lobby.staff
-- lobby.titan
-- lobby.lord
-- lobby.knight
-- lobby.prime
-- lobby.default
+###### Features:
+- Hotbar Items
+- Join/Leave messages
+- Double Jump
+- PiggyBack
+- Build/Place protection
+- Spawn teleport
+- XP Bar show level + update
 
-###### Benefits:
-__- PRIME:__  
+###### Commands:
+- /build <name>
+- /setspawn
+- /spawn <name>
 
-__- KNIGHT:__  
-
-__- LORD:__  
-
-__- TITAN:__  
-
-__- STAFF:__  
-build command
-build <player> command
-
-__- ADMIN:__  
-setspawn command  
-spawn <player> command

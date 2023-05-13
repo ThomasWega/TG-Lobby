@@ -4,7 +4,6 @@ main: net.trustgames.lobby.Lobby
 api-version: 1.19
 depend:
   - Core
-  - LuckPerms
 authors: [ Wega ]
 description: Lobby for TrustGames.net
 website: www.trustgames.net

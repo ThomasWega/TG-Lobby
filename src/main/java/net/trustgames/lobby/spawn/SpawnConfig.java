@@ -12,6 +12,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
 
 public enum SpawnConfig {
     SPAWN_TP(CommandConfig.PREFIX.getString() + "<dark_gray>You've been teleported to the spawn location"),
@@ -47,7 +48,7 @@ public enum SpawnConfig {
             spawnLocation = location;
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            Lobby.LOGGER.log(Level.SEVERE, "Unable to save new location to spawn config", e);
             return false;
         }
     }

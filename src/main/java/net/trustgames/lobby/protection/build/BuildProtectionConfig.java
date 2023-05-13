@@ -2,8 +2,8 @@ package net.trustgames.lobby.protection.build;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.trustgames.toolkit.config.CommandConfig;
-import net.trustgames.toolkit.utils.MiniMessageUtils;
 
 public enum BuildProtectionConfig {
     SENDER_ON(CommandConfig.PREFIX.getString() + "<green>From now on, you can place or break blocks"),
@@ -35,6 +35,9 @@ public enum BuildProtectionConfig {
      * @return New formatted Component with replaced id tag
      */
     public final Component addComponent(Component component) {
-        return MiniMessageUtils.component(component).deserialize(message);
+        return MiniMessage.miniMessage().deserialize(
+                message,
+                Placeholder.component("component", component)
+        );
     }
 }

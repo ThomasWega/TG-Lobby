@@ -1,7 +1,7 @@
 package net.trustgames.lobby.xpbar;
 
 import net.trustgames.toolkit.Toolkit;
-import net.trustgames.toolkit.cache.PlayerDataCache;
+import net.trustgames.toolkit.database.player.data.PlayerDataFetcher;
 import net.trustgames.toolkit.database.player.data.config.PlayerDataType;
 import net.trustgames.toolkit.database.player.data.event.PlayerDataUpdateEvent;
 import net.trustgames.toolkit.database.player.data.event.PlayerDataUpdateEventManager;
@@ -45,13 +45,12 @@ public final class PlayerLevelHandler implements PlayerDataUpdateListener, Liste
     private void update(@NotNull UUID uuid) {
         Player player = Bukkit.getPlayer(uuid);
         if (player != null && player.isOnline()) {
-            PlayerDataCache dataCache = new PlayerDataCache(toolkit, uuid, PlayerDataType.XP);
-            dataCache.get(xp -> {
-                if (xp.isEmpty()) return;
+            new PlayerDataFetcher(toolkit).resolveIntDataAsync(uuid, PlayerDataType.XP).thenAccept(optXp -> {
+                if (optXp.isEmpty()) return;
 
-                int xpInt = Integer.parseInt(xp.get());
-                int level = getLevelByXp(xpInt);
-                float levelProgress = getProgress(xpInt);
+                int xp = optXp.getAsInt();
+                int level = getLevelByXp(xp);
+                float levelProgress = getProgress(xp);
                 player.setExp(levelProgress);
                 player.setLevel(level);
             });
@@ -60,6 +59,7 @@ public final class PlayerLevelHandler implements PlayerDataUpdateListener, Liste
 
     @Override
     public void onPlayerDataUpdate(PlayerDataUpdateEvent event) {
+        if (event.getDataType() != PlayerDataType.XP && event.getDataType() != PlayerDataType.LEVEL) return;
         update(event.getUuid());
     }
 }
