@@ -22,3 +22,18 @@ Lobby for TrustGames.net
 - /setspawn
 - /spawn <name>
 
+
+###### How to get Core:
+TG-Core is self-hosted on a server. To be able to reach that server you need to set the server up in your maven settings.xml. Insert the following lines in the server section
+
+**_settings.xml_**
+```
+<servers>
+    <server>
+      <id>trustgames-repo</id>
+      <username>{username}</username>
+      <password>{secret}</password>
+    </server>
+  </servers>
+```
+
