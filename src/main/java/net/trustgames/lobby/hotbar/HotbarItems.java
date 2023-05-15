@@ -1,11 +1,11 @@
 package net.trustgames.lobby.hotbar;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.trustgames.core.managers.item.ItemBuilder;
-import net.trustgames.core.managers.item.SkullManager;
+import net.trustgames.core.managers.item.SkullBuilder;
 import net.trustgames.core.utils.ColorUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -33,17 +33,18 @@ public final class HotbarItems {
         inventory = player.getInventory();
 
         // server selector
-        ItemStack selectorStack = SkullManager.getSkull(
-                "eyJ0aW1lc3RhbXAiOjE1MTgxODUxNjg4OTEsInByb2ZpbGVJZCI6IjIzZjFhNTlmNDY5YjQzZGRiZGI1MzdiZmVjMTA0NzFmIiwicHJvZmlsZU5hbWUiOiIyODA3Iiwic2lnbmF0dXJlUmVxdWlyZWQiOnRydWUsInRleHR1cmVzIjp7IlNLSU4iOnsidXJsIjoiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS83YTRiODgzMmFmYzNjZWE4MzIyNGIxNDQxMGI2NjJlNzA3ZThlNzljNjFmNDY2ZTM2MmEzMGU4MmM3ZGU5In19fQ==",
-                "WsGW3iUx8g+xH1NraTlpxgnsp8ClAE40oerBpV+MnPNmBAbZ/WnZwVEI5w9pziuCG75oxuckrO/kyFFHzxivr+OXKoXYwi8jw+8ZRL7v5gappa5nvdbf5kkClNxmxkjDzbN0U01tM91OWIimKwLo5Lel+Zf02vtYw7CF9sM8rowLKAjQzo1Nydb0Hpo2WFsIe4Aa17vyXsHsv4OTDx4Mj1zUvXtFkgTzNCjBuBAfOBaGXp+m6Zo23XJAu010Rf6by0y8OuEm0XHKMY0SXlpE2AepIQDbaMQA2tlViVsDJLAIJJQh0SBILRxC6+8aGdQmC1AG1L7RmtDrIShx6pwF0gGK5BBG0BTtbJ++NtR0sIBk2oNFvm+TtsG/VmIHL6cDiJ7sxvbNJXrr5lp8YJ9Wsgn6P+iJ/qtdSGOfoEQkBmneRZvelbWeUYcpZi8xinoOmgQCDzIWnKZ96T73ArbBZBbeL+6+XGi7lnqv4DMqqfeyzG3YC6SmCzkiBABz5PDxKG0BthnT7Xw0rocBsxHhjWmWC5okskKHZql+Pk1PZnCXWuaC30HxScH11QHy0li4y3J5mclhqISd5/ZbGx/wuOcETQrFKh9M90qObf5VGNxAJovwdIfs3Zh+YCBdYWzsx8UCbLKmewfGWxpat1VgrHmSumE2uojdk81W8lCmyOs="
-        );
-        selectorStack = new ItemBuilder(selectorStack)
+        ItemStack selectorStack = new SkullBuilder()
+                .texture(
+                        "eyJ0aW1lc3RhbXAiOjE1MTgxODUxNjg4OTEsInByb2ZpbGVJZCI6IjIzZjFhNTlmNDY5YjQzZGRiZGI1MzdiZmVjMTA0NzFmIiwicHJvZmlsZU5hbWUiOiIyODA3Iiwic2lnbmF0dXJlUmVxdWlyZWQiOnRydWUsInRleHR1cmVzIjp7IlNLSU4iOnsidXJsIjoiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS83YTRiODgzMmFmYzNjZWE4MzIyNGIxNDQxMGI2NjJlNzA3ZThlNzljNjFmNDY2ZTM2MmEzMGU4MmM3ZGU5In19fQ==",
+                        "WsGW3iUx8g+xH1NraTlpxgnsp8ClAE40oerBpV+MnPNmBAbZ/WnZwVEI5w9pziuCG75oxuckrO/kyFFHzxivr+OXKoXYwi8jw+8ZRL7v5gappa5nvdbf5kkClNxmxkjDzbN0U01tM91OWIimKwLo5Lel+Zf02vtYw7CF9sM8rowLKAjQzo1Nydb0Hpo2WFsIe4Aa17vyXsHsv4OTDx4Mj1zUvXtFkgTzNCjBuBAfOBaGXp+m6Zo23XJAu010Rf6by0y8OuEm0XHKMY0SXlpE2AepIQDbaMQA2tlViVsDJLAIJJQh0SBILRxC6+8aGdQmC1AG1L7RmtDrIShx6pwF0gGK5BBG0BTtbJ++NtR0sIBk2oNFvm+TtsG/VmIHL6cDiJ7sxvbNJXrr5lp8YJ9Wsgn6P+iJ/qtdSGOfoEQkBmneRZvelbWeUYcpZi8xinoOmgQCDzIWnKZ96T73ArbBZBbeL+6+XGi7lnqv4DMqqfeyzG3YC6SmCzkiBABz5PDxKG0BthnT7Xw0rocBsxHhjWmWC5okskKHZql+Pk1PZnCXWuaC30HxScH11QHy0li4y3J5mclhqISd5/ZbGx/wuOcETQrFKh9M90qObf5VGNxAJovwdIfs3Zh+YCBdYWzsx8UCbLKmewfGWxpat1VgrHmSumE2uojdk81W8lCmyOs="
+                )
                 .displayName(ColorUtils.color("&6Server Selector" + " &7(Use)"))
                 .hideFlags()
                 .build();
 
         // player profile
-        ItemStack profileStack = new ItemBuilder(Material.PLAYER_HEAD, 1)
+        ItemStack profileStack = new SkullBuilder()
+                .owner(player)
                 .displayName(ColorUtils.color("&aMy Profile" + " &7(Use)"))
                 .hideFlags()
                 .build();
@@ -61,16 +62,16 @@ public final class HotbarItems {
         List<Component> hideLore = new ArrayList<>();
         if (Bukkit.getOnlinePlayers().size() == 1) {
             hideLore.add(Component.text(""));
-            hideLore.add(Component.text(ChatColor.DARK_GRAY + "Nobody else is online :("));
+            hideLore.add(Component.text("Nobody else is online :(").color(NamedTextColor.DARK_GRAY));
         } else {
             hideLore.add(Component.text(""));
-            hideLore.add(Component.text(ChatColor.DARK_GRAY + "Hide " + (Bukkit.getOnlinePlayers().size() - 1) + " player(s) by"));
-            hideLore.add(Component.text(ChatColor.DARK_GRAY + "clicking with this item"));
+            hideLore.add(Component.text("Hide " + (Bukkit.getOnlinePlayers().size() - 1) + " player(s) by").color(NamedTextColor.DARK_GRAY));
+            hideLore.add(Component.text("clicking with this item").color(NamedTextColor.DARK_GRAY));
         }
 
         // hide players item
         ItemStack hideStack = new ItemBuilder(Material.FEATHER, Bukkit.getOnlinePlayers().size())
-                .displayName(Component.text(ChatColor.WHITE + "Hide Players" + ChatColor.GRAY + " (Use)"))
+                .displayName(Component.text("Hide Players").color(NamedTextColor.WHITE).append(Component.text(" (Use)").color(NamedTextColor.GRAY)))
                 .lore(hideLore)
                 .hideFlags()
                 .build();

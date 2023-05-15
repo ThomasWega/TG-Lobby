@@ -5,10 +5,11 @@ import cloud.commandframework.Command;
 import cloud.commandframework.arguments.CommandArgument;
 import cloud.commandframework.bukkit.parsers.PlayerArgument;
 import cloud.commandframework.paper.PaperCommandManager;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.trustgames.lobby.Lobby;
 import net.trustgames.lobby.spawn.SpawnConfig;
 import net.trustgames.toolkit.config.PermissionConfig;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -36,7 +37,7 @@ public final class SpawnCommand {
                     Player player = ((Player) context.getSender());
                     Location location = SpawnConfig.getSpawnLocation();
                     if (location == null) {
-                        player.sendMessage(ChatColor.RED + "Spawn location not set!");
+                        player.sendMessage(Component.text("Spawn location not set!").color(NamedTextColor.RED));
                         return;
                     }
                     player.teleportAsync(location, PlayerTeleportEvent.TeleportCause.COMMAND)
@@ -58,7 +59,7 @@ public final class SpawnCommand {
                     Player target = context.get(targetArg);
                     Location location = SpawnConfig.getSpawnLocation();
                     if (location == null) {
-                        sender.sendMessage(ChatColor.RED + "Spawn location not set!");
+                        sender.sendMessage(Component.text("Spawn location not set!").color(NamedTextColor.RED));
                         return;
                     }
 
