@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public final class PiggyBack implements Listener {
+public final class PiggyBackHandler implements Listener {
 
     private static final ParticleBuilder particle = new ParticleBuilder(
             PiggyBackConfig.PARTICLE.getParticle())
@@ -33,8 +33,9 @@ public final class PiggyBack implements Listener {
             (float) PiggyBackConfig.SOUND_PITCH.getDouble());
     private final Lobby lobby;
 
-    public PiggyBack(Lobby lobby) {
+    public PiggyBackHandler(Lobby lobby) {
         this.lobby = lobby;
+        Bukkit.getServer().getPluginManager().registerEvents(this, lobby);
     }
 
     @EventHandler(priority = EventPriority.HIGH)

@@ -2,6 +2,7 @@ package net.trustgames.lobby.spawn;
 
 import com.destroystokyo.paper.event.player.PlayerPostRespawnEvent;
 import net.trustgames.lobby.Lobby;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -23,6 +24,7 @@ public final class SpawnHandler implements Listener {
     public SpawnHandler(Lobby lobby) {
         this.config = YamlConfiguration.loadConfiguration(SpawnConfig.getSpawnFile(lobby));
         SpawnConfig.setSpawnLocation(config.getLocation("spawn.location"));
+        Bukkit.getServer().getPluginManager().registerEvents(this, lobby);
     }
 
     @EventHandler

@@ -1,5 +1,6 @@
 package net.trustgames.lobby.xpbar;
 
+import net.trustgames.lobby.Lobby;
 import net.trustgames.toolkit.Toolkit;
 import net.trustgames.toolkit.database.player.data.PlayerDataFetcher;
 import net.trustgames.toolkit.database.player.data.config.PlayerDataType;
@@ -27,9 +28,10 @@ public final class PlayerLevelHandler implements PlayerDataUpdateListener, Liste
 
     private final Toolkit toolkit;
 
-    public PlayerLevelHandler(Toolkit toolkit) {
-        this.toolkit = toolkit;
+    public PlayerLevelHandler(Lobby lobby) {
+        this.toolkit = lobby.getToolkit();
         PlayerDataUpdateEventManager.register(this);
+        Bukkit.getServer().getPluginManager().registerEvents(this, lobby);
     }
 
     @EventHandler(priority = EventPriority.HIGH)

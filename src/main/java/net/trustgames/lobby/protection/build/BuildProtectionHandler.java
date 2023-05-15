@@ -1,5 +1,7 @@
 package net.trustgames.lobby.protection.build;
 
+import net.trustgames.lobby.Lobby;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -12,6 +14,10 @@ import java.util.Set;
 import java.util.UUID;
 
 public final class BuildProtectionHandler implements Listener {
+
+    public BuildProtectionHandler(Lobby lobby) {
+        Bukkit.getServer().getPluginManager().registerEvents(this, lobby);
+    }
 
     // using Set as to prevent duplicates
     public static final Set<UUID> allowedPlayers = new HashSet<>();

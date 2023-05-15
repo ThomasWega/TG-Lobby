@@ -7,8 +7,8 @@ import net.trustgames.core.Core;
 import net.trustgames.core.managers.FileManager;
 import net.trustgames.lobby.hotbar.HotbarHandler;
 import net.trustgames.lobby.join_leave_messages.JoinLeaveMessagesHandler;
-import net.trustgames.lobby.movement.double_jump.DoubleJump;
-import net.trustgames.lobby.movement.piggyback.PiggyBack;
+import net.trustgames.lobby.movement.double_jump.DoubleJumpHandler;
+import net.trustgames.lobby.movement.piggyback.PiggyBackHandler;
 import net.trustgames.lobby.protection.LobbyGamerulesHandler;
 import net.trustgames.lobby.protection.build.BuildProtectionCommand;
 import net.trustgames.lobby.protection.build.BuildProtectionHandler;
@@ -21,7 +21,6 @@ import net.trustgames.toolkit.database.player.data.event.PlayerDataUpdateEventMa
 import net.trustgames.toolkit.managers.rabbit.config.RabbitExchange;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -72,17 +71,15 @@ public final class Lobby extends JavaPlugin {
     }
 
     private void registerEvents() {
+        new SpawnHandler(this);
+        new HotbarHandler(this);
+        new DoubleJumpHandler(this);
+        new PiggyBackHandler(this);
+        new BuildProtectionHandler(this);
+        new JoinLeaveMessagesHandler(this);
+        new PlayerLevelHandler(this);
+
         new PlayerDataUpdateEventManager(toolkit.getRabbitManager()).receiveEvents(RabbitExchange.EVENT_PLAYER_DATA_UPDATE);
-
-        PluginManager pluginManager = getServer().getPluginManager();
-
-        pluginManager.registerEvents(new SpawnHandler(this), this);
-        pluginManager.registerEvents(new HotbarHandler(), this);
-        pluginManager.registerEvents(new DoubleJump(this), this);
-        pluginManager.registerEvents(new PiggyBack(this), this);
-        pluginManager.registerEvents(new BuildProtectionHandler(), this);
-        pluginManager.registerEvents(new JoinLeaveMessagesHandler(), this);
-        pluginManager.registerEvents(new PlayerLevelHandler(toolkit), this);
     }
 
     private void registerCommands() {

@@ -1,5 +1,7 @@
 package net.trustgames.lobby.hotbar;
 
+import net.trustgames.lobby.Lobby;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -15,6 +17,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
  * Also handles the item move, drop, drag
  */
 public final class HotbarHandler implements Listener {
+
+    public HotbarHandler(Lobby lobby) {
+        Bukkit.getServer().getPluginManager().registerEvents(this, lobby);
+    }
 
     @EventHandler(priority = EventPriority.NORMAL)
     private void onPlayerJoin(PlayerJoinEvent event) {

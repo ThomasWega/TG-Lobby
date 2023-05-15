@@ -22,7 +22,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-public final class DoubleJump implements Listener {
+public final class DoubleJumpHandler implements Listener {
 
     private static final ParticleBuilder particle = new ParticleBuilder(
             DoubleJumpConfig.PARTICLE.getParticle())
@@ -36,8 +36,9 @@ public final class DoubleJump implements Listener {
     private final Lobby lobby;
     private final Set<UUID> cooldowns = new HashSet<>();
 
-    public DoubleJump(Lobby lobby) {
+    public DoubleJumpHandler(Lobby lobby) {
         this.lobby = lobby;
+        Bukkit.getServer().getPluginManager().registerEvents(this, lobby);
     }
 
     @EventHandler(priority = EventPriority.NORMAL)

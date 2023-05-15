@@ -1,5 +1,6 @@
 package net.trustgames.lobby.join_leave_messages;
 
+import net.trustgames.lobby.Lobby;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -8,6 +9,10 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public final class JoinLeaveMessagesHandler implements Listener {
+
+    public JoinLeaveMessagesHandler(Lobby lobby) {
+        Bukkit.getServer().getPluginManager().registerEvents(this, lobby);
+    }
 
     @EventHandler(priority = EventPriority.NORMAL)
     private void onPlayerJoin(PlayerJoinEvent event) {
