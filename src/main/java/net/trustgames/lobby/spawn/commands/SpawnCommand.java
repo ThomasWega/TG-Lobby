@@ -37,7 +37,7 @@ public final class SpawnCommand {
                     Player player = ((Player) context.getSender());
                     Location location = SpawnConfig.getSpawnLocation();
                     if (location == null) {
-                        player.sendMessage(Component.text("Spawn location not set!").color(NamedTextColor.RED));
+                        player.sendMessage(Component.text("Spawn location not set!", NamedTextColor.RED));
                         return;
                     }
                     player.teleportAsync(location, PlayerTeleportEvent.TeleportCause.COMMAND)
@@ -59,7 +59,7 @@ public final class SpawnCommand {
                     Player target = context.get(targetArg);
                     Location location = SpawnConfig.getSpawnLocation();
                     if (location == null) {
-                        sender.sendMessage(Component.text("Spawn location not set!").color(NamedTextColor.RED));
+                        sender.sendMessage(Component.text("Spawn location not set!", NamedTextColor.RED));
                         return;
                     }
 

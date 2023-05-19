@@ -1,55 +1,58 @@
 package net.trustgames.lobby.hotbar;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.trustgames.core.managers.gui.GUIManager;
+import net.trustgames.core.managers.gui.buttons.HotbarGUIButton;
+import net.trustgames.core.managers.gui.player.PlayerGUI;
+import net.trustgames.core.managers.item.ItemBuilder;
+import net.trustgames.core.managers.item.SkullBuilder;
 import net.trustgames.lobby.Lobby;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 
-/**
- * Events which set, change, update or remove the hotbar items.
- * Also handles the item move, drop, drag
- */
-public final class HotbarHandler implements Listener {
+import java.util.HashMap;
+import java.util.Map;
+
+public class HotbarHandler implements Listener {
+
+    private final GUIManager guiManager;
 
     public HotbarHandler(Lobby lobby) {
-        Bukkit.getServer().getPluginManager().registerEvents(this, lobby);
+        this.guiManager = lobby.getCore().getGuiManager();
+        Bukkit.getPluginManager().registerEvents(this, lobby);
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    HashMap<Integer, HotbarGUIButton> buttonMap = new HashMap<>(Map.of(
+            1, new HotbarGUIButton()
+                    .creator(player -> new SkullBuilder()
+                            .owner(player)
+                            .displayName(
+                                    Component.text("My profile", NamedTextColor.GREEN)
+                            )
+                            .hideFlags()
+                            .build()
+                    )
+                    .event(event -> event.getWhoClicked().sendMessage(Component.text("TO ADD INV")))
+                    .eventHotbar(event -> event.getPlayer().sendMessage(Component.text("TO ADD HOTBAR"))),
+
+            2, new HotbarGUIButton()
+                    .creator(player -> new ItemBuilder(Material.COMPASS)
+                            .displayName(Component.text("My profile", NamedTextColor.GREEN))
+                            .hideFlags()
+                            .build()
+                    )
+                    .event(event -> event.getWhoClicked().sendMessage(Component.text("TO ADD INV")))
+                    .eventHotbar(event -> event.getPlayer().sendMessage(Component.text("TO ADD HOTBAR")))
+            ));
+
+    @EventHandler
     private void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-
-        player.getInventory().clear();
-
-        HotbarItems.addItems(player);
-        HotbarItems.hidePlayersItem();
-    }
-
-    @EventHandler(priority = EventPriority.HIGH)
-    private void onPlayerQuit(PlayerQuitEvent event) {
-        HotbarItems.hidePlayersItem();
-    }
-
-    @EventHandler(priority = EventPriority.NORMAL)
-    private void itemClickEvent(InventoryClickEvent event) {
-        event.setCancelled(true);
-    }
-
-    @EventHandler(priority = EventPriority.NORMAL)
-    private void itemDragEvent(InventoryDragEvent event) {
-        event.setCancelled(true);
-    }
-
-    @EventHandler(priority = EventPriority.NORMAL)
-    private void itemDropEvent(PlayerDropItemEvent event) {
-        event.setCancelled(true);
+        new PlayerGUI(guiManager, player).setContents(buttonMap);
     }
 }
-

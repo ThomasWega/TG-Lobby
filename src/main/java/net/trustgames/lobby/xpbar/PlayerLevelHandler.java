@@ -31,7 +31,7 @@ public final class PlayerLevelHandler implements PlayerDataUpdateListener, Liste
     public PlayerLevelHandler(Lobby lobby) {
         this.toolkit = lobby.getToolkit();
         PlayerDataUpdateEventManager.register(this);
-        Bukkit.getServer().getPluginManager().registerEvents(this, lobby);
+        Bukkit.getPluginManager().registerEvents(this, lobby);
     }
 
     @EventHandler(priority = EventPriority.HIGH)

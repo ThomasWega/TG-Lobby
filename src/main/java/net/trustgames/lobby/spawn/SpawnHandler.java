@@ -24,7 +24,7 @@ public final class SpawnHandler implements Listener {
     public SpawnHandler(Lobby lobby) {
         this.config = YamlConfiguration.loadConfiguration(SpawnConfig.getSpawnFile(lobby));
         SpawnConfig.setSpawnLocation(config.getLocation("spawn.location"));
-        Bukkit.getServer().getPluginManager().registerEvents(this, lobby);
+        Bukkit.getPluginManager().registerEvents(this, lobby);
     }
 
     @EventHandler

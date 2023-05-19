@@ -38,7 +38,7 @@ public final class DoubleJumpHandler implements Listener {
 
     public DoubleJumpHandler(Lobby lobby) {
         this.lobby = lobby;
-        Bukkit.getServer().getPluginManager().registerEvents(this, lobby);
+        Bukkit.getPluginManager().registerEvents(this, lobby);
     }
 
     @EventHandler(priority = EventPriority.NORMAL)

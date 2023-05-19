@@ -16,7 +16,7 @@ import java.util.UUID;
 public final class BuildProtectionHandler implements Listener {
 
     public BuildProtectionHandler(Lobby lobby) {
-        Bukkit.getServer().getPluginManager().registerEvents(this, lobby);
+        Bukkit.getPluginManager().registerEvents(this, lobby);
     }
 
     // using Set as to prevent duplicates

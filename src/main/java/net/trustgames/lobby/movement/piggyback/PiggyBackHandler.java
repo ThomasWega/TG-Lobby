@@ -35,7 +35,7 @@ public final class PiggyBackHandler implements Listener {
 
     public PiggyBackHandler(Lobby lobby) {
         this.lobby = lobby;
-        Bukkit.getServer().getPluginManager().registerEvents(this, lobby);
+        Bukkit.getPluginManager().registerEvents(this, lobby);
     }
 
     @EventHandler(priority = EventPriority.HIGH)

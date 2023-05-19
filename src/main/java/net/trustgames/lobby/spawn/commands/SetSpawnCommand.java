@@ -34,13 +34,10 @@ public final class SetSpawnCommand {
                     Player player = ((Player) context.getSender());
                     if (SpawnConfig.updateSpawnLocation(lobby, player.getLocation())) {
                         player.sendMessage(Component.text(
-                                "Spawn location was set at your location and saved in /plugins/Lobby/spawn.yml")
-                                .color(NamedTextColor.GREEN)
+                                "Spawn location was set at your location and saved in /plugins/Lobby/spawn.yml", NamedTextColor.GREEN)
                         );
                     } else {
-                        player.sendMessage(Component.text(
-                                "ERROR: Couldn't save the spawn.yml file!")
-                                .color(NamedTextColor.RED)
+                        player.sendMessage(Component.text("ERROR: Couldn't save the spawn.yml file!", NamedTextColor.RED)
                         );
                     }
                 })
