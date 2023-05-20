@@ -48,7 +48,7 @@ public class HotbarHandler implements Listener {
                     )
                     .event(event -> event.getWhoClicked().sendMessage(Component.text("TO ADD INV")))
                     .eventHotbar(event -> event.getPlayer().sendMessage(Component.text("TO ADD HOTBAR")))
-            ));
+    ));
 
     @EventHandler
     private void onPlayerJoin(PlayerJoinEvent event) {
