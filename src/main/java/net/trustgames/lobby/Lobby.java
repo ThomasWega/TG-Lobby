@@ -21,10 +21,10 @@ import net.trustgames.toolkit.database.player.data.event.PlayerDataUpdateEventMa
 import net.trustgames.toolkit.managers.rabbit.config.RabbitExchange;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.util.Objects;
 import java.util.logging.Logger;
 
 /**
@@ -33,7 +33,7 @@ import java.util.logging.Logger;
  * but unlike Core shouldn't be used on any mini-games servers.
  */
 public final class Lobby extends JavaPlugin {
-    public static final Logger LOGGER = PaperPluginLogger.getLogger("Lobby");
+    public static final Logger LOGGER = PaperPluginLogger.getLogger("TG-Lobby");
     @Getter
     private Core core;
     @Getter
@@ -44,7 +44,11 @@ public final class Lobby extends JavaPlugin {
     @Override
     public void onEnable() {
         // get the core instance
-        core = (Core) Objects.requireNonNull(Bukkit.getPluginManager().getPlugin("Core"));
+        Plugin corePlugin = Bukkit.getPluginManager().getPlugin("TG-Core");
+        if (corePlugin == null) {
+            throw new RuntimeException("Failed to load TG-Core plugin for " + this.getName());
+        }
+        core = (Core) corePlugin;
         toolkit = core.getToolkit();
 
         new LobbyGamerulesHandler();

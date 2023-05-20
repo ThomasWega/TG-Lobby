@@ -1,0 +1,12 @@
+name: TG-Lobby
+version: '${project.version}'
+main: net.trustgames.lobby.Lobby
+description: Lobby plugin for TrustGames.net
+api-version: '1.19'
+dependencies:
+  - name: TG-Core
+    required: true
+    bootstrap: false
+load-after:
+  - name: TG-Core
+    bootstrap: false
