@@ -18,7 +18,7 @@ import net.trustgames.lobby.spawn.commands.SpawnCommand;
 import net.trustgames.lobby.xpbar.PlayerLevelHandler;
 import net.trustgames.toolkit.Toolkit;
 import net.trustgames.toolkit.database.player.data.event.PlayerDataUpdateEventManager;
-import net.trustgames.toolkit.managers.rabbit.config.RabbitExchange;
+import net.trustgames.toolkit.managers.message_queue.config.RabbitExchange;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
