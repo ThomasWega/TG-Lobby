@@ -4,7 +4,7 @@ import cloud.commandframework.paper.PaperCommandManager;
 import com.destroystokyo.paper.utils.PaperPluginLogger;
 import lombok.Getter;
 import net.trustgames.core.Core;
-import net.trustgames.core.managers.FileManager;
+import net.trustgames.core.managers.file.FileManager;
 import net.trustgames.lobby.hotbar.HotbarHandler;
 import net.trustgames.lobby.join_leave_messages.JoinLeaveMessagesHandler;
 import net.trustgames.lobby.movement.double_jump.DoubleJumpHandler;
