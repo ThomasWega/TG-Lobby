@@ -16,13 +16,11 @@ public final class JoinLeaveMessagesHandler implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     private void onPlayerJoin(PlayerJoinEvent event) {
-        event.joinMessage(null);
         Bukkit.broadcast(JoinLeaveMessagesConfig.JOIN_MSG.formatMessage(event.getPlayer()));
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
     private void onPlayerQuit(PlayerQuitEvent event) {
-        event.quitMessage(null);
         Bukkit.broadcast(JoinLeaveMessagesConfig.LEAVE_MSG.formatMessage(event.getPlayer()));
     }
 }
