@@ -21,6 +21,7 @@ import net.trustgames.toolkit.database.player.data.event.PlayerDataUpdateEventMa
 import net.trustgames.toolkit.managers.message_queue.config.RabbitExchange;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -31,7 +32,7 @@ import java.io.File;
  * It extends the functionalities of Core plugin for TrustGames.net network,
  * but unlike Core shouldn't be used on any mini-games servers.
  */
-public final class Lobby extends JavaPlugin {
+public final class Lobby extends JavaPlugin implements Listener {
 
     public static ComponentLogger LOGGER;
     @Getter
