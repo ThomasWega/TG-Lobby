@@ -1,8 +1,8 @@
 package net.trustgames.lobby;
 
 import cloud.commandframework.paper.PaperCommandManager;
-import com.destroystokyo.paper.utils.PaperPluginLogger;
 import lombok.Getter;
+import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import net.trustgames.core.Core;
 import net.trustgames.core.managers.file.FileManager;
 import net.trustgames.lobby.hotbar.HotbarHandler;
@@ -25,7 +25,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.util.logging.Logger;
 
 /**
  * Lobby plugin which is used on the lobbies of TrustGames.net network.
@@ -33,7 +32,8 @@ import java.util.logging.Logger;
  * but unlike Core shouldn't be used on any mini-games servers.
  */
 public final class Lobby extends JavaPlugin {
-    public static final Logger LOGGER = PaperPluginLogger.getLogger("TG-Lobby");
+
+    public static ComponentLogger LOGGER;
     @Getter
     private Core core;
     @Getter
@@ -48,6 +48,7 @@ public final class Lobby extends JavaPlugin {
         if (corePlugin == null) {
             throw new RuntimeException("Failed to load TG-Core plugin for " + this.getName());
         }
+        LOGGER = getComponentLogger();
         core = (Core) corePlugin;
         toolkit = core.getToolkit();
 
@@ -61,7 +62,7 @@ public final class Lobby extends JavaPlugin {
 
         // create a data folder
         if (getDataFolder().mkdirs()) {
-            LOGGER.warning("Created main plugin folder");
+            LOGGER.warn("Created main plugin folder {}", getDataFolder().getAbsolutePath());
         }
 
         registerEvents();

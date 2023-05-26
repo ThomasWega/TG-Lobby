@@ -33,7 +33,7 @@ public final class SpawnHandler implements Listener {
 
         Location location = config.getLocation("spawn.location");
         if (location == null) {
-            LOGGER.severe("Spawn location isn't set!");
+            LOGGER.warn("Spawn location isn't set!");
             return;
         }
 
@@ -46,7 +46,7 @@ public final class SpawnHandler implements Listener {
 
         Location location = config.getLocation("spawn.location");
         if (location == null) {
-            LOGGER.severe("Spawn location isn't set!");
+            LOGGER.warn("Spawn location isn't set!");
             return;
         }
 
