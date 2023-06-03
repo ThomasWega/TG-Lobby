@@ -3,8 +3,8 @@ package net.trustgames.lobby.hotbar.buttons;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.trustgames.core.managers.gui.buttons.HotbarGUIButton;
-import net.trustgames.core.managers.item.ItemBuilder;
+import net.trustgames.core.gui.buttons.HotbarGUIButton;
+import net.trustgames.core.item.ItemBuilder;
 import org.bukkit.Material;
 
 import java.util.List;

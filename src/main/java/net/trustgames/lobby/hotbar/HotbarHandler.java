@@ -1,7 +1,7 @@
 package net.trustgames.lobby.hotbar;
 
-import net.trustgames.core.managers.gui.GUIManager;
-import net.trustgames.core.managers.gui.type.PlayerGUI;
+import net.trustgames.core.gui.GUIManager;
+import net.trustgames.core.gui.type.PlayerGUI;
 import net.trustgames.lobby.Lobby;
 import net.trustgames.lobby.hotbar.buttons.GameSelectorButton;
 import net.trustgames.lobby.hotbar.buttons.HidePlayersButton;

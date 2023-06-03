@@ -18,6 +18,7 @@ import net.trustgames.lobby.xpbar.PlayerLevelHandler;
 import net.trustgames.toolkit.Toolkit;
 import net.trustgames.toolkit.database.player.data.event.PlayerDataUpdateEventManager;
 import net.trustgames.toolkit.managers.file.FileLoader;
+import net.trustgames.toolkit.managers.message_queue.RabbitManager;
 import net.trustgames.toolkit.managers.message_queue.config.RabbitExchange;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -88,7 +89,10 @@ public final class Lobby extends JavaPlugin implements Listener {
         new JoinLeaveMessagesHandler(this);
         new PlayerLevelHandler(this);
 
-        new PlayerDataUpdateEventManager(toolkit.getRabbitManager()).receiveEvents(RabbitExchange.EVENT_PLAYER_DATA_UPDATE);
+        RabbitManager rabbitManager = toolkit.getRabbitManager();
+        if (rabbitManager != null) {
+            new PlayerDataUpdateEventManager(toolkit.getRabbitManager()).receiveEvents(RabbitExchange.EVENT_PLAYER_DATA_UPDATE);
+        }
     }
 
     private void registerCommands() {
