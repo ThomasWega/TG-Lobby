@@ -74,8 +74,8 @@ public class HidePlayersButton {
                                 .append(Component.text("(right-click)", NamedTextColor.GRAY))
                         )
                         .lore(List.of(
-                                        Component.text("You are currently have", NamedTextColor.DARK_GRAY),
-                                        Component.text((Bukkit.getOnlinePlayers().size() - 1) + " players hidden.", NamedTextColor.DARK_GRAY),
+                                        Component.text("You are currently hiding", NamedTextColor.DARK_GRAY),
+                                        Component.text((Bukkit.getOnlinePlayers().size() - 1) + " players.", NamedTextColor.DARK_GRAY),
                                         Component.text("Click this item to be", NamedTextColor.DARK_GRAY),
                                         Component.text("able to see them again.", NamedTextColor.DARK_GRAY)
                                 )
