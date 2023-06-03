@@ -7,6 +7,7 @@ Lobby for TrustGames.net
 - PiggyBack
 - Build Command messages
 - Spawn Command messages
+- HotbarItems messages/actions
 
 ###### Features:
 - Hotbar Items
