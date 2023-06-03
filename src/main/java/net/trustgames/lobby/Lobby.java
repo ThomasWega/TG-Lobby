@@ -4,7 +4,6 @@ import cloud.commandframework.paper.PaperCommandManager;
 import lombok.Getter;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import net.trustgames.core.Core;
-import net.trustgames.core.managers.file.FileManager;
 import net.trustgames.lobby.hotbar.HotbarHandler;
 import net.trustgames.lobby.join_leave_messages.JoinLeaveMessagesHandler;
 import net.trustgames.lobby.movement.double_jump.DoubleJumpHandler;
@@ -18,6 +17,7 @@ import net.trustgames.lobby.spawn.commands.SpawnCommand;
 import net.trustgames.lobby.xpbar.PlayerLevelHandler;
 import net.trustgames.toolkit.Toolkit;
 import net.trustgames.toolkit.database.player.data.event.PlayerDataUpdateEventManager;
+import net.trustgames.toolkit.managers.file.FileLoader;
 import net.trustgames.toolkit.managers.message_queue.config.RabbitExchange;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -26,6 +26,9 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Lobby plugin which is used on the lobbies of TrustGames.net network.
@@ -97,12 +100,20 @@ public final class Lobby extends JavaPlugin implements Listener {
     }
 
     private void createConfigs() {
-        File[] configs = new File[]{
-                new File(getDataFolder(), "spawn.yml"),
-        };
+        /*
+         1. Name of the file
+         2. Folder of the file
+        */
+        Map<String, File> configsMap = new HashMap<>(Map.of(
+                "spawn.yml", getDataFolder()
+        ));
 
-        for (File file : configs) {
-            FileManager.createFile(this, file);
-        }
+        configsMap.forEach((configName, configDir) -> {
+            try {
+                FileLoader.loadFile(this.getClassLoader(), configDir, configName);
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to load config " + configName + "from resources file", e);
+            }
+        });
     }
 }
