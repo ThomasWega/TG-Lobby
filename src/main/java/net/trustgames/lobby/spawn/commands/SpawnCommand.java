@@ -9,6 +9,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.trustgames.lobby.Lobby;
 import net.trustgames.lobby.spawn.SpawnConfig;
+import net.trustgames.lobby.spawn.SpawnLocation;
 import net.trustgames.toolkit.config.PermissionConfig;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
@@ -16,10 +17,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
 public final class SpawnCommand {
-
+    private final Lobby lobby;
     private final PaperCommandManager<CommandSender> commandManager;
 
     public SpawnCommand(Lobby lobby) {
+        this.lobby = lobby;
         this.commandManager = lobby.getCommandManager();
 
         Command.Builder<CommandSender> spawnCommand = commandManager.commandBuilder(
@@ -35,7 +37,7 @@ public final class SpawnCommand {
                 .senderType(Player.class)
                 .handler(context -> {
                     Player player = ((Player) context.getSender());
-                    Location location = SpawnConfig.getSpawnLocation();
+                    Location location = SpawnLocation.getLocation(lobby);
                     if (location == null) {
                         player.sendMessage(Component.text("Spawn location not set!", NamedTextColor.RED));
                         return;
@@ -57,7 +59,7 @@ public final class SpawnCommand {
                 .handler(context -> {
                     CommandSender sender = context.getSender();
                     Player target = context.get(targetArg);
-                    Location location = SpawnConfig.getSpawnLocation();
+                    Location location = SpawnLocation.getLocation(lobby);
                     if (location == null) {
                         sender.sendMessage(Component.text("Spawn location not set!", NamedTextColor.RED));
                         return;

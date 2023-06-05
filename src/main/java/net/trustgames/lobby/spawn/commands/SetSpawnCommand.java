@@ -6,7 +6,7 @@ import cloud.commandframework.paper.PaperCommandManager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.trustgames.lobby.Lobby;
-import net.trustgames.lobby.spawn.SpawnConfig;
+import net.trustgames.lobby.spawn.SpawnLocation;
 import net.trustgames.toolkit.config.PermissionConfig;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -32,14 +32,13 @@ public final class SetSpawnCommand {
                 .permission(PermissionConfig.STAFF.getPermission())
                 .handler(context -> {
                     Player player = ((Player) context.getSender());
-                    if (SpawnConfig.updateSpawnLocation(lobby, player.getLocation())) {
-                        player.sendMessage(Component.text(
-                                "Spawn location was set at your location and saved in /plugins/Lobby/spawn.yml", NamedTextColor.GREEN)
-                        );
-                    } else {
-                        player.sendMessage(Component.text("ERROR: Couldn't save the spawn.yml file!", NamedTextColor.RED)
-                        );
+                    if (!SpawnLocation.setLocation(lobby, player.getLocation())) {
+                        player.sendMessage(Component.text("ERROR: Couldn't save the spawn.yml file!", NamedTextColor.RED));
+                        return;
                     }
+                    player.sendMessage(Component.text(
+                            "Spawn location was set at your location and saved in /plugins/Lobby/spawn.yml", NamedTextColor.GREEN)
+                    );
                 })
         );
     }

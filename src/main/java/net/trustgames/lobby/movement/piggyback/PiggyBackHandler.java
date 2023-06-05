@@ -2,11 +2,13 @@ package net.trustgames.lobby.movement.piggyback;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.trustgames.lobby.Lobby;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -23,14 +25,12 @@ import java.util.List;
 
 public final class PiggyBackHandler implements Listener {
 
-    private static final ParticleBuilder particle = new ParticleBuilder(
-            PiggyBackConfig.PARTICLE.getParticle())
-            .count((int) PiggyBackConfig.PARTICLE_COUNT.getDouble());
-    private static final Sound sound = Sound.sound(
-            PiggyBackConfig.SOUND.getSoundKey(),
+    private static final ParticleBuilder particle = new ParticleBuilder(Particle.CRIT)
+            .count(3);
+    private static final Sound sound = Sound.sound(Key.key("entity.ghast.shoot"),
             Sound.Source.AMBIENT,
-            (float) PiggyBackConfig.SOUND_VOLUME.getDouble(),
-            (float) PiggyBackConfig.SOUND_PITCH.getDouble());
+            1,1
+    );
     private final Lobby lobby;
 
     public PiggyBackHandler(Lobby lobby) {
@@ -100,9 +100,9 @@ public final class PiggyBackHandler implements Listener {
         Location loc = player.getLocation();
         loc.setPitch(0);
         Vector vec = loc.getDirection()
-                .multiply(PiggyBackConfig.THROW_MULTIPLY.getDouble())
+                .multiply(PiggyBackConfig.THROW_MULTIPLY.getValue())
                 .normalize();
-        vec.setY(vec.getY() + PiggyBackConfig.THROW_Y.getDouble())
+        vec.setY(vec.getY() + PiggyBackConfig.THROW_Y.getValue())
                 .normalize();
 
         // velocity needs to be set 1 tick later, as otherwise it doesn't do anything

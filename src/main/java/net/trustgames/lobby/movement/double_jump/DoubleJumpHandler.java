@@ -2,11 +2,13 @@ package net.trustgames.lobby.movement.double_jump;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.trustgames.lobby.Lobby;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -23,18 +25,17 @@ import java.util.Set;
 import java.util.UUID;
 
 public final class DoubleJumpHandler implements Listener {
-
-    private static final ParticleBuilder particle = new ParticleBuilder(
-            DoubleJumpConfig.PARTICLE.getParticle())
-            .count((int) DoubleJumpConfig.PARTICLE_COUNT.getDouble())
-            .offset(0.5d, 0.5d, 0.5d);
-    private static final Sound sound = Sound.sound(
-            DoubleJumpConfig.SOUND.getSoundKey(),
-            Sound.Source.AMBIENT,
-            (float) DoubleJumpConfig.SOUND_VOLUME.getDouble(),
-            (float) DoubleJumpConfig.SOUND_PITCH.getDouble());
     private final Lobby lobby;
     private final Set<UUID> cooldowns = new HashSet<>();
+    private static final Sound sound = Sound.sound(
+            Key.key("block.note_block.flute"),
+            Sound.Source.AMBIENT,
+            1, 1
+    );
+
+    private static final ParticleBuilder particleBuilder = new ParticleBuilder(Particle.ELECTRIC_SPARK)
+            .count(5)
+            .offset(0.5d, 0.5d, 0.5d);
 
     public DoubleJumpHandler(Lobby lobby) {
         this.lobby = lobby;
@@ -62,10 +63,10 @@ public final class DoubleJumpHandler implements Listener {
         player.setAllowFlight(false);
         player.setFlying(false);
 
-        double hor_run = DoubleJumpConfig.HOR_RUN.getDouble();
-        double ver_run = DoubleJumpConfig.VER_RUN.getDouble();
-        double hor = DoubleJumpConfig.HOR.getDouble();
-        double ver = DoubleJumpConfig.VER.getDouble();
+        double hor_run = DoubleJumpConfig.HOR_RUN.getValue();
+        double ver_run = DoubleJumpConfig.VER_RUN.getValue();
+        double hor = DoubleJumpConfig.HOR.getValue();
+        double ver = DoubleJumpConfig.VER.getValue();
 
         if (player.isSprinting()) {
             player.setVelocity(player.getLocation().getDirection().normalize()
@@ -79,8 +80,11 @@ public final class DoubleJumpHandler implements Listener {
                     .normalize());
         }
 
-        Audience.audience(Bukkit.getOnlinePlayers()).playSound(sound, player);
-        particle.location(player.getLocation()).spawn();
+        Audience.audience(Bukkit.getOnlinePlayers())
+                .playSound(sound, player);
+
+        particleBuilder.location(player.getLocation())
+                .spawn();
 
         removeFromSet(player);
     }

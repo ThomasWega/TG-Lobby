@@ -4,7 +4,6 @@ import com.destroystokyo.paper.event.player.PlayerPostRespawnEvent;
 import net.trustgames.lobby.Lobby;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,12 +17,10 @@ import static net.trustgames.lobby.Lobby.LOGGER;
  * Also has method to get the spawn.yml file
  */
 public final class SpawnHandler implements Listener {
-
-    private final YamlConfiguration config;
+    private final Location spawnLocation;
 
     public SpawnHandler(Lobby lobby) {
-        this.config = YamlConfiguration.loadConfiguration(SpawnConfig.getSpawnFile(lobby));
-        SpawnConfig.setSpawnLocation(config.getLocation("spawn.location"));
+        this.spawnLocation = SpawnLocation.getLocation(lobby);
         Bukkit.getPluginManager().registerEvents(this, lobby);
     }
 
@@ -31,25 +28,21 @@ public final class SpawnHandler implements Listener {
     private void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        Location location = config.getLocation("spawn.location");
-        if (location == null) {
-            LOGGER.warn("Spawn location isn't set!");
-            return;
-        }
-
-        player.teleport(location);
+        handleTP(player);
     }
 
     @EventHandler
     private void onPlayerDeath(PlayerPostRespawnEvent event) {
         Player player = event.getPlayer();
 
-        Location location = config.getLocation("spawn.location");
-        if (location == null) {
+        handleTP(player);
+    }
+
+    private void handleTP(Player player) {
+        if (spawnLocation == null) {
             LOGGER.warn("Spawn location isn't set!");
             return;
         }
-
-        player.teleport(location);
+        player.teleport(spawnLocation);
     }
 }
