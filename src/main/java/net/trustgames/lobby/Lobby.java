@@ -66,7 +66,7 @@ public final class Lobby extends JavaPlugin implements Listener {
          */
 
         // create a data folder
-        if (getDataFolder().mkdirs()) {
+        if (getDataFolder().mkdir()) {
             LOGGER.warn("Created main plugin folder {}", getDataFolder().getAbsolutePath());
         }
 

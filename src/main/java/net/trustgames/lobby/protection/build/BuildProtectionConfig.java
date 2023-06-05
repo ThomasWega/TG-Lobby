@@ -6,12 +6,12 @@ import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.trustgames.toolkit.config.CommandConfig;
 
 public enum BuildProtectionConfig {
-    SENDER_ON(CommandConfig.PREFIX.getString() + "<green>From now on, you can place or break blocks"),
-    SENDER_OFF(CommandConfig.PREFIX.getString() + "<red>From now on, you can't place or break blocks"),
-    SENDER_ON_OTHER(CommandConfig.PREFIX.getString() + "<green>You've allowed player <component> to break or place blocks"),
-    SENDER_OFF_OTHER(CommandConfig.PREFIX.getString() + "<red>You've disallowed player <component> to break or place blocks"),
-    TARGET_ON(CommandConfig.PREFIX.getString() + "<green>You've been allowed to break or place blocks by player <white><component>"),
-    TARGET_OFF(CommandConfig.PREFIX.getString() + "<red>You've been disallowed to break or place blocks by player <white><component>"),
+    SENDER_ON(CommandConfig.PREFIX.getValue() + "<green>From now on, you can place or break blocks"),
+    SENDER_OFF(CommandConfig.PREFIX.getValue() + "<red>From now on, you can't place or break blocks"),
+    SENDER_ON_OTHER(CommandConfig.PREFIX.getValue() + "<green>You've allowed player <component> to break or place blocks"),
+    SENDER_OFF_OTHER(CommandConfig.PREFIX.getValue() + "<red>You've disallowed player <component> to break or place blocks"),
+    TARGET_ON(CommandConfig.PREFIX.getValue() + "<green>You've been allowed to break or place blocks by player <white><component>"),
+    TARGET_OFF(CommandConfig.PREFIX.getValue() + "<red>You've been disallowed to break or place blocks by player <white><component>"),
     TARGET_ON_SILENT(SENDER_ON_OTHER.message + ". <white>The player won't be notified about this"),
     TARGET_OFF_SILENT(SENDER_OFF_OTHER.message + ". <white>The player won't not be notified about this");
 

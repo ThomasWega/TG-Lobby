@@ -5,8 +5,8 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.trustgames.toolkit.config.CommandConfig;
 
 public enum SpawnConfig {
-    SPAWN_TP(CommandConfig.PREFIX.getString() + "<dark_gray>You've been teleported to the spawn location"),
-    SPAWN_TP_OTHER(CommandConfig.PREFIX.getString() + "<dark_gray>You've teleported the player(s) to the spawn location");
+    SPAWN_TP(CommandConfig.PREFIX.getValue() + "<dark_gray>You've been teleported to the spawn location"),
+    SPAWN_TP_OTHER(CommandConfig.PREFIX.getValue() + "<dark_gray>You've teleported the player(s) to the spawn location");
 
     private final String message;
 

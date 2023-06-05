@@ -61,7 +61,7 @@ public final class SpawnCommand {
                     Player target = context.get(targetArg);
                     Location location = SpawnLocation.getLocation(lobby);
                     if (location == null) {
-                        sender.sendMessage(Component.text("Spawn location not set!", NamedTextColor.RED));
+                        sender.sendMessage(Component.text("Spawn location isn't set!", NamedTextColor.RED));
                         return;
                     }
 
