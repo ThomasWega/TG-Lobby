@@ -7,20 +7,27 @@ import cloud.commandframework.arguments.flags.CommandFlag;
 import cloud.commandframework.bukkit.parsers.PlayerArgument;
 import cloud.commandframework.paper.PaperCommandManager;
 import net.kyori.adventure.text.Component;
+import net.trustgames.core.gui.GUIManager;
+import net.trustgames.core.gui.type.InventoryHandler;
+import net.trustgames.core.gui.type.PlayerGUI;
+import net.trustgames.lobby.Lobby;
 import net.trustgames.toolkit.config.PermissionConfig;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.PlayerInventory;
 
+import java.util.Map;
 import java.util.UUID;
-
-import static net.trustgames.lobby.protection.build.BuildProtectionHandler.allowedPlayers;
 
 public class BuildProtectionCommand {
 
+    private static final Map<UUID, InventoryHandler> allowedPlayersMap = BuildProtectionAllowedPlayersMap.getAllowedPlayersMap();
     private final PaperCommandManager<CommandSender> commandManager;
+    private final GUIManager guiManager;
 
-    public BuildProtectionCommand(PaperCommandManager<CommandSender> commandManager) {
-        this.commandManager = commandManager;
+    public BuildProtectionCommand(Lobby lobby) {
+        this.commandManager = lobby.getCommandManager();
+        this.guiManager = lobby.getCore().getGuiManager();
 
         // MAIN COMMAND
         Command.Builder<CommandSender> buildCommand = commandManager.commandBuilder(
@@ -40,11 +47,33 @@ public class BuildProtectionCommand {
                 .handler(context -> {
                     Player player = ((Player) context.getSender());
                     UUID uuid = player.getUniqueId();
-                    if (allowedPlayers.contains(uuid)) {
-                        allowedPlayers.remove(uuid);
+                    PlayerInventory playerInventory = player.getInventory();
+
+                    // turn off
+                    if (allowedPlayersMap.containsKey(uuid)) {
+                        InventoryHandler inventoryHandler = allowedPlayersMap.get(uuid);
+                        /*
+                         If the player had any PlayerGUI before he went into build mode,
+                         it will be given back to him now.
+                        */
+                        if (inventoryHandler != null) {
+                            PlayerGUI playerGUI = (PlayerGUI) inventoryHandler;
+                            guiManager.registerInventory(playerInventory, playerGUI);
+                            playerGUI.fill();
+                            allowedPlayersMap.remove(uuid);
+                        }
                         player.sendMessage(BuildProtectionConfig.SENDER_OFF.getFormatted());
+                        // turn on
                     } else {
-                        allowedPlayers.add(uuid);
+                        InventoryHandler inventoryHandler = guiManager.getActiveInventories().get(playerInventory);
+                        /*
+                         save the current PlayerGUI if he has any now.
+                         It will be given back to the player after he escapes build mode
+                        */
+                        if (inventoryHandler != null) {
+                            allowedPlayersMap.put(uuid, inventoryHandler);
+                            guiManager.unregisterInventory(playerInventory);
+                        }
                         player.sendMessage(BuildProtectionConfig.SENDER_ON.getFormatted());
                     }
                 })
@@ -74,8 +103,8 @@ public class BuildProtectionCommand {
                     String targetName = target.getName();
                     String senderName = sender.getName();
                     // remove from the allowed list
-                    if (allowedPlayers.contains(targetUuid)) {
-                        allowedPlayers.remove(targetUuid);
+                    if (allowedPlayersMap.containsKey(targetUuid)) {
+                        allowedPlayersMap.remove(targetUuid);
                         if (silent) {
                             sender.sendMessage(BuildProtectionConfig.TARGET_OFF_SILENT.addComponent(Component.text(targetName)));
                         } else {
@@ -89,7 +118,7 @@ public class BuildProtectionCommand {
                         }
                         // add to the allowed list
                     } else {
-                        allowedPlayers.add(targetUuid);
+                        allowedPlayersMap.put(targetUuid, guiManager.getActiveInventories().get(target.getInventory()));
                         if (silent) {
                             sender.sendMessage(BuildProtectionConfig.TARGET_ON_SILENT.addComponent(Component.text(targetName)));
                         } else {

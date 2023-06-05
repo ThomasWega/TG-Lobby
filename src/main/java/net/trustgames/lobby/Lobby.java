@@ -98,7 +98,7 @@ public final class Lobby extends JavaPlugin implements Listener {
     private void registerCommands() {
         commandManager = core.getCommandManager();
 
-        new BuildProtectionCommand(commandManager);
+        new BuildProtectionCommand(this);
         new SetSpawnCommand(this);
         new SpawnCommand(this);
     }
