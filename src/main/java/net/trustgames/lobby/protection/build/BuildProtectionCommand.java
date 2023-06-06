@@ -47,33 +47,12 @@ public class BuildProtectionCommand {
                 .handler(context -> {
                     Player player = ((Player) context.getSender());
                     UUID uuid = player.getUniqueId();
-                    PlayerInventory playerInventory = player.getInventory();
 
-                    // turn off
                     if (allowedPlayersMap.containsKey(uuid)) {
-                        InventoryHandler inventoryHandler = allowedPlayersMap.get(uuid);
-                        /*
-                         If the player had any PlayerGUI before he went into build mode,
-                         it will be given back to him now.
-                        */
-                        if (inventoryHandler != null) {
-                            PlayerGUI playerGUI = (PlayerGUI) inventoryHandler;
-                            guiManager.registerInventory(playerInventory, playerGUI);
-                            playerGUI.fill();
-                            allowedPlayersMap.remove(uuid);
-                        }
+                        tryRestorePlayerGUI(player);
                         player.sendMessage(BuildProtectionConfig.SENDER_OFF.getFormatted());
-                        // turn on
                     } else {
-                        InventoryHandler inventoryHandler = guiManager.getActiveInventories().get(playerInventory);
-                        /*
-                         save the current PlayerGUI if he has any now.
-                         It will be given back to the player after he escapes build mode
-                        */
-                        if (inventoryHandler != null) {
-                            allowedPlayersMap.put(uuid, inventoryHandler);
-                            guiManager.unregisterInventory(playerInventory);
-                        }
+                        trySavePlayerGUI(player);
                         player.sendMessage(BuildProtectionConfig.SENDER_ON.getFormatted());
                     }
                 })
@@ -102,36 +81,65 @@ public class BuildProtectionCommand {
                     UUID targetUuid = target.getUniqueId();
                     String targetName = target.getName();
                     String senderName = sender.getName();
-                    // remove from the allowed list
+
                     if (allowedPlayersMap.containsKey(targetUuid)) {
-                        allowedPlayersMap.remove(targetUuid);
+                        tryRestorePlayerGUI(target);
+
                         if (silent) {
                             sender.sendMessage(BuildProtectionConfig.TARGET_OFF_SILENT.addComponent(Component.text(targetName)));
-                        } else {
-                            // if the sender and target are the same person
-                            if (targetName.equals(senderName)) {
-                                target.sendMessage(BuildProtectionConfig.SENDER_OFF.getFormatted());
-                            } else {
-                                target.sendMessage(BuildProtectionConfig.TARGET_OFF.addComponent(Component.text(senderName)));
-                                sender.sendMessage(BuildProtectionConfig.SENDER_OFF_OTHER.addComponent(Component.text(targetName)));
-                            }
+                            return;
+
                         }
-                        // add to the allowed list
+                        // if the sender and target are the same person
+                        if (targetName.equals(senderName)) {
+                            target.sendMessage(BuildProtectionConfig.SENDER_OFF.getFormatted());
+                            return;
+                        }
+
+                        target.sendMessage(BuildProtectionConfig.TARGET_OFF.addComponent(Component.text(senderName)));
+                        sender.sendMessage(BuildProtectionConfig.SENDER_OFF_OTHER.addComponent(Component.text(targetName)));
+
                     } else {
-                        allowedPlayersMap.put(targetUuid, guiManager.getActiveInventories().get(target.getInventory()));
+                        trySavePlayerGUI(target);
+
                         if (silent) {
                             sender.sendMessage(BuildProtectionConfig.TARGET_ON_SILENT.addComponent(Component.text(targetName)));
-                        } else {
-                            // if the sender and target are the same person
-                            if (targetName.equals(senderName)) {
-                                target.sendMessage(BuildProtectionConfig.SENDER_ON.getFormatted());
-                            } else {
-                                target.sendMessage(BuildProtectionConfig.TARGET_ON.addComponent(Component.text(senderName)));
-                                sender.sendMessage(BuildProtectionConfig.SENDER_ON_OTHER.addComponent(Component.text(targetName)));
-                            }
+                            return;
                         }
+
+                        // if the sender and target are the same person
+                        if (targetName.equals(senderName)) {
+                            target.sendMessage(BuildProtectionConfig.SENDER_ON.getFormatted());
+                            return;
+                        }
+
+                        target.sendMessage(BuildProtectionConfig.TARGET_ON.addComponent(Component.text(senderName)));
+                        sender.sendMessage(BuildProtectionConfig.SENDER_ON_OTHER.addComponent(Component.text(targetName)));
                     }
                 })
         );
+    }
+
+
+    private void trySavePlayerGUI(Player player) {
+        PlayerInventory playerInventory = player.getInventory();
+        InventoryHandler inventoryHandler = guiManager.getActiveInventories().get(playerInventory);
+        if (inventoryHandler == null) return;
+
+        UUID uuid = player.getUniqueId();
+        allowedPlayersMap.put(uuid, inventoryHandler);
+        guiManager.unregisterInventory(playerInventory);
+    }
+
+    private void tryRestorePlayerGUI(Player player) {
+        UUID uuid = player.getUniqueId();
+        InventoryHandler inventoryHandler = allowedPlayersMap.get(uuid);
+        if (inventoryHandler == null) return;
+
+        PlayerInventory playerInventory = player.getInventory();
+        PlayerGUI playerGUI = (PlayerGUI) inventoryHandler;
+        guiManager.registerInventory(playerInventory, playerGUI);
+        playerGUI.fill();
+        allowedPlayersMap.remove(uuid);
     }
 }
