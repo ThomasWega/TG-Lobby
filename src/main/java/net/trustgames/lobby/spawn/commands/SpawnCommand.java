@@ -43,7 +43,7 @@ public final class SpawnCommand {
                         return;
                     }
                     player.teleportAsync(location, PlayerTeleportEvent.TeleportCause.COMMAND)
-                            .thenRun(() -> player.sendMessage(SpawnConfig.SPAWN_TP.getFormatted()));
+                            .thenRun(() -> player.sendMessage(SpawnConfig.SPAWN_TP.getFormatted(player.getName())));
                 })
         );
     }
@@ -59,6 +59,7 @@ public final class SpawnCommand {
                 .handler(context -> {
                     CommandSender sender = context.getSender();
                     Player target = context.get(targetArg);
+                    String targetName = target.getName();
                     Location location = SpawnLocation.getLocation(lobby);
                     if (location == null) {
                         sender.sendMessage(Component.text("Spawn location isn't set!", NamedTextColor.RED));
@@ -67,10 +68,10 @@ public final class SpawnCommand {
 
                     target.teleportAsync(location, PlayerTeleportEvent.TeleportCause.COMMAND)
                             .thenRun(() -> {
-                                target.sendMessage(SpawnConfig.SPAWN_TP.getFormatted());
+                                target.sendMessage(SpawnConfig.SPAWN_TP.getFormatted(targetName));
                                 // if the sender and target are the same person
-                                if (!sender.getName().equals(target.getName())) {
-                                    sender.sendMessage(SpawnConfig.SPAWN_TP_OTHER.getFormatted());
+                                if (!sender.getName().equalsIgnoreCase(target.getName())) {
+                                    sender.sendMessage(SpawnConfig.SPAWN_TP_OTHER.getFormatted(targetName));
                                 }
                             });
                 })

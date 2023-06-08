@@ -97,7 +97,7 @@ public class BuildProtectionCommand {
 
                         }
                         // if the sender and target are the same person
-                        if (targetName.equals(senderName)) {
+                        if (targetName.equalsIgnoreCase(senderName)) {
                             target.sendMessage(BuildProtectionConfig.SENDER_OFF.getFormatted());
                             return;
                         }
@@ -115,7 +115,7 @@ public class BuildProtectionCommand {
                         }
 
                         // if the sender and target are the same person
-                        if (targetName.equals(senderName)) {
+                        if (targetName.equalsIgnoreCase(senderName)) {
                             target.sendMessage(BuildProtectionConfig.SENDER_ON.getFormatted());
                             return;
                         }
