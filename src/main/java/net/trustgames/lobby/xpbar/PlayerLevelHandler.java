@@ -5,8 +5,7 @@ import net.trustgames.toolkit.Toolkit;
 import net.trustgames.toolkit.database.player.data.PlayerDataFetcher;
 import net.trustgames.toolkit.database.player.data.config.PlayerDataType;
 import net.trustgames.toolkit.database.player.data.event.PlayerDataUpdateEvent;
-import net.trustgames.toolkit.database.player.data.event.PlayerDataUpdateEventManager;
-import net.trustgames.toolkit.database.player.data.event.PlayerDataUpdateListener;
+import net.trustgames.toolkit.event.EventSubscriber;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,13 +23,12 @@ import static net.trustgames.toolkit.utils.LevelUtils.getProgress;
 /**
  * Updates the player xp bar to match his progress towards the next level
  */
-public final class PlayerLevelHandler implements PlayerDataUpdateListener, Listener {
+public final class PlayerLevelHandler implements EventSubscriber<PlayerDataUpdateEvent>, Listener {
 
     private final Toolkit toolkit;
 
     public PlayerLevelHandler(Lobby lobby) {
         this.toolkit = lobby.getToolkit();
-        PlayerDataUpdateEventManager.register(this);
         Bukkit.getPluginManager().registerEvents(this, lobby);
     }
 
@@ -60,8 +58,8 @@ public final class PlayerLevelHandler implements PlayerDataUpdateListener, Liste
     }
 
     @Override
-    public void onPlayerDataUpdate(PlayerDataUpdateEvent event) {
-        if (event.getDataType() != PlayerDataType.XP && event.getDataType() != PlayerDataType.LEVEL) return;
-        update(event.getUuid());
+    public void onEvent(@NotNull PlayerDataUpdateEvent event) {
+        if (event.dataType() != PlayerDataType.XP && event.dataType() != PlayerDataType.LEVEL) return;
+        update(event.uuid());
     }
 }

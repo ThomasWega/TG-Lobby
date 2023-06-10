@@ -16,10 +16,13 @@ import net.trustgames.lobby.spawn.commands.SetSpawnCommand;
 import net.trustgames.lobby.spawn.commands.SpawnCommand;
 import net.trustgames.lobby.xpbar.PlayerLevelHandler;
 import net.trustgames.toolkit.Toolkit;
-import net.trustgames.toolkit.database.player.data.event.PlayerDataUpdateEventManager;
+import net.trustgames.toolkit.database.player.data.event.PlayerDataUpdateEvent;
+import net.trustgames.toolkit.database.player.data.event.PlayerDataUpdateEventConfig;
 import net.trustgames.toolkit.file.FileLoader;
 import net.trustgames.toolkit.message_queue.RabbitManager;
-import net.trustgames.toolkit.message_queue.config.RabbitExchange;
+import net.trustgames.toolkit.message_queue.event.RabbitEvent;
+import net.trustgames.toolkit.message_queue.event.RabbitEventBus;
+import net.trustgames.toolkit.message_queue.event.RabbitEventManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Listener;
@@ -45,6 +48,12 @@ public final class Lobby extends JavaPlugin implements Listener {
     private Toolkit toolkit;
     @Getter
     private PaperCommandManager<CommandSender> commandManager;
+
+    @Getter
+    private RabbitEventManager rabbitEventManager;
+
+    @Getter
+    private RabbitEventBus<RabbitEvent> rabbitEventBus;
 
     @Override
     public void onEnable() {
@@ -91,8 +100,15 @@ public final class Lobby extends JavaPlugin implements Listener {
 
         RabbitManager rabbitManager = toolkit.getRabbitManager();
         if (rabbitManager != null) {
-            new PlayerDataUpdateEventManager(toolkit.getRabbitManager()).receiveEvents(RabbitExchange.EVENT_PLAYER_DATA_UPDATE);
+            registerRabbitEvents();
         }
+    }
+
+    private void registerRabbitEvents() {
+        this.rabbitEventManager = core.getRabbitEventManager();
+        this.rabbitEventBus = core.getRabbitEventBus();
+
+        rabbitEventBus.subscribe(PlayerDataUpdateEvent.class, new PlayerDataUpdateEventConfig().config(), new PlayerLevelHandler(this));
     }
 
     private void registerCommands() {
