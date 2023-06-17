@@ -6,8 +6,7 @@ import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import net.trustgames.core.Core;
 import net.trustgames.lobby.hotbar.HotbarHandler;
 import net.trustgames.lobby.join_leave_messages.JoinLeaveMessagesHandler;
-import net.trustgames.lobby.movement.double_jump.DoubleJumpHandler;
-import net.trustgames.lobby.movement.piggyback.PiggyBackHandler;
+import net.trustgames.lobby.double_jump.DoubleJumpHandler;
 import net.trustgames.lobby.protection.LobbyGamerulesHandler;
 import net.trustgames.lobby.protection.build.BuildProtectionCommand;
 import net.trustgames.lobby.protection.build.BuildProtectionHandler;
@@ -93,7 +92,6 @@ public final class Lobby extends JavaPlugin implements Listener {
         new SpawnHandler(this);
         new HotbarHandler(this);
         new DoubleJumpHandler(this);
-        new PiggyBackHandler(this);
         new BuildProtectionHandler(this);
         new JoinLeaveMessagesHandler(this);
         new PlayerLevelHandler(this);

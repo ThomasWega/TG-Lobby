@@ -1,4 +1,4 @@
-package net.trustgames.lobby.movement.double_jump;
+package net.trustgames.lobby.double_jump;
 
 import com.destroystokyo.paper.ParticleBuilder;
 import net.kyori.adventure.audience.Audience;
